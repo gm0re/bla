@@ -1,23 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import * as React from "react";
 
-function App() {
+import "./styles.css";
+
+import useRecorder from "./useRecorder";
+
+const App = () => {
+  let [audioURL, isRecording, startRecording, stopRecording] = useRecorder();
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <audio src={audioURL} controls />
+      <button onClick={startRecording} disabled={isRecording}>
+        start recording
+      </button>
+      <button onClick={stopRecording} disabled={!isRecording}>
+        stop recording
+      </button>
+
+      <p>
+        <em>
+          (On Codesandbox pop out the preview into a window to get a user media
+          request.)
+        </em>
+      </p>
     </div>
   );
 }
