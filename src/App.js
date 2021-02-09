@@ -1,28 +1,40 @@
 import * as React from "react";
+import styled from 'styled-components';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faThumbsUp } from '@fortawesome/free-regular-svg-icons';
 
-import "./styles.css";
+library.add(faThumbsUp);
+
+import { ActionsPanel, Recordings } from './components';
 
 import useRecorder from "./useRecorder";
 
-const App = () => {
-  let [audioURL, isRecording, startRecording, stopRecording] = useRecorder();
-  return (
-    <div className="App">
-      <audio src={audioURL} controls />
-      <button onClick={startRecording} disabled={isRecording}>
-        start recording
-      </button>
-      <button onClick={stopRecording} disabled={!isRecording}>
-        stop recording
-      </button>
+const Wrapper = styled.div`
+  font-family: sans-serif;
+  text-align: center;
+`;
 
-      <p>
-        <em>
-          (On Codesandbox pop out the preview into a window to get a user media
-          request.)
-        </em>
-      </p>
-    </div>
+const App = () => {
+  const [
+    recordings,
+    recorderState,
+    startRecording,
+    pauseRecording,
+    resumeRecording,
+    stopRecording
+  ] = useRecorder();
+
+  return (
+    <Wrapper>
+      <Recordings recordings={recordings} />
+      <ActionsPanel
+        pauseRecording={pauseRecording}
+        recorderState={recorderState}
+        resumeRecording={resumeRecording}
+        startRecording={startRecording}
+        stopRecording={stopRecording}
+      />
+    </Wrapper>
   );
 }
 

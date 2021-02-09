@@ -1,48 +1,73 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
+import { states as recorderStates } from './constants/recorder';
+
+const { RECORDING, RESUMING, PAUSED, INACTIVE } = recorderStates;
 
 const useRecorder = () => {
-  const [audioURL, setAudioURL] = useState("");
-  const [isRecording, setIsRecording] = useState(false);
+  const [recordings, setRecording] = useState([]);
+  const [recorderState, setRecorderState] = useState('');
   const [recorder, setRecorder] = useState(null);
 
+  const updateRecorderState = () => {
+    const recorderActions = {
+      inactive: () => recorder.stop(),
+      paused: () => recorder.pause(),
+      recording: () => recorder.start(),
+      resuming: () => recorder.resume()
+    };
+    recorderActions[recorderState]();
+  };
+
+  const startRecording = () => {
+    setRecorderState(RECORDING);
+  };
+
+  const resumeRecording = () => {
+    setRecorderState(RESUMING);
+  };
+
+  const pauseRecording = () => {
+    setRecorderState(PAUSED);
+  };
+
+  const stopRecording = () => {
+    setRecorderState(INACTIVE);
+  };
+
   useEffect(() => {
-    // Lazily obtain recorder first time we're recording.
     if (recorder === null) {
-      if (isRecording) {
+      if (recorderState === RECORDING) {
         requestRecorder().then(setRecorder, console.error);
       }
       return;
     }
 
-    // Manage recorder state.
-    if (isRecording) {
-      recorder.start();
-    } else {
-      recorder.stop();
-    }
+    updateRecorderState();
 
-    // Obtain the audio when ready.
     const handleData = e => {
-      setAudioURL(URL.createObjectURL(e.data));
+      const newRecording = URL.createObjectURL(e.data);
+
+      setRecording([...recordings, newRecording]);
     };
 
-    recorder.addEventListener("dataavailable", handleData);
-    return () => recorder.removeEventListener("dataavailable", handleData);
-  }, [recorder, isRecording]);
+    recorder.addEventListener('dataavailable', handleData);
 
-  const startRecording = () => {
-    setIsRecording(true);
-  };
+    return () => recorder.removeEventListener('dataavailable', handleData);
+  }, [recorder, recorderState]);
 
-  const stopRecording = () => {
-    setIsRecording(false);
-  };
-
-  return [audioURL, isRecording, startRecording, stopRecording];
+  return [
+    recordings,
+    recorderState,
+    startRecording,
+    pauseRecording,
+    resumeRecording,
+    stopRecording
+  ];
 };
 
 async function requestRecorder() {
   const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
   return new MediaRecorder(stream);
 }
+
 export default useRecorder;
