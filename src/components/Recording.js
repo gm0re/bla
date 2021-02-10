@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import styled from 'styled-components';
 import identicon from 'identicon';
 import uniqid from 'uniqid';
+
+import RecordingActions from './RecordingActions';
 
 const PlayerWrapper = styled.div`
   display: flex;
@@ -23,14 +24,14 @@ const ImgWrapper = styled.div`
 `;
 
 const Recording = ({ recording }) => {
-  // 🛠 Should move to a useVotes hook to manage votes incoming from recordings.
+  // 🛠 move to a useVotes hook to manage votes incoming from recordings.
   const [hasVoted, setHasVoted] = useState(false);
   const [upVotes, setUpVotes] = useState(0);
   const [avatar, setAvatar] = useState();
 
   const avatarId = uniqid();
 
-  const vote = () => {
+  const onVote = () => {
     const totalVotes = hasVoted
       ? upVotes - 1
       : upVotes + 1;
@@ -40,6 +41,7 @@ const Recording = ({ recording }) => {
   };
 
   useEffect(() => {
+    // 👷 move to backend layer.
     identicon.generate({
       id: avatarId,
       size: 54
@@ -57,14 +59,11 @@ const Recording = ({ recording }) => {
         <ImgWrapper><img src={avatar} /></ImgWrapper>
         <div><audio src={recording} key={recording} controls /></div>
       </PlayerWrapper>
-      {/* <button>Reply</button> */}
-      <button onClick={vote}>
-        {`${upVotes} `}
-        <FontAwesomeIcon
-          icon={["far", "thumbs-up"]}
-          color={`${hasVoted ? 'green' : 'red'}`}
-        />
-      </button>
+      <RecordingActions
+        hasVoted={hasVoted}
+        onVote={onVote}
+        upVotes={upVotes}
+      />
     </div>
   )
 };
