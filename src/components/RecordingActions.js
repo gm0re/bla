@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const RecordingActionsWrapper = styled.div`
@@ -10,20 +9,24 @@ const RecordingActionsWrapper = styled.div`
   justify-content: flex-end;
 `;
 
+const RecordingActionButton = styled.button`
+  margin: 4px;
+`;
+
 const RecordingActions = ({
   hasVoted,
   onVote,
   upVotes
 }) => (
   <RecordingActionsWrapper>
-    {/* <button>Reply</button> */}
-    <button onClick={onVote}>
+    {/* <RecordingActionButton>Reply</RecordingActionButton> */}
+    <RecordingActionButton onClick={onVote}>
       {`${upVotes} `}
       <FontAwesomeIcon
-        icon={["far", "thumbs-up"]}
+        icon={['far', 'thumbs-up']}
         color={`${hasVoted ? 'green' : 'red'}`}
       />
-    </button>
+    </RecordingActionButton>
   </RecordingActionsWrapper>
 );
 

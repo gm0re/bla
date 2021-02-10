@@ -7,6 +7,13 @@ const useRecorder = () => {
   const [recordings, setRecording] = useState([]);
   const [recorderState, setRecorderState] = useState('');
   const [recorder, setRecorder] = useState(null);
+  // 👷 WIP: save stream to stop all tracks by getTracks()[0].stop()
+  // causing a 🐛 because of tracks removal?
+  const [stream, setStream] = useState();
+
+  function requestRecorder() {
+    return navigator.mediaDevices.getUserMedia({ audio: true });
+  }
 
   const updateRecorderState = () => {
     const recorderActions = {
@@ -37,7 +44,10 @@ const useRecorder = () => {
   useEffect(() => {
     if (recorder === null) {
       if (recorderState === RECORDING) {
-        requestRecorder().then(setRecorder, console.error);
+        requestRecorder().then(newStream => {
+          setStream(newStream)
+          setRecorder(new MediaRecorder(newStream));
+        }, console.error);
       }
       return;
     }
@@ -64,10 +74,5 @@ const useRecorder = () => {
     stopRecording
   ];
 };
-
-async function requestRecorder() {
-  const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-  return new MediaRecorder(stream);
-}
 
 export default useRecorder;

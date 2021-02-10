@@ -1,15 +1,12 @@
 import * as React from "react";
 import styled from 'styled-components';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { faThumbsUp } from '@fortawesome/free-regular-svg-icons';
 
-library.add(faThumbsUp);
+import './icons';
 
 import { ActionsPanel, Recordings } from './components';
-
 import useRecorder from "./useRecorder";
 
-const Wrapper = styled.div`
+const GlobalWrapper = styled.div`
   font-family: sans-serif;
   width: 50%;
   margin: 0 auto;
@@ -26,7 +23,7 @@ const App = () => {
   ] = useRecorder();
 
   return (
-    <Wrapper>
+    <GlobalWrapper>
       <Recordings recordings={recordings} />
       <ActionsPanel
         pauseRecording={pauseRecording}
@@ -35,7 +32,7 @@ const App = () => {
         startRecording={startRecording}
         stopRecording={stopRecording}
       />
-    </Wrapper>
+    </GlobalWrapper>
   );
 }
 
