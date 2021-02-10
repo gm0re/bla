@@ -11,9 +11,9 @@ const useRecorder = () => {
   // causing a 🐛 because of tracks removal?
   const [stream, setStream] = useState();
 
-  function requestRecorder() {
-    return navigator.mediaDevices.getUserMedia({ audio: true });
-  }
+  const requestRecorder = () => (
+    navigator.mediaDevices.getUserMedia({ audio: true })
+  );
 
   const updateRecorderState = () => {
     const recorderActions = {

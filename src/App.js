@@ -3,7 +3,8 @@ import styled from 'styled-components';
 
 import './icons';
 
-import { ActionsPanel, Recordings } from './components';
+import { ActionsPanel, EmptyFeed, Recordings } from './components';
+
 import useRecorder from "./useRecorder";
 
 const GlobalWrapper = styled.div`
@@ -24,6 +25,7 @@ const App = () => {
 
   return (
     <GlobalWrapper>
+      {!recordings.length && <EmptyFeed />}
       <Recordings recordings={recordings} />
       <ActionsPanel
         pauseRecording={pauseRecording}
