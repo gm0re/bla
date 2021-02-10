@@ -5,7 +5,7 @@ const { RECORDING, RESUMING, PAUSED, INACTIVE } = recorderStates;
 
 const useRecorder = () => {
   const [recordings, setRecording] = useState([]);
-  const [recorderState, setRecorderState] = useState('');
+  const [recorderState, setRecorderState] = useState(INACTIVE);
   const [recorder, setRecorder] = useState(null);
   // 👷 WIP: save stream to stop all tracks by getTracks()[0].stop()
   // causing a 🐛 because of tracks removal?
