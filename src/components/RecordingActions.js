@@ -1,14 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
+const RecordingActionsWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+`;
 
 const RecordingActions = ({
   hasVoted,
   onVote,
   upVotes
 }) => (
-  <div>
+  <RecordingActionsWrapper>
     {/* <button>Reply</button> */}
     <button onClick={onVote}>
       {`${upVotes} `}
@@ -17,7 +24,7 @@ const RecordingActions = ({
         color={`${hasVoted ? 'green' : 'red'}`}
       />
     </button>
-  </div>
+  </RecordingActionsWrapper>
 );
 
 RecordingActions.propTypes = {

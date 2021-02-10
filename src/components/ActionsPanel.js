@@ -1,9 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 import { states as recorderStates } from '../constants/recorder';
 
 const { PAUSED, RECORDING, INACTIVE } = recorderStates;
+
+const RecorderActionsPanel = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 8px;
+`;
 
 const ActionsPanel = ({
   pauseRecording,
@@ -12,7 +20,7 @@ const ActionsPanel = ({
   startRecording,
   stopRecording
 }) => (
-  <div>
+  <RecorderActionsPanel>
     <button
       onClick={recorderState === PAUSED
         ? resumeRecording
@@ -37,7 +45,7 @@ const ActionsPanel = ({
     >
       Stop
     </button>
-  </div>
+  </RecorderActionsPanel>
 );
 
 ActionsPanel.propTypes = {

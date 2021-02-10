@@ -6,6 +6,10 @@ import uniqid from 'uniqid';
 
 import RecordingActions from './RecordingActions';
 
+const RecordingWrapper = styled.div`
+  padding: 8px;
+`;
+
 const PlayerWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -54,7 +58,7 @@ const Recording = ({ recording }) => {
   }, []);
 
   return (
-    <div>
+    <RecordingWrapper>
       <PlayerWrapper>
         <ImgWrapper><img src={avatar} /></ImgWrapper>
         <div><audio src={recording} key={recording} controls /></div>
@@ -64,7 +68,7 @@ const Recording = ({ recording }) => {
         onVote={onVote}
         upVotes={upVotes}
       />
-    </div>
+    </RecordingWrapper>
   )
 };
 
