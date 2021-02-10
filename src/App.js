@@ -11,7 +11,6 @@ import useRecorder from "./useRecorder";
 
 const Wrapper = styled.div`
   font-family: sans-serif;
-  text-align: center;
 `;
 
 const App = () => {
