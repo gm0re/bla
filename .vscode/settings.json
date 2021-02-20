@@ -2,6 +2,7 @@
   "conventionalCommits.scopes": [
     "fix",
     "refactor",
-    "feature"
+    "feature",
+    "recordings"
   ]
 }

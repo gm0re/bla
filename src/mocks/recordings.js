@@ -1,4 +1,4 @@
-export const recordings = [
+export const recordingsMocks = [
   'blob:https://voicechanger.io/d2978fc6-54f3-495f-86b8-39f73896829c',
   'blob:https://voicechanger.io/96acc75c-7393-466b-b855-89a547f6ff30',
   'blob:https://voicechanger.io/2996765b-edc7-4526-ae1b-2083170a7804',
