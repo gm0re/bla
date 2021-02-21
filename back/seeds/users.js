@@ -1,13 +1,13 @@
 const faker = require('faker');
+const { USERS_TO_SEED } = require('../constants');
 
 exports.seed = knex => (
   knex('users')
     .del()
     .then(() => {
       const users = [];
-      const amount = 5;
 
-      for (let i = 0; i <= amount; i++) {
+      for (let i = 0; i <= USERS_TO_SEED; i++) {
         users.push({
           username: faker.internet.userName(),
           createdAt: faker.date.recent(),
