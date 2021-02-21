@@ -8,7 +8,12 @@
 module.exports = {
 
   attributes: {
-    username: { type: 'string', required: true, unique: true }
+    username: { type: 'string', required: true, unique: true },
+
+    recordings: {
+      collection: 'recordings',
+      via: 'userId'
+    }
   }
 
 };

@@ -12,7 +12,11 @@ module.exports = {
     filename: { type: 'string', required: true, unique: true },
     filetype: { type: 'string', required: true },
     filesize: { type: 'number', columnType: 'float', required: true },
-    length: { type: 'number', columnType: 'float', required: true }
+    length: { type: 'number', columnType: 'float', required: true },
+
+    userId: {
+      model: 'users'
+    }
   }
 
 };
