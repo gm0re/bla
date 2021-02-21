@@ -10,7 +10,7 @@ import useRecorder from "./useRecorder";
 const GlobalWrapper = styled.div`
   font-family: sans-serif;
   width: 50%;
-  margin: 0 auto;
+  margin: auto;
 `;
 
 const App = () => {

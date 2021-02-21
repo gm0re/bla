@@ -1,12 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 import Recording from './Recording';
 
+const RecordingsWrapper = styled.div`
+  height: 500px;
+  overflow-y: scroll;
+`;
+
 const Recordings = ({ recordings }) => (
-  recordings && recordings.map(recording => (
-    <Recording recording={recording} key={recording.id || recording.filename } />
-  ))
+  <RecordingsWrapper>
+    {recordings.length && recordings.map(recording => (
+      <Recording recording={recording} key={recording.id || recording.filename } />
+    ))}
+  </RecordingsWrapper>
 );
 
 Recordings.propTypes = {

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
+
 import { states as recorderStates } from './constants/recorder';
 import { recordingsSvc } from './services';
-
 const { RECORDING, RESUMING, PAUSED, INACTIVE } = recorderStates;
 
 const useRecorder = () => {
