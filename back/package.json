@@ -9,7 +9,7 @@
     "@sailshq/lodash": "^3.10.3",
     "@sailshq/socket.io-redis": "^5.2.0",
     "grunt": "1.0.4",
-    "knex": "^0.12.7",
+    "knex": "^0.21.17",
     "pg": "^8.3.0",
     "sails": "^1.4.0",
     "sails-hook-grunt": "^4.0.0",
