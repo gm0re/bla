@@ -14,8 +14,9 @@ module.exports = {
     filesize: { type: 'number', columnType: 'float', required: true },
     length: { type: 'number', columnType: 'float', required: true },
 
-    userId: {
-      model: 'users'
+    user: {
+      model: 'Users',
+      columnName: 'userId'
     }
   }
 

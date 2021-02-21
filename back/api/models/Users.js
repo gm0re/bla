@@ -11,8 +11,8 @@ module.exports = {
     username: { type: 'string', required: true, unique: true },
 
     recordings: {
-      collection: 'recordings',
-      via: 'userId'
+      collection: 'Recordings',
+      via: 'user'
     }
   }
 
