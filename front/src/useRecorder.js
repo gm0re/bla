@@ -66,6 +66,7 @@ const useRecorder = () => {
     const setNewRecording = ({ data: blob }) => {
       const { size, type } = blob;
 
+      // 👷 replace harcoded user with loged user data
       const newRecording = {
         createdAt: Date.now(),
         filename: URL.createObjectURL(blob),

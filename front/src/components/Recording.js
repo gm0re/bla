@@ -60,7 +60,13 @@ const Recording = ({ recording }) => {
     <RecordingWrapper>
       <PlayerWrapper>
         <ImgWrapper><img src={avatar} /></ImgWrapper>
-        <div><audio src={recording.filename} key={recording.id || recording.filename} controls /></div>
+        <div>
+          <audio
+            src={recording.filename}
+            key={recording.id || recording.filename}
+            controls
+          />
+        </div>
       </PlayerWrapper>
       <RecordingActions
         hasVoted={hasVoted}
