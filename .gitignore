@@ -25,5 +25,5 @@ yarn-error.log*
 # eslint
 .eslintcache
 
-# editors
+# ignore IDE files
 .vscode/
