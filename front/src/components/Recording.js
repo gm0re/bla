@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import identicon from 'identicon';
-import uniqid from 'uniqid';
 
 import RecordingActions from './RecordingActions';
 
@@ -33,8 +32,7 @@ const Recording = ({ recording }) => {
   const [upVotes, setUpVotes] = useState(0);
   const [avatar, setAvatar] = useState();
 
-  const avatarId = uniqid();
-
+  // console.log(recording);
   const onVote = () => {
     const totalVotes = hasVoted
       ? upVotes - 1
@@ -47,7 +45,7 @@ const Recording = ({ recording }) => {
   useEffect(() => {
     // 👷 move to backend layer.
     identicon.generate({
-      id: avatarId,
+      id: recording.user.username,
       size: 54
     }, (err, buffer) => {
       if (err) {
@@ -61,7 +59,7 @@ const Recording = ({ recording }) => {
     <RecordingWrapper>
       <PlayerWrapper>
         <ImgWrapper><img src={avatar} /></ImgWrapper>
-        <div><audio src={recording} key={recording} controls /></div>
+        <div><audio src={recording.filename} key={recording.id} controls /></div>
       </PlayerWrapper>
       <RecordingActions
         hasVoted={hasVoted}
@@ -73,7 +71,13 @@ const Recording = ({ recording }) => {
 };
 
 Recording.propTypes = {
-  recording: PropTypes.string
+  recording: PropTypes.shape({
+    filename: PropTypes.string,
+    id: PropTypes.number,
+    user: PropTypes.shape({
+      username: PropTypes.string
+    })
+  })
 };
 
 export default Recording;
