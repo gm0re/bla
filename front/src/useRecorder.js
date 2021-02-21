@@ -43,9 +43,11 @@ const useRecorder = () => {
   };
 
   useEffect(async() => {
-    const preloadedRecordings = await recordingsSvc.get() || [];
+    if (!recordings.length) {
+      const preloadedRecordings = await recordingsSvc.get() || [];
 
-    setRecordings([...recordings, ...preloadedRecordings]);
+      setRecordings([...recordings, ...preloadedRecordings]);
+    }
 
     if (recorder === null) {
       if (recorderState === RECORDING) {
@@ -61,15 +63,23 @@ const useRecorder = () => {
 
     updateRecorderState();
 
-    const handleData = e => {
-      const newRecording = URL.createObjectURL(e.data);
+    const setNewRecording = ({ data: blob }) => {
+      const { size, type } = blob;
+
+      const newRecording = {
+        createdAt: Date.now(),
+        filename: URL.createObjectURL(blob),
+        filesize: size,
+        filtetype: type,
+        user: { username: 'gmore' }
+      };
 
       setRecordings([...recordings, newRecording]);
     };
 
-    recorder.addEventListener('dataavailable', handleData);
+    recorder.addEventListener('dataavailable', setNewRecording);
 
-    return () => recorder.removeEventListener('dataavailable', handleData);
+    return () => recorder.removeEventListener('dataavailable', setNewRecording);
   }, [recorder, recorderState]);
 
   return [

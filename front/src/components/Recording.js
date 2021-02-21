@@ -32,7 +32,8 @@ const Recording = ({ recording }) => {
   const [upVotes, setUpVotes] = useState(0);
   const [avatar, setAvatar] = useState();
 
-  // console.log(recording);
+  console.log(recording);
+
   const onVote = () => {
     const totalVotes = hasVoted
       ? upVotes - 1
@@ -59,7 +60,7 @@ const Recording = ({ recording }) => {
     <RecordingWrapper>
       <PlayerWrapper>
         <ImgWrapper><img src={avatar} /></ImgWrapper>
-        <div><audio src={recording.filename} key={recording.id} controls /></div>
+        <div><audio src={recording.filename} key={recording.id || recording.filename} controls /></div>
       </PlayerWrapper>
       <RecordingActions
         hasVoted={hasVoted}

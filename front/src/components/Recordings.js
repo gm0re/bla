@@ -5,7 +5,7 @@ import Recording from './Recording';
 
 const Recordings = ({ recordings }) => (
   recordings && recordings.map(recording => (
-    <Recording recording={recording} key={recording.id} />
+    <Recording recording={recording} key={recording.id || recording.filename } />
   ))
 );
 
