@@ -3,7 +3,12 @@ import styled from 'styled-components';
 
 import './icons';
 
-import { ActionsPanel, EmptyFeed, Recordings } from './components';
+import {
+  ActionsPanel,
+  EmptyFeed,
+  Header,
+  Recordings
+} from './components';
 
 import useRecorder from "./useRecorder";
 
@@ -23,8 +28,16 @@ const App = () => {
     stopRecording
   ] = useRecorder();
 
+  const user = {
+    id: 0,
+    username: 'gmore'
+  };
+
   return (
     <GlobalWrapper>
+      <Header
+        user={user}
+      />
       {!recordings.length && <EmptyFeed />}
       <Recordings recordings={recordings} />
       <ActionsPanel
