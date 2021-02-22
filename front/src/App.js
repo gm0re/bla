@@ -16,6 +16,8 @@ const GlobalWrapper = styled.div`
   font-family: sans-serif;
   width: 50%;
   margin: auto;
+  display: flex;
+  flex-direction: column;
 `;
 
 const App = () => {

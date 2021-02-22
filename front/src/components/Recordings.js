@@ -7,6 +7,8 @@ import Recording from './Recording';
 const RecordingsWrapper = styled.div`
   height: 500px;
   overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
 `;
 
 const Recordings = ({ recordings }) => (

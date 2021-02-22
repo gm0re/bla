@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import identicon from 'identicon';
 
+import UserIcon from './UserIcon';
 import RecordingActions from './RecordingActions';
 
 const RecordingWrapper = styled.div`
@@ -19,18 +19,10 @@ const PlayerWrapper = styled.div`
   }
 `;
 
-const ImgWrapper = styled.div`
-  border-radius: 100%;
-  overflow: hidden;
-  width: 54px;
-  height: 54px;
-`;
-
 const Recording = ({ recording }) => {
   // 🛠 move to a useVotes hook to manage votes incoming from recordings.
   const [hasVoted, setHasVoted] = useState(false);
   const [upVotes, setUpVotes] = useState(0);
-  const [avatar, setAvatar] = useState();
 
   console.log(recording);
 
@@ -43,23 +35,12 @@ const Recording = ({ recording }) => {
     setUpVotes(totalVotes);
   };
 
-  useEffect(() => {
-    // 👷 move to backend layer.
-    identicon.generate({
-      id: recording.user.username,
-      size: 54
-    }, (err, buffer) => {
-      if (err) {
-        console.error(err);
-      }
-      setAvatar(buffer);
-    });
-  }, []);
-
   return (
     <RecordingWrapper>
       <PlayerWrapper>
-        <ImgWrapper><img src={avatar} /></ImgWrapper>
+        <UserIcon
+          username={recording.user.username}
+        />
         <div>
           <audio
             src={recording.filename}
