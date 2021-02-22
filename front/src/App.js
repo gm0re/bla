@@ -18,6 +18,8 @@ const GlobalWrapper = styled.div`
   margin: auto;
   display: flex;
   flex-direction: column;
+  border-radius: 16px;
+  background-color: #00000014;
 `;
 
 const App = () => {

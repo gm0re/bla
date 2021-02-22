@@ -9,7 +9,13 @@ const HeaderWrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
+  align-items: center;
   z-index: 999;
+  padding: 4px;
+
+  > div {
+    margin: 4px;
+  }
 `;
 
 const Header = ({ user }) => (
@@ -17,7 +23,7 @@ const Header = ({ user }) => (
     <UserIcon
       username={user.username}
     />
-    <span>{user.username}</span>
+    <div>{user.username}</div>
   </HeaderWrapper>
 );
 
