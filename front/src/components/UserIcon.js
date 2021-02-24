@@ -8,6 +8,7 @@ const ImgWrapper = styled.div`
   overflow: hidden;
   width: 54px;
   height: 54px;
+  min-width: 54px;
 `;
 
 const UserIcon = ({ username }) => {

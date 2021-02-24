@@ -13,7 +13,7 @@ const RecordingsWrapper = styled.div`
 
 const Recordings = ({ recordings }) => (
   <RecordingsWrapper>
-    {recordings.length && recordings.map(recording => (
+    {!!recordings.length && recordings.map(recording => (
       <Recording recording={recording} key={recording.id || recording.filename } />
     ))}
   </RecordingsWrapper>

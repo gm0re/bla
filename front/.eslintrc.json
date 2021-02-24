@@ -28,7 +28,7 @@
         "array-element-newline": "off",
         "arrow-body-style": "error",
         "arrow-parens": [
-            "error",
+            "warn",
             "as-needed"
         ],
         "arrow-spacing": [
@@ -144,6 +144,7 @@
         "no-console": "off",
         "no-constructor-return": "error",
         "no-continue": "error",
+        "no-debugger": "warn",
         "no-div-regex": "error",
         "no-duplicate-imports": "error",
         "no-else-return": "error",

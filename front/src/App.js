@@ -4,13 +4,13 @@ import styled from 'styled-components';
 import './icons';
 
 import {
-  ActionsPanel,
+  Recorder,
   EmptyFeed,
   Header,
   Recordings
 } from './components';
 
-import useRecorder from "./useRecorder";
+import useRecording from "./useRecording";
 
 const GlobalWrapper = styled.div`
   font-family: sans-serif;
@@ -25,12 +25,8 @@ const GlobalWrapper = styled.div`
 const App = () => {
   const [
     recordings,
-    recorderState,
-    startRecording,
-    pauseRecording,
-    resumeRecording,
-    stopRecording
-  ] = useRecorder();
+    setNewRecording
+  ] = useRecording();
 
   const user = {
     id: 0,
@@ -39,18 +35,12 @@ const App = () => {
 
   return (
     <GlobalWrapper>
-      <Header
-        user={user}
-      />
-      {!recordings.length && <EmptyFeed />}
+      <Header user={user} />
+
+      {(!recordings.length) && <EmptyFeed />}
+
       <Recordings recordings={recordings} />
-      <ActionsPanel
-        pauseRecording={pauseRecording}
-        recorderState={recorderState}
-        resumeRecording={resumeRecording}
-        startRecording={startRecording}
-        stopRecording={stopRecording}
-      />
+      <Recorder setNewRecording={setNewRecording} />
     </GlobalWrapper>
   );
 }

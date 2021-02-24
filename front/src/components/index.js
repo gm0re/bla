@@ -1,4 +1,4 @@
-export { default as ActionsPanel } from './ActionsPanel';
+export { default as Recorder } from './Recorder';
 export { default as EmptyFeed } from './EmptyFeed';
 export { default as Header } from './Header';
 export { default as Recording } from './Recording';

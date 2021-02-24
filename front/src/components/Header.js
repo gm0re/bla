@@ -11,7 +11,7 @@ const HeaderWrapper = styled.div`
   justify-content: flex-end;
   align-items: center;
   z-index: 999;
-  padding: 4px;
+  padding: 8px;
 
   > div {
     margin: 4px;

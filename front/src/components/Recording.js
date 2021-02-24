@@ -24,7 +24,7 @@ const Recording = ({ recording }) => {
   const [hasVoted, setHasVoted] = useState(false);
   const [upVotes, setUpVotes] = useState(0);
 
-  console.log(recording);
+  // console.log(recording);
 
   const onVote = () => {
     const totalVotes = hasVoted
@@ -43,6 +43,7 @@ const Recording = ({ recording }) => {
         />
         <div>
           <audio
+            id={recording.id || recording.filename}
             src={recording.filename}
             key={recording.id || recording.filename}
             controls
