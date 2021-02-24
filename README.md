@@ -1,18 +1,41 @@
 # Bla! App
 
-Bla! is an application to chat via audio in third party pages through the installation of a widget.
+Bla! is an application to chat via audio.
 
-The idea is to have fun creating and saving audio filters to chat with your friends and/or meet new ones.
+## Run the app
 
+### Front
+```
+  $ cd front
+  $ npm i
+  $ npm start
+```
+
+### Back
+Before running the project you must have installed `node` and `npm`. Also make sure to install globally latest version of `sails`:
+```
+  $ npm i -g sails
+```
+It's possible to seed the DB using `knex`. Make sure to install it globally too:
+```
+  $ npm i -g knex
+```
+To run the backend project:
+```
+  $ cd back
+  $ npm i
+  $ sails lift --alter
+```
+---
 ## TODO
-
+- Make a trello board to manage issues.
 - Apply design + UX.
 - Create iframe wrapper and widgetize.
 - Create preset filters.
 - Create custom filters bar.
 - Store audios.
 - Store filters.
-- Create conversations' trees.
+- Create conversations' trees (maybe).
 - Create Auth layer.
 - Create transcriptor.
 - Show transcriptions.
