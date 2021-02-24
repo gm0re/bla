@@ -21,36 +21,34 @@ const ActionButton = styled.button`
 const Recorder = ({
   setNewRecording
 }) => {
-
+  // 👷 WIP: save stream to stop all tracks by getTracks()[0].stop()
+  // causing a 🐛 because of tracks removal?
   const [, setStream] = useState();
   const [recorder, setRecorder] = useState(null);
   const [recorderState, setRecorderState] = useState(INACTIVE);
 
-  const onDataAvailable = () => {
-    console.log('onDataAvailable');
-    // setNewRecording();
-    // recorder.removeEventListener('dataavailable', onDataAvailable);
+  const onDataAvailable = (e) => {
+    setNewRecording(e);
   };
 
   const stopRecorder = () => {
-    if (recorderState === RECORDING) {
+    if (recorderState === INACTIVE) {
       recorder.stop();
-      console.log('stop');
-      // setRecorder(null);
     }
   };
 
+  const resumeRecorder = () => {
+    recorder.resume();
+  }
+
   const updateRecorderState = () => {
-    console.log('state', recorderState);
     const recorderActions = {
       inactive: () => stopRecorder(),
       paused: () => recorder.pause(),
       recording: () => recorder.start(),
-      resuming: () => recorder.resume()
+      resuming: () => resumeRecorder()
     };
-    if (recorder) {
-      recorderActions[recorderState]();
-    }
+    recorderActions[recorderState]();
   };
 
   const startRecording = () => {
@@ -70,11 +68,11 @@ const Recorder = ({
   };
 
   useEffect(async() => {
-    console.log('recState', recorderState);
     if (recorder === null) {
       if (recorderState === RECORDING) {
         try {
           const newStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+
           setRecorder(new MediaRecorder(newStream));
           setStream(newStream);
         } catch (error) {
@@ -83,19 +81,16 @@ const Recorder = ({
       }
       return;
     }
-    console.log('add 2');
-    recorder.addEventListener('dataavailable', onDataAvailable);
 
     updateRecorderState();
-    return () => recorder.removeEventListener('dataavailable', onDataAvailable);
   }, [recorderState]);
 
   useEffect(() => {
-    console.log('rec', recorder);
     if (recorder !== null) {
-      // recorder.addEventListener('dataavailable', onDataAvailable);
+      recorder.start();
+      recorder.addEventListener('dataavailable', onDataAvailable);
 
-      // return () => recorder.removeEventListener('dataavailable', onDataAvailable);
+      return () => recorder.removeEventListener('dataavailable', onDataAvailable);
     }
   }, [recorder]);
 
@@ -106,7 +101,10 @@ const Recorder = ({
           ? resumeRecording
           : startRecording
         }
-        disabled={recorderState === RECORDING}
+        disabled={
+          recorderState === RECORDING ||
+          recorderState === RESUMING
+        }
       >
         <FontAwesomeIcon
           icon={'microphone'}
