@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { recordingsSvc } from './services';
+import { recordingsSvc } from '../services';
 
 const useRecordings = () => {
   const [recordings, setRecordings] = useState([]);

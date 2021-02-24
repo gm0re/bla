@@ -10,7 +10,7 @@ import {
   Recordings
 } from './components';
 
-import useRecording from "./useRecording";
+import useRecording from "./hooks/useRecording";
 
 const GlobalWrapper = styled.div`
   font-family: sans-serif;
