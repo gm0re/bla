@@ -11,15 +11,9 @@ const useRecorder = setNewRecording => {
   const [recorder, setRecorder] = useState(null);
   const [recorderState, setRecorderState] = useState(INACTIVE);
 
-  const stopRecorder = () => {
-    if (recorderState === INACTIVE) {
-      recorder.stop();
-    }
-  };
-
   const updateRecorderState = () => {
     const recorderActions = {
-      inactive: () => stopRecorder(),
+      inactive: () => recorder.stop(),
       paused: () => recorder.pause(),
       recording: () => recorder.start(),
       resuming: () => recorder.resume()
