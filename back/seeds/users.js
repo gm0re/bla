@@ -15,7 +15,10 @@ exports.seed = knex => (
         });
       }
 
-      console.log('users seeded:', users);
+      // 👨‍💻 hardcoded username until login is implemented
+      users[0].username = 'gmore';
+
+      // console.log('users seeded:', users);
 
       return knex('users').insert(users);
     })

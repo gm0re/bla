@@ -8,10 +8,10 @@ exports.up = knex => (
           recordings.string('filename', 100);
           recordings.string('filetype', 100);
           recordings.float('filesize');
-          recordings.float('length');
-          recordings.datetime('createdAt', { precision: 6 }).defaultTo(knex.fn.now(6));
-          recordings.datetime('updatedAt', { precision: 6 }).defaultTo(null);
-          recordings.datetime('deletedAt', { precision: 6 }).defaultTo(null);
+          recordings.float('duration');
+          recordings.timestamp('createdAt', { precision: 6 }).defaultTo(knex.fn.now(6));
+          recordings.timestamp('updatedAt', { precision: 6 }).defaultTo(null);
+          recordings.timestamp('deletedAt', { precision: 6 }).defaultTo(null);
         });
       }
     })

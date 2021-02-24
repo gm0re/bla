@@ -8,14 +8,13 @@
 module.exports = {
 
   attributes: {
-    id: { type: 'number', required: true, unique: true, autoIncrement: true },
     filename: { type: 'string', required: true, unique: true },
     filetype: { type: 'string', required: true },
     filesize: { type: 'number', columnType: 'float', required: true },
-    length: { type: 'number', columnType: 'float', required: true },
+    duration: { type: 'number', columnType: 'float', required: true },
 
     user: {
-      model: 'Users',
+      model: 'users',
       columnName: 'userId'
     }
   }

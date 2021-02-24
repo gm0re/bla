@@ -12,14 +12,14 @@ exports.seed = knex => (
           filename: faker.system.fileName(),
           filetype: faker.system.fileType(),
           filesize: faker.random.float(),
-          length: faker.random.float(),
+          duration: faker.random.float(),
           userId: faker.random.number({ min: 1, max: USERS_TO_SEED }),
           createdAt: faker.date.recent(),
           updatedAt: faker.date.future()
         });
       }
 
-      console.log('Recordings seeded:', recordings);
+      // console.log('Recordings seeded:', recordings);
 
       return knex('recordings').insert(recordings);
     })
