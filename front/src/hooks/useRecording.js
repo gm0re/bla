@@ -33,9 +33,7 @@ const useRecordings = () => {
   };
 
   useEffect(async() => {
-    const preloadedRecordings = await recordingsSvc.get() || [];
-
-    setRecordings(preloadedRecordings);
+    setRecordings(await recordingsSvc.get() || []);
   }, []);
 
   return [
