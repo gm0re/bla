@@ -27,26 +27,18 @@ const Recorder = ({
   const [recorder, setRecorder] = useState(null);
   const [recorderState, setRecorderState] = useState(INACTIVE);
 
-  const onDataAvailable = (e) => {
-    setNewRecording(e);
-  };
-
   const stopRecorder = () => {
     if (recorderState === INACTIVE) {
       recorder.stop();
     }
   };
 
-  const resumeRecorder = () => {
-    recorder.resume();
-  }
-
   const updateRecorderState = () => {
     const recorderActions = {
       inactive: () => stopRecorder(),
       paused: () => recorder.pause(),
       recording: () => recorder.start(),
-      resuming: () => resumeRecorder()
+      resuming: () => recorder.resume()
     };
     recorderActions[recorderState]();
   };
@@ -88,9 +80,9 @@ const Recorder = ({
   useEffect(() => {
     if (recorder !== null) {
       recorder.start();
-      recorder.addEventListener('dataavailable', onDataAvailable);
+      recorder.addEventListener('dataavailable', setNewRecording);
 
-      return () => recorder.removeEventListener('dataavailable', onDataAvailable);
+      return () => recorder.removeEventListener('dataavailable', setNewRecording);
     }
   }, [recorder]);
 
