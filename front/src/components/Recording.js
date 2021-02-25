@@ -5,10 +5,6 @@ import styled from 'styled-components';
 import UserIcon from './UserIcon';
 import RecordingActions from './RecordingActions';
 
-const RecordingWrapper = styled.div`
-  padding: 8px;
-`;
-
 const PlayerWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -17,6 +13,22 @@ const PlayerWrapper = styled.div`
   > div {
     margin: 6px;
   }
+`;
+
+const Player = styled.audio`
+  height: 35px;
+`;
+
+const RecordingWrapper = styled.div`
+  padding: 8px;
+`;
+
+const Timestamp = styled.div`
+  margin: 4px;
+`;
+
+const Username = styled.div`
+  margin: 4px;
 `;
 
 const Recording = ({ recording }) => {
@@ -51,14 +63,14 @@ const Recording = ({ recording }) => {
       <PlayerWrapper>
         <UserIcon username={recording.user.username} />
         <div>
-          <div>{recording.user.username}</div>
-          <audio
+          <Username>{recording.user.username}</Username>
+          <Player
             id={recording.id || recording.filename}
             key={recording.id || recording.filename}
             src={recording.filename}
             controls
           />
-          <div>{formatDate(recording.createdAt)}</div>
+          <Timestamp>{formatDate(recording.createdAt)}</Timestamp>
         </div>
       </PlayerWrapper>
       <RecordingActions
