@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
-import { states as recorderStates } from '../constants/recorder';
+import { states as recorderStates } from "../constants/recorder";
 
 const { RECORDING, RESUMING, PAUSED, INACTIVE } = recorderStates;
 
-const useRecorder = setNewRecording => {
+const useRecorder = (setNewRecording) => {
   // 👷 WIP: save stream to stop all tracks by getTracks()[0].stop()
   // causing a 🐛 because of tracks removal?
   const [, setStream] = useState();
@@ -22,14 +22,17 @@ const useRecorder = setNewRecording => {
   };
 
   const startRecording = () => {
+    console.log("startRecording");
     setRecorderState(RECORDING);
   };
 
   const resumeRecording = () => {
+    console.log("resumeRecording");
     setRecorderState(RESUMING);
   };
 
   const pauseRecording = () => {
+    console.log("pauseRecording");
     setRecorderState(PAUSED);
   };
 
@@ -37,11 +40,13 @@ const useRecorder = setNewRecording => {
     setRecorderState(INACTIVE);
   };
 
-  useEffect(async() => {
+  useEffect(async () => {
     if (recorder === null) {
       if (recorderState === RECORDING) {
         try {
-          const newStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+          const newStream = await navigator.mediaDevices.getUserMedia({
+            audio: true
+          });
 
           setRecorder(new MediaRecorder(newStream));
           setStream(newStream);
@@ -58,9 +63,9 @@ const useRecorder = setNewRecording => {
   useEffect(() => {
     if (recorder !== null) {
       recorder.start();
-      recorder.addEventListener('dataavailable', setNewRecording);
+      recorder.addEventListener("dataavailable", setNewRecording);
 
-      return () => recorder.removeEventListener('dataavailable', setNewRecording);
+      return () => recorder.removeEventListener("dataavailable", setNewRecording);
     }
   }, [recorder]);
 
@@ -70,7 +75,7 @@ const useRecorder = setNewRecording => {
     resumeRecording,
     startRecording,
     stopRecording
-  ]
-}
+  ];
+};
 
 export default useRecorder;
