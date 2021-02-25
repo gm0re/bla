@@ -11,6 +11,11 @@ const RecordingActionsWrapper = styled.div`
 
 const RecordingActionButton = styled.button`
   margin: 4px;
+  outline: none;
+  border: 0;
+  background-color: Transparent;
+  background-repeat: no-repeat;
+  cursor: pointer;
 `;
 
 const RecordingActions = ({
