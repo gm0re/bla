@@ -25,7 +25,7 @@ const Recorder = ({
   ] = useRecorder(setNewRecording);
 
   return (
-    <div className="flex justify-center p-2 border">
+    <div className="flex justify-center p-2">
       <ActionButton
         onClick={recorderState === PAUSED
           ? resumeRecording

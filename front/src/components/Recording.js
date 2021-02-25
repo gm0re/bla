@@ -32,7 +32,7 @@ const Recording = ({ recording }) => {
   };
 
   return (
-    <div className="bg-white px-2 pt-2 mb-4 shadow-sm border-l border-r border-gray-100">
+    <div className="bg-white p-2 border-b border-gray-100">
       <div className="flex items-center justify-center">
         <UserIcon username={recording.user.username} />
         <audio className="ml-1 flex-grow"
@@ -42,8 +42,8 @@ const Recording = ({ recording }) => {
           controls
         />
       </div>
-      <div className="flex place-content-between items-center">
-        <div className="text-xs">{formatDate(recording.createdAt)}</div>
+      <div className="flex place-content-between items-center pt-2">
+        <div className="text-xs text-gray-500">{formatDate(recording.createdAt)}</div>
         <RecordingActions
           hasVoted={hasVoted}
           onVote={onVote}

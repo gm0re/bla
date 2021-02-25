@@ -23,7 +23,7 @@ const App = () => {
   };
 
   return (
-    <div className="m-2 flex flex-col rounded-lg bg-gray-100">
+    <div className="m-2 flex flex-col rounded-lg bg-gray-100 overflow-hidden border">
       <Header user={user} />
 
       {(!recordings.length) && <EmptyFeed />}
