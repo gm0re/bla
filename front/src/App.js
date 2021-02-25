@@ -34,14 +34,14 @@ const App = () => {
   };
 
   return (
-    <GlobalWrapper>
+    <div className="m-2 flex flex-col rounded-lg bg-gray-100">
       <Header user={user} />
 
       {(!recordings.length) && <EmptyFeed />}
 
       <Recordings recordings={recordings} />
       <Recorder setNewRecording={setNewRecording} />
-    </GlobalWrapper>
+    </div>
   );
 }
 

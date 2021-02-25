@@ -32,7 +32,7 @@ const Recorder = ({
   ] = useRecorder(setNewRecording);
 
   return (
-    <RecorderWrapper>
+    <div className="flex justify-center p-2 border">
       <ActionButton
         onClick={recorderState === PAUSED
           ? resumeRecording
@@ -60,7 +60,7 @@ const Recorder = ({
       >
         <FontAwesomeIcon icon={'stop'} />
       </ActionButton>
-    </RecorderWrapper>
+    </div>
   )
 };
 

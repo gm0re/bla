@@ -19,12 +19,11 @@ const HeaderWrapper = styled.div`
 `;
 
 const Header = ({ user }) => (
-  <HeaderWrapper>
+  <div className="flex justify-end items-center p-2">
     <UserIcon
       username={user.username}
     />
-    <div>{user.username}</div>
-  </HeaderWrapper>
+  </div>
 );
 
 Header.propTypes = {

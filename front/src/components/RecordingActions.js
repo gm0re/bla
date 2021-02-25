@@ -18,16 +18,16 @@ const RecordingActions = ({
   onVote,
   upVotes
 }) => (
-  <RecordingActionsWrapper>
+  <div className="">
     {/* <RecordingActionButton>Reply</RecordingActionButton> */}
-    <RecordingActionButton onClick={onVote}>
-      {`${upVotes} `}
+    <div onClick={onVote}>
       <FontAwesomeIcon
         icon={['far', 'thumbs-up']}
         color={`${hasVoted ? 'green' : 'red'}`}
-      />
-    </RecordingActionButton>
-  </RecordingActionsWrapper>
+        />{" "}
+        {`${upVotes} `}
+    </div>
+  </div>
 );
 
 RecordingActions.propTypes = {

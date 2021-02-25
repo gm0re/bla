@@ -6,9 +6,9 @@ const EmptyFeedWrapper = styled.div`
 `;
 
 const EmptyFeed = () => (
-  <EmptyFeedWrapper>
+  <div className="text-center border">
     No Recordings
-  </EmptyFeedWrapper>
+  </div>
 );
 
 export default EmptyFeed;

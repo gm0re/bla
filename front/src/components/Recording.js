@@ -59,26 +59,25 @@ const Recording = ({ recording }) => {
   };
 
   return (
-    <RecordingWrapper>
-      <PlayerWrapper>
+    <div className="bg-white px-2 pt-2 mb-4 shadow-sm border-l border-r border-gray-100">
+      <div className="flex items-center justify-center">
         <UserIcon username={recording.user.username} />
-        <div>
-          <Username>{recording.user.username}</Username>
-          <Player
-            id={recording.id || recording.filename}
-            key={recording.id || recording.filename}
-            src={recording.filename}
-            controls
-          />
-          <Timestamp>{formatDate(recording.createdAt)}</Timestamp>
-        </div>
-      </PlayerWrapper>
-      <RecordingActions
-        hasVoted={hasVoted}
-        onVote={onVote}
-        upVotes={upVotes}
-      />
-    </RecordingWrapper>
+        <audio className="ml-1 flex-grow"
+          id={recording.id || recording.filename}
+          key={recording.id || recording.filename}
+          src={recording.filename}
+          controls
+        />
+      </div>
+      <div className="flex place-content-between items-center">
+        <div className="text-xs">{formatDate(recording.createdAt)}</div>
+        <RecordingActions
+          hasVoted={hasVoted}
+          onVote={onVote}
+          upVotes={upVotes}
+        />
+      </div>
+    </div>
   )
 };
 

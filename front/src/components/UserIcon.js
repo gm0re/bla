@@ -30,9 +30,9 @@ const UserIcon = ({ username }) => {
     });
   }, []);
   return (
-    <ImgWrapper>
-      <img src={avatar} />
-    </ImgWrapper>
+    <div className="border rounded-full overflow-hidden">
+      <img className="w-auto h-8" src={avatar} />
+    </div>
   )
 };
 

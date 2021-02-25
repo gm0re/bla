@@ -12,11 +12,11 @@ const RecordingsWrapper = styled.div`
 `;
 
 const Recordings = ({ recordings }) => (
-  <RecordingsWrapper>
+  <div className="flex flex-col">
     {!!recordings.length && recordings.map(recording => (
       <Recording recording={recording} key={recording.id || recording.filename } />
     ))}
-  </RecordingsWrapper>
+  </div>
 );
 
 Recordings.propTypes = {
