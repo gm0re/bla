@@ -21,6 +21,8 @@ const Player = styled.audio`
 
 const RecordingWrapper = styled.div`
   padding: 8px;
+    background-color: white;
+    border: 1px solid #00000008;
 `;
 
 const Timestamp = styled.div`

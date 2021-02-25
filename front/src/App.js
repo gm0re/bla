@@ -19,7 +19,7 @@ const GlobalWrapper = styled.div`
   display: flex;
   flex-direction: column;
   border-radius: 16px;
-  background-color: #00000014;
+  background-color: #fdfafa;
 `;
 
 const App = () => {
