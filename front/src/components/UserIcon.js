@@ -3,12 +3,15 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import identicon from 'identicon';
 
+const iconSize = 48;
+
 const ImgWrapper = styled.div`
   border-radius: 100%;
   overflow: hidden;
-  width: 54px;
-  height: 54px;
-  min-width: 54px;
+  width: ${iconSize}px;
+  height: ${iconSize}px;
+  min-width: ${iconSize}px;
+  align-self: start;
 `;
 
 const UserIcon = ({ username }) => {
@@ -18,10 +21,10 @@ const UserIcon = ({ username }) => {
     // 👷 move to backend layer.
     identicon.generate({
       id: username,
-      size: 54
-    }, (err, buffer) => {
-      if (err) {
-        console.error(err);
+      size: iconSize
+    }, (error, buffer) => {
+      if (error) {
+        console.error(error);
       }
       setAvatar(buffer);
     });
