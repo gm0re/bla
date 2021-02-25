@@ -1,35 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 
 import UserIcon from './UserIcon';
 import RecordingActions from './RecordingActions';
-
-const PlayerWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  > div {
-    margin: 6px;
-  }
-`;
-
-const Player = styled.audio`
-  height: 35px;
-`;
-
-const RecordingWrapper = styled.div`
-  padding: 8px;
-`;
-
-const Timestamp = styled.div`
-  margin: 4px;
-`;
-
-const Username = styled.div`
-  margin: 4px;
-`;
 
 const Recording = ({ recording }) => {
   // 🛠 move to a useVotes hook to manage votes incoming from recordings.

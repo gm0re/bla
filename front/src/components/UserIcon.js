@@ -1,18 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 import identicon from 'identicon';
 
 const iconSize = 48;
-
-const ImgWrapper = styled.div`
-  border-radius: 100%;
-  overflow: hidden;
-  width: ${iconSize}px;
-  height: ${iconSize}px;
-  min-width: ${iconSize}px;
-  align-self: start;
-`;
 
 const UserIcon = ({ username }) => {
   const [avatar, setAvatar] = useState();

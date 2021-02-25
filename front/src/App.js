@@ -1,5 +1,4 @@
 import * as React from "react";
-import styled from 'styled-components';
 
 import './icons';
 
@@ -11,16 +10,6 @@ import {
 } from './components';
 
 import useRecording from "./hooks/useRecording";
-
-const GlobalWrapper = styled.div`
-  font-family: sans-serif;
-  width: 50%;
-  margin: auto;
-  display: flex;
-  flex-direction: column;
-  border-radius: 16px;
-  background-color: #00000014;
-`;
 
 const App = () => {
   const [

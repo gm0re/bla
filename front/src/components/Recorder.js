@@ -9,13 +9,6 @@ import { states as recorderStates } from '../constants/recorder';
 
 const { RECORDING, RESUMING, PAUSED, INACTIVE } = recorderStates;
 
-const RecorderWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  padding: 8px;
-`;
-
 const ActionButton = styled.button`
   margin: 4px;
 `;

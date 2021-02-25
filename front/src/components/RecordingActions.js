@@ -1,17 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-
-const RecordingActionsWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-`;
-
-const RecordingActionButton = styled.button`
-  margin: 4px;
-`;
 
 const RecordingActions = ({
   hasVoted,
