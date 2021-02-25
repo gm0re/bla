@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import UserIcon from './UserIcon';
+import Username from './Username';
 import RecordingActions from './RecordingActions';
 
 const PlayerWrapper = styled.div`
@@ -27,10 +28,8 @@ const RecordingWrapper = styled.div`
 
 const Timestamp = styled.div`
   margin: 4px;
-`;
-
-const Username = styled.div`
-  margin: 4px;
+  font-weight: lighter;
+  font-size: small;
 `;
 
 const Recording = ({ recording }) => {

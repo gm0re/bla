@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+import Username from './Username';
 import UserIcon from './UserIcon';
 
 const HeaderWrapper = styled.div`
@@ -21,7 +22,7 @@ const HeaderWrapper = styled.div`
 const Header = ({ user }) => (
   <HeaderWrapper>
     <UserIcon profilePic={user.profilePic} />
-    <div>{user.username}</div>
+    <Username>{user.username}</Username>
   </HeaderWrapper>
 );
 
