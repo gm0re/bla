@@ -9,7 +9,7 @@ module.exports = {
 
   attributes: {
     username: { type: 'string', required: true, unique: true },
-
+    profilePic: { type: 'string' },
     recordings: {
       collection: 'recordings',
       via: 'user'

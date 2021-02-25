@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import Recording from './Recording';
 
 const RecordingsWrapper = styled.div`
-  height: 500px;
+  height: 600px;
   overflow-y: scroll;
   display: flex;
   flex-direction: column;

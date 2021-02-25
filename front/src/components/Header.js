@@ -20,15 +20,14 @@ const HeaderWrapper = styled.div`
 
 const Header = ({ user }) => (
   <HeaderWrapper>
-    <UserIcon
-      username={user.username}
-    />
+    <UserIcon profilePic={user.profilePic} />
     <div>{user.username}</div>
   </HeaderWrapper>
 );
 
 Header.propTypes = {
   user: PropTypes.shape({
+    profilePic: PropTypes.string,
     username: PropTypes.string
   })
 };

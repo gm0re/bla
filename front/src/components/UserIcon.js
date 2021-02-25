@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import identicon from 'identicon';
 
+// 👷 hardcoded icon size > possible issue with randomly generated icons on BE
 const iconSize = 48;
 
 const ImgWrapper = styled.div`
@@ -14,30 +14,14 @@ const ImgWrapper = styled.div`
   align-self: start;
 `;
 
-const UserIcon = ({ username }) => {
-  const [avatar, setAvatar] = useState();
-
-  useEffect(() => {
-    // 👷 move to backend layer.
-    identicon.generate({
-      id: username,
-      size: iconSize
-    }, (error, buffer) => {
-      if (error) {
-        console.error(error);
-      }
-      setAvatar(buffer);
-    });
-  }, []);
-  return (
-    <ImgWrapper>
-      <img src={avatar} />
-    </ImgWrapper>
-  )
-};
+const UserIcon = ({ profilePic }) => (
+  <ImgWrapper>
+    <img src={`data:image/png;base64, ${profilePic}`} />
+  </ImgWrapper>
+);
 
 UserIcon.propTypes = {
-  username: PropTypes.string
+  profilePic: PropTypes.string
 };
 
 export default UserIcon;

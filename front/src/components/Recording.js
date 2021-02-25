@@ -63,7 +63,7 @@ const Recording = ({ recording }) => {
   return (
     <RecordingWrapper>
       <PlayerWrapper>
-        <UserIcon username={recording.user.username} />
+        <UserIcon profilePic={recording.user.profilePic} />
         <div>
           <Username>{recording.user.username}</Username>
           <Player
@@ -90,6 +90,7 @@ Recording.propTypes = {
     filename: PropTypes.string,
     id: PropTypes.number,
     user: PropTypes.shape({
+      profilePic: PropTypes.string,
       username: PropTypes.string
     })
   })
