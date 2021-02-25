@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -24,8 +24,6 @@ const Recording = ({ recording }) => {
   const [hasVoted, setHasVoted] = useState(false);
   const [upVotes, setUpVotes] = useState(0);
 
-  // console.log(recording);
-
   const onVote = () => {
     const totalVotes = hasVoted
       ? upVotes - 1
@@ -35,19 +33,32 @@ const Recording = ({ recording }) => {
     setUpVotes(totalVotes);
   };
 
+  const formatDate = dateString => {
+    const options = {
+      day: 'numeric',
+      hour: "2-digit",
+      hour12: true,
+      minute: "2-digit",
+      month: 'short',
+      timezone: new Date().getTimezoneOffset(),
+      year: 'numeric'
+    };
+    return new Date(dateString).toLocaleString(undefined, options);
+  };
+
   return (
     <RecordingWrapper>
       <PlayerWrapper>
-        <UserIcon
-          username={recording.user.username}
-        />
+        <UserIcon username={recording.user.username} />
         <div>
+          <div>{recording.user.username}</div>
           <audio
             id={recording.id || recording.filename}
-            src={recording.filename}
             key={recording.id || recording.filename}
+            src={recording.filename}
             controls
           />
+          <div>{formatDate(recording.createdAt)}</div>
         </div>
       </PlayerWrapper>
       <RecordingActions
@@ -61,6 +72,7 @@ const Recording = ({ recording }) => {
 
 Recording.propTypes = {
   recording: PropTypes.shape({
+    createdAt: PropTypes.string,
     filename: PropTypes.string,
     id: PropTypes.number,
     user: PropTypes.shape({
