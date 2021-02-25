@@ -15,6 +15,8 @@ import useRecording from "./hooks/useRecording";
 const GlobalWrapper = styled.div`
   font-family: sans-serif;
   width: 50%;
+  max-width: 420px;
+  min-width: 375px;
   margin: auto;
   display: flex;
   flex-direction: column;
