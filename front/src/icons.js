@@ -1,22 +1,18 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
-  faHeart,
-  faThumbsUp
+  faHeart
 } from '@fortawesome/free-regular-svg-icons';
 import {
   faHeart as fasHeart,
   faMicrophone,
   faPause,
-  faStop,
-  faThumbsUp as fasThumbsUp
+  faStop
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
   faHeart,
-  faThumbsUp,
   faMicrophone,
   faPause,
   faStop,
-  fasHeart,
-  fasThumbsUp
+  fasHeart
 );

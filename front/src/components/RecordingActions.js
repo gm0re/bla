@@ -3,6 +3,11 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
+const colors = {
+  fav: 'red',
+  inactive: 'grey'
+};
+
 const ActionIcon = styled(FontAwesomeIcon)`
   position: absolute;
   width: 16px !important;
@@ -15,7 +20,7 @@ const ActionIcon = styled(FontAwesomeIcon)`
 const ActionButtonShadow = styled.div`
   display: none;
   position: absolute;
-  background-color: red;
+  background-color: ${colors.fav};
   border-radius: 100%;
   width: 24px;
   height: 24px;
@@ -41,10 +46,10 @@ const RecordingActionButton = styled.button`
     display: block;
   }
   &:hover ${ActionIcon} {
-    color: red;
+    color: ${colors.fav};
   }
   &:hover ${UpVotes} {
-    color: red;
+    color: ${colors.fav};
   }
 
   margin: 4px;
@@ -75,13 +80,13 @@ const RecordingActions = ({
         {hasVoted ? (
           <ActionIcon
             icon={['fas', 'heart']}
-            color="red"
+            color={colors.fav}
           />
         ) : (
           <ActionIcon
-          icon={['far', 'heart']}
-          color={`${hasVoted ? 'red' : 'grey'}`}
-        />
+            icon={['far', 'heart']}
+            color={`${hasVoted ? colors.fav : colors.inactive}`}
+          />
         )}
         <ActionButtonShadow />
       </ActionButtonElemsContainer>
