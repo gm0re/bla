@@ -12,7 +12,7 @@ const RecordingsWrapper = styled.div`
 `;
 
 const Recordings = ({ recordings }) => (
-  <div className="flex flex-col">
+  <div className="flex flex-col h-96 overflow-auto">
     {!!recordings.length && recordings.map(recording => (
       <Recording recording={recording} key={recording.id || recording.filename } />
     ))}
