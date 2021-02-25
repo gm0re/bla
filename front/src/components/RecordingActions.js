@@ -1,37 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-const colors = {
-  fav: 'red',
-  inactive: 'grey'
-};
-
-const ActionIcon = styled(FontAwesomeIcon)`
-  position: absolute;
-  width: 16px !important;
-  height: 19px;
-  display: block;
-  top: 3px;
-  left: 4px;
-`;
-
-const ActionButtonShadow = styled.div`
-  display: none;
-  position: absolute;
-  background-color: ${colors.fav};
-  border-radius: 100%;
-  width: 24px;
-  height: 24px;
-  opacity: 20%;
-`;
-
-const ActionButtonElemsContainer = styled.div`
-  width: 24px;
-  height: 24px;
-  position: relative;
-`;
+import RecordingAction from './RecordingAction';
 
 const RecordingActionsWrapper = styled.div`
   display: flex;
@@ -39,65 +10,67 @@ const RecordingActionsWrapper = styled.div`
   justify-content: flex-end;
 `;
 
-const UpVotes = styled.span``;
-
-const RecordingActionButton = styled.button`
-  &:hover ${ActionButtonShadow} {
-    display: block;
-  }
-  &:hover ${ActionIcon} {
-    color: ${colors.fav};
-  }
-  &:hover ${UpVotes} {
-    color: ${colors.fav};
-  }
-
-  margin: 4px;
-  display: flex;
-  outline: none;
-  border: 0;
-  background-color: transparent;
-  background-repeat: no-repeat;
-  cursor: pointer;
-  flex-direction: row;
-  align-items: center;
-
-  > div {
-    margin: 4px;
-  }
-`;
-
 const RecordingActions = ({
-  hasVoted,
-  onVote,
-  upVotes
-}) => (
-  <RecordingActionsWrapper>
-    {/* <RecordingActionButton>Reply</RecordingActionButton> */}
-    <RecordingActionButton onClick={onVote}>
-      <UpVotes>{`${upVotes}`}</UpVotes>
-      <ActionButtonElemsContainer>
-        {hasVoted ? (
-          <ActionIcon
-            icon={['fas', 'heart']}
-            color={colors.fav}
-          />
-        ) : (
-          <ActionIcon
-            icon={['far', 'heart']}
-            color={`${hasVoted ? colors.fav : colors.inactive}`}
-          />
-        )}
-        <ActionButtonShadow />
-      </ActionButtonElemsContainer>
-    </RecordingActionButton>
-  </RecordingActionsWrapper>
-);
+  recording
+}) => {
+  // 🛠 move to a useVotes hook to manage votes incoming from recordings.
+  const [hasFaved, setHasFaved] = useState(false);
+  const [favs, setFavs] = useState(0);
+
+  const onFav = () => {
+    console.log('fav');
+    const totalFavs = hasFaved
+      ? favs - 1
+      : favs + 1;
+
+    setHasFaved(!hasFaved);
+    setFavs(totalFavs);
+  };
+
+  const onReply = () => {
+    console.log('reply');
+  };
+
+  const onShare = () => {
+    console.log('share');
+  };
+
+  const onStar = () => {
+    console.log('star');
+  };
+
+  return (
+    <RecordingActionsWrapper>
+      <RecordingAction
+        color="red"
+        count={recording.favs || favs}
+        hasClickedOn={recording.user.hasFaved || hasFaved}
+        icon={{
+          active: ['fas', 'heart'],
+          inactive: ['far', 'heart']
+        }}
+        onClick={onFav}
+      />
+      {/* <RecordingAction
+        onClick={onReply}
+      />
+      <RecordingAction
+        onClick={onStar}
+      />
+      <RecordingAction
+        onClick={onShare}
+      /> */}
+    </RecordingActionsWrapper>
+  );
+};
 
 RecordingActions.propTypes = {
-  hasVoted: PropTypes.bool,
-  onVote: PropTypes.func,
-  upVotes: PropTypes.number
+  recording: PropTypes.shape({
+    favs: PropTypes.number,
+    user: PropTypes.shape({
+      hasFaved: PropTypes.bool
+    })
+  })
 };
 
 export default RecordingActions;

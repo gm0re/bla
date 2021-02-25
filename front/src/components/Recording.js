@@ -33,19 +33,6 @@ const Timestamp = styled.div`
 `;
 
 const Recording = ({ recording }) => {
-  // 🛠 move to a useVotes hook to manage votes incoming from recordings.
-  const [hasVoted, setHasVoted] = useState(false);
-  const [upVotes, setUpVotes] = useState(0);
-
-  const onVote = () => {
-    const totalVotes = hasVoted
-      ? upVotes - 1
-      : upVotes + 1;
-
-    setHasVoted(!hasVoted);
-    setUpVotes(totalVotes);
-  };
-
   const formatDate = dateString => {
     const options = {
       day: 'numeric',
@@ -74,11 +61,7 @@ const Recording = ({ recording }) => {
           <Timestamp>{formatDate(recording.createdAt)}</Timestamp>
         </div>
       </PlayerWrapper>
-      <RecordingActions
-        hasVoted={hasVoted}
-        onVote={onVote}
-        upVotes={upVotes}
-      />
+      <RecordingActions recording={recording} />
     </RecordingWrapper>
   )
 };
