@@ -1,10 +1,10 @@
 module.exports = {
 
 
-  friendlyName: 'Delete fav by user id and recording id',
+  friendlyName: 'Delete star by user id and recording id',
 
 
-  description: 'Remove faved recording of a user.',
+  description: 'Remove starred recording of a user.',
 
 
   inputs: {
@@ -23,8 +23,10 @@ module.exports = {
 
   },
 
+
   fn: async inputs => (
-    Favs.destroy(inputs)
+    Stars.destroy(inputs)
   )
+
 
 };

@@ -35,7 +35,7 @@ module.exports = {
 
   },
 
-  fn: async (inputs) => (
+  fn: async inputs => (
     Recordings.create(inputs).fetch()
   )
 

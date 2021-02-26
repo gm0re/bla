@@ -12,6 +12,22 @@ const recordingsSvc = {
         console.error(error);
       })
   ),
+  deleteShare: ({ recordingId, userId }) => (
+    axios
+      .delete(`${DOMAIN}/shares/recording/${recordingId}/user/${userId}`)
+      .then(({ data: share }) => share)
+      .catch(error => {
+        console.error(error);
+      })
+  ),
+  deleteStar: ({ recordingId, userId }) => (
+    axios
+      .delete(`${DOMAIN}/stars/recording/${recordingId}/user/${userId}`)
+      .then(({ data: stars }) => stars)
+      .catch(error => {
+        console.error(error);
+      })
+  ),
   get: () => (
     axios
       .get(`${DOMAIN}/recordings`)
@@ -32,6 +48,22 @@ const recordingsSvc = {
     axios
       .post(`${DOMAIN}/favs`, newFav)
       .then(({ data: fav }) => fav)
+      .catch(error => {
+        console.error(error);
+      })
+  ),
+  saveShare: newShare => (
+    axios
+      .post(`${DOMAIN}/shares`, newShare)
+      .then(({ data: share }) => share)
+      .catch(error => {
+        console.error(error);
+      })
+  ),
+  saveStar: newStar => (
+    axios
+      .post(`${DOMAIN}/stars`, newStar)
+      .then(({ data: star }) => star)
       .catch(error => {
         console.error(error);
       })

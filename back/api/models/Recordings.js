@@ -22,6 +22,18 @@ module.exports = {
       collection: 'users',
       via: 'recordingId',
       through: 'favs'
+    },
+
+    sharedBy: {
+      collection: 'users',
+      via: 'recordingId',
+      through: 'shares'
+    },
+
+    starredBy: {
+      collection: 'users',
+      via: 'recordingId',
+      through: 'stars'
     }
   }
 

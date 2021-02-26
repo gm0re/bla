@@ -20,6 +20,18 @@ module.exports = {
       collection: 'recordings',
       via: 'userId',
       through: 'favs'
+    },
+
+    shares: {
+      collection: 'recordings',
+      via: 'userId',
+      through: 'shares'
+    },
+
+    stars: {
+      collection: 'recordings',
+      via: 'userId',
+      through: 'stars'
     }
   }
 
