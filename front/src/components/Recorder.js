@@ -28,6 +28,11 @@ const RecorderButton = styled.button`
 `;
 
 const RecordButton = styled(RecorderButton)`
+  &:hover {
+    transform: scale(1.2);
+    transition: transform .1s;
+  }
+
   background-color: red;
   border-radius: 100%;
   width: 40px;
