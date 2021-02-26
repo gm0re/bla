@@ -70,7 +70,7 @@ const useRecorder = setNewRecording => {
     resumeRecording,
     startRecording,
     stopRecording
-  ]
-}
+  ];
+};
 
 export default useRecorder;

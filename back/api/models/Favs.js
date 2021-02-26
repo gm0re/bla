@@ -9,11 +9,13 @@ module.exports = {
 
   attributes: {
     userId:{
-      model:'users'
+      model:'users',
+      required: true
     },
 
     recordingId: {
-      model: 'recordings'
+      model: 'recordings',
+      required: true
     }
   }
 

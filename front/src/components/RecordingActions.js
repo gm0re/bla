@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+import useFav from '../hooks/useFav';
 import RecordingAction from './RecordingAction';
 
 const RecordingActionsWrapper = styled.div`
@@ -13,23 +14,13 @@ const RecordingActionsWrapper = styled.div`
 const RecordingActions = ({
   recording
 }) => {
-  // 🛠 move to a useVotes hook to manage votes incoming from recordings.
-  const [hasFaved, setHasFaved] = useState(false);
+  // 🛠 move to hooks to manage diff states
   const [hasReplied, setHasReplied] = useState(false);
   const [hasStarred, setHasStarred] = useState(false);
   const [hasShared, setHasShared] = useState(false);
-  const [favs, setFavs] = useState(0);
   const [replies, setReplies] = useState(0);
 
-  const onFav = () => {
-    console.log('fav');
-    const totalFavs = hasFaved
-      ? favs - 1
-      : favs + 1;
-
-    setHasFaved(!hasFaved);
-    setFavs(totalFavs);
-  };
+  const [favs, hasFaved, onFav] = useFav();
 
   const onReply = () => {
     console.log('reply');
@@ -61,7 +52,7 @@ const RecordingActions = ({
           active: ['fas', 'heart'],
           inactive: ['far', 'heart']
         }}
-        onClick={onFav}
+        onClick={() => onFav(recording)}
       />
       <RecordingAction
         color="blue"

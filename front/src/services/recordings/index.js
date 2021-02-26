@@ -4,6 +4,14 @@ import axios from 'axios';
 const DOMAIN = 'http://localhost:1337';
 
 const recordingsSvc = {
+  fav: newFav => (
+    axios
+      .post(`${DOMAIN}/favs`, newFav)
+      .then(({ data: fav }) => fav)
+      .catch(error => {
+        console.error(error);
+      })
+  ),
   get: () => (
     axios
       .get(`${DOMAIN}/recordings`)
