@@ -16,6 +16,12 @@ module.exports = {
     user: {
       model: 'users',
       columnName: 'userId'
+    },
+
+    favedBy: {
+      collection: 'users',
+      via: 'recordingId',
+      through: 'favs'
     }
   }
 
