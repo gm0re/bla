@@ -20,7 +20,7 @@ const RecordingActions = ({
   const [hasShared, setHasShared] = useState(false);
   const [replies, setReplies] = useState(0);
 
-  const [favs, hasFaved, onFav] = useFav();
+  const [favs, hasFaved, onFav] = useFav(recording);
 
   const onReply = () => {
     console.log('reply');
@@ -52,7 +52,7 @@ const RecordingActions = ({
           active: ['fas', 'heart'],
           inactive: ['far', 'heart']
         }}
-        onClick={() => onFav(recording)}
+        onClick={onFav}
       />
       <RecordingAction
         color="blue"

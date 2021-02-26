@@ -4,7 +4,7 @@ module.exports = {
   friendlyName: 'Create recordings',
 
 
-  description: 'Endpoint to create a new recording of a user.',
+  description: 'Create a new user recording.',
 
 
   inputs: {

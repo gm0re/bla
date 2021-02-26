@@ -20,7 +20,8 @@ module.exports.routes = {
   ***************************************************************************/
 
   '/': { view: 'pages/homepage' },
-  'POST /recordings': { action: 'create-recordings' }
+  'POST /recordings': { action: 'create-recordings' },
+  'DELETE /favs/recording/:recordingId/user/:userId': { action: 'delete-fav-by-user-recording' }
 
   /***************************************************************************
   *                                                                          *

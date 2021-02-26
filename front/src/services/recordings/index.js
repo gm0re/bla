@@ -4,9 +4,9 @@ import axios from 'axios';
 const DOMAIN = 'http://localhost:1337';
 
 const recordingsSvc = {
-  fav: newFav => (
+  deleteFav: ({ recordingId, userId }) => (
     axios
-      .post(`${DOMAIN}/favs`, newFav)
+      .delete(`${DOMAIN}/favs/recording/${recordingId}/user/${userId}`)
       .then(({ data: fav }) => fav)
       .catch(error => {
         console.error(error);
@@ -24,6 +24,14 @@ const recordingsSvc = {
     axios
       .post(`${DOMAIN}/recordings`, newRecording)
       .then(({ data: recording }) => recording)
+      .catch(error => {
+        console.error(error);
+      })
+  ),
+  saveFav: newFav => (
+    axios
+      .post(`${DOMAIN}/favs`, newFav)
+      .then(({ data: fav }) => fav)
       .catch(error => {
         console.error(error);
       })

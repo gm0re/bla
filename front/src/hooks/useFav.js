@@ -1,29 +1,42 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { recordingsSvc } from '../services';
 
-const useFav = () => {
+const useFav = recording => {
   const [hasFaved, setHasFaved] = useState(false);
   const [favs, setFavs] = useState(0);
 
-  const saveFav = fav => {
-    recordingsSvc.fav(fav);
-  };
+  // 👨‍🏭 hardcoded userId to be migrated with login
+  const hasUserFaved = () => (
+    recording.favedBy.some(({ id }) => id === 1)
+  );
 
-  const onFav = recording => {
+  const onFav = () => {
     console.log('fav');
     const totalFavs = hasFaved
       ? favs - 1
       : favs + 1;
 
+    if (hasFaved) {
+      recordingsSvc.deleteFav({
+        recordingId: recording.id,
+        userId: 1
+      });
+    } else {
+      recordingsSvc.saveFav({
+        recordingId: recording.id,
+        userId: 1
+      });
+    }
+
     setHasFaved(!hasFaved);
     setFavs(totalFavs);
-
-    saveFav({
-      recordingId: recording.id,
-      userId: 1
-    });
   };
+
+  useEffect(() => {
+    setFavs(recording.favedBy.length);
+    setHasFaved(hasUserFaved());
+  }, []);
 
   return [
     favs,
