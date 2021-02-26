@@ -19,6 +19,7 @@ const RecordingActions = ({
   const [hasStarred, setHasStarred] = useState(false);
   const [hasShared, setHasShared] = useState(false);
   const [favs, setFavs] = useState(0);
+  const [replies, setReplies] = useState(0);
 
   const onFav = () => {
     console.log('fav');
@@ -32,7 +33,12 @@ const RecordingActions = ({
 
   const onReply = () => {
     console.log('reply');
+    const totalReplies = hasReplied
+      ? replies - 1
+      : replies + 1;
+
     setHasReplied(!hasReplied);
+    setReplies(totalReplies);
   };
 
   const onShare = () => {
@@ -59,6 +65,7 @@ const RecordingActions = ({
       />
       <RecordingAction
         color="blue"
+        count={recording.replies || replies}
         hasClickedOn={recording.user.hasReplied || hasReplied}
         icon={{
           active: ['fas', 'comment'],
@@ -91,6 +98,7 @@ const RecordingActions = ({
 RecordingActions.propTypes = {
   recording: PropTypes.shape({
     favs: PropTypes.number,
+    replies: PropTypes.number,
     user: PropTypes.shape({
       hasFaved: PropTypes.bool,
       hasReplied: PropTypes.bool,
