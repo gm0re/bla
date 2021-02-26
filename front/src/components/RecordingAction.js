@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const inactiveColor = 'grey';
 
-const ActionButtonShadow = styled.div`
+const ActionButtonGlow = styled.div`
   display: none;
   position: absolute;
   background-color: ${({ color }) => color};
@@ -15,7 +15,7 @@ const ActionButtonShadow = styled.div`
   opacity: 20%;
 `;
 
-const ActionButtonElemsContainer = styled.div`
+const ActionButtonElems = styled.div`
   width: 24px;
   height: 24px;
   position: relative;
@@ -33,7 +33,7 @@ const ActionIcon = styled(FontAwesomeIcon)`
 const Counter = styled.span``;
 
 const RecordingActionButton = styled.button`
-  &:hover ${ActionButtonShadow} {
+  &:hover ${ActionButtonGlow} {
     display: block;
   }
   &:hover ${ActionIcon} {
@@ -69,7 +69,7 @@ const RecordingAction = ({
     {typeof count === 'number' && (
       <Counter color={color}>{`${count}`}</Counter>
     )}
-    <ActionButtonElemsContainer>
+    <ActionButtonElems>
       {hasClickedOn ? (
         <ActionIcon
           icon={icon.active}
@@ -81,8 +81,8 @@ const RecordingAction = ({
           color={`${hasClickedOn ? color : inactiveColor}`}
         />
       )}
-      <ActionButtonShadow color={color} />
-    </ActionButtonElemsContainer>
+      <ActionButtonGlow color={color} />
+    </ActionButtonElems>
   </RecordingActionButton>
 );
 

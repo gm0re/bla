@@ -16,13 +16,23 @@ const RecorderWrapper = styled.div`
   padding: 8px;
 `;
 
-const ActionButton = styled.button`
+const RecorderButton = styled.button`
   margin: 4px;
   outline: none;
   border: 0;
-  background-color: Transparent;
+  background-color: transparent;
   background-repeat: no-repeat;
   cursor: pointer;
+  font-size: larger;
+  display: ${({ hidden }) => (hidden ? 'none' : 'block')};
+`;
+
+const RecordButton = styled(RecorderButton)`
+  background-color: red;
+  border-radius: 100%;
+  width: 40px;
+  height: 40px;
+  color: white;
 `;
 
 const Recorder = ({
@@ -38,33 +48,33 @@ const Recorder = ({
 
   return (
     <RecorderWrapper>
-      <ActionButton
+      <RecordButton
         onClick={recorderState === PAUSED
           ? resumeRecording
           : startRecording
         }
-        disabled={
+        hidden={
           recorderState === RECORDING ||
           recorderState === RESUMING
         }
       >
         <FontAwesomeIcon icon={'microphone'} />
-      </ActionButton>
-      <ActionButton
+      </RecordButton>
+      <RecorderButton
         onClick={pauseRecording}
-        disabled={
+        hidden={
           recorderState === PAUSED ||
           recorderState === INACTIVE
         }
       >
         <FontAwesomeIcon icon={'pause'} />
-      </ActionButton>
-      <ActionButton
+      </RecorderButton>
+      <RecorderButton
         onClick={stopRecording}
-        disabled={recorderState === INACTIVE}
+        hidden={recorderState === INACTIVE}
       >
         <FontAwesomeIcon icon={'stop'} />
-      </ActionButton>
+      </RecorderButton>
     </RecorderWrapper>
   )
 };
