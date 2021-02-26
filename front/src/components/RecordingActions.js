@@ -46,8 +46,8 @@ const RecordingActions = ({
     <RecordingActionsWrapper>
       <RecordingAction
         color="red"
-        count={recording.favs || favs}
-        hasClickedOn={recording.user.hasFaved || hasFaved}
+        count={favs}
+        hasClickedOn={hasFaved}
         icon={{
           active: ['fas', 'heart'],
           inactive: ['far', 'heart']
@@ -56,8 +56,8 @@ const RecordingActions = ({
       />
       <RecordingAction
         color="blue"
-        count={recording.replies || replies}
-        hasClickedOn={recording.user.hasReplied || hasReplied}
+        count={replies}
+        hasClickedOn={hasReplied}
         icon={{
           active: ['fas', 'comment'],
           inactive: ['far', 'comment']
@@ -66,7 +66,7 @@ const RecordingActions = ({
       />
       <RecordingAction
         color="yellow"
-        hasClickedOn={recording.user.hasStarred || hasStarred}
+        hasClickedOn={hasStarred}
         icon={{
           active: ['fas', 'star'],
           inactive: ['far', 'star']
@@ -75,7 +75,7 @@ const RecordingActions = ({
       />
       <RecordingAction
         color="green"
-        hasClickedOn={recording.user.hasShared || hasShared}
+        hasClickedOn={hasShared}
         icon={{
           active: ['fas', 'share-square'],
           inactive: ['far', 'share-square']
