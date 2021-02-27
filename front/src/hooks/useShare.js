@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { recordingsSvc } from '../services';
+import recordingsSvc from '../services/recordings';
 
 const useShare = recording => {
   const [hasShared, setHasShared] = useState(false);

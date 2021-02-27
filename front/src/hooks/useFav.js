@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { recordingsSvc } from '../services';
+import recordingsSvc from '../services/recordings';
 
 const useFav = recording => {
   const [hasFaved, setHasFaved] = useState(false);
