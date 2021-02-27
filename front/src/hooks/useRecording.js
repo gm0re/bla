@@ -50,7 +50,7 @@ const useRecordings = () => {
     const recording = attachUserToRecording(await recordingsSvc.save(newRecording));
 
     setRecordingsCreatedCount(oldRecordingsCount => oldRecordingsCount + 1);
-    setRecordings(oldRecordings => [...oldRecordings, recording]);
+    setRecordings(oldRecordings => [recording, ...oldRecordings]);
   };
 
   useEffect(() => {

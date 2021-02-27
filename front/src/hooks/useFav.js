@@ -33,7 +33,7 @@ const useFav = recording => {
   };
 
   useEffect(() => {
-    setFavs(recording.favedBy?.length);
+    setFavs(recording.favedBy?.length || 0);
     setHasFaved(hasUserFaved());
   }, []);
 
