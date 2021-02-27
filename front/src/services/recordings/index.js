@@ -28,9 +28,9 @@ const recordingsSvc = {
         console.error(error);
       })
   ),
-  get: () => (
+  get: (limit, skip) => (
     axios
-      .get(`${DOMAIN}/recordings`)
+      .get(`${DOMAIN}/recordings?limit=${limit}&skip=${skip}`)
       .then(({ data: recordings }) => recordings)
       .catch(error => {
         console.error(error);

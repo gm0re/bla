@@ -2,8 +2,17 @@ import { useEffect, useState } from 'react';
 
 import { recordingsSvc } from '../services';
 
+const RECORDINGS_PER_PAGE = 10;
+
 const useRecordings = () => {
+  const [page, setPage] = useState(1);
+  const [skip, setSkip] = useState(RECORDINGS_PER_PAGE);
   const [recordings, setRecordings] = useState([]);
+
+  const fetchRecordings = async () => {
+    const newRecordings = await recordingsSvc.get(5, 5);
+    setRecordings(oldRecordings => [...oldRecordings, ...newRecordings]);
+  };
 
   // 👷 replace harcoded user with loged user data
   const getUser = () => ({
@@ -35,10 +44,11 @@ const useRecordings = () => {
   };
 
   useEffect(async() => {
-    setRecordings(await recordingsSvc.get() || []);
+    setRecordings(await recordingsSvc.get(5, 0) || []);
   }, []);
 
   return [
+    fetchRecordings,
     recordings,
     setNewRecording
   ];

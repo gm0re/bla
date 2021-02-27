@@ -11,15 +11,28 @@ const RecordingsWrapper = styled.div`
   flex-direction: column;
 `;
 
-const Recordings = ({ recordings }) => (
-  <RecordingsWrapper>
-    {!!recordings.length && recordings.map(recording => (
-      <Recording recording={recording} key={recording.id || recording.filename } />
-    ))}
-  </RecordingsWrapper>
-);
+const Recordings = ({ recordings, fetchRecordings }) => {
+  const onScroll = ({ target }) => {
+    const { scrollHeight, scrollTop, clientHeight } = target
+    const isAtBottom = () => scrollHeight - scrollTop === clientHeight;
+
+    if (isAtBottom()) {
+      console.log('bottom');
+      fetchRecordings();
+    }
+  }
+
+  return (
+    <RecordingsWrapper onScroll={onScroll}>
+      {!!recordings.length && recordings.map(recording => (
+        <Recording recording={recording} key={recording.id || recording.filename } />
+      ))}
+    </RecordingsWrapper>
+  );
+};
 
 Recordings.propTypes = {
+  fetchRecordings: PropTypes.func,
   recordings: PropTypes.arrayOf(PropTypes.object)
 };
 

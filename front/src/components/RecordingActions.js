@@ -45,7 +45,7 @@ const RecordingActions = ({
         onClick={onFav}
       />
       <RecordingAction
-        color="blue"
+        color="#0070ff"
         count={replies}
         hasClickedOn={hasReplied}
         icon={{
@@ -55,7 +55,7 @@ const RecordingActions = ({
         onClick={onReply}
       />
       <RecordingAction
-        color="yellow"
+        color="#ffca00"
         hasClickedOn={hasStarred}
         icon={{
           active: ['fas', 'star'],
@@ -64,7 +64,7 @@ const RecordingActions = ({
         onClick={onStar}
       />
       <RecordingAction
-        color="green"
+        color="#0dbb0d"
         hasClickedOn={hasShared}
         icon={{
           active: ['fas', 'share-square'],

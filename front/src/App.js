@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { lazy, Suspense } from "react";
 import styled from 'styled-components';
 
 import './icons';
@@ -6,9 +6,10 @@ import './icons';
 import {
   Recorder,
   EmptyFeed,
-  Header,
-  Recordings
+  Header
 } from './components';
+
+const Recordings = lazy(() => import('./components/Recordings'));
 
 import useRecording from "./hooks/useRecording";
 
@@ -26,6 +27,7 @@ const GlobalWrapper = styled.div`
 
 const App = () => {
   const [
+    fetchRecordings,
     recordings,
     setNewRecording
   ] = useRecording();
@@ -40,10 +42,9 @@ const App = () => {
   return (
     <GlobalWrapper>
       <Header user={user} />
-
-      {(!recordings.length) && <EmptyFeed />}
-
-      <Recordings recordings={recordings} />
+      <Suspense fallback={<EmptyFeed />}>
+        <Recordings fetchRecordings={fetchRecordings} recordings={recordings} />
+      </Suspense>
       <Recorder setNewRecording={setNewRecording} />
     </GlobalWrapper>
   );
