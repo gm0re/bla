@@ -7,7 +7,6 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 dayjs.extend(relativeTime);
 
 const Label = styled.div`
-  margin: 4px;
   font-weight: lighter;
   font-size: small;
 `;
