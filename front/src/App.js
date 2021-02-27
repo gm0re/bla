@@ -29,6 +29,7 @@ const App = () => {
   const [
     fetchRecordings,
     recordings,
+    recordingsCreatedCount,
     setNewRecording
   ] = useRecording();
 
@@ -43,7 +44,11 @@ const App = () => {
     <GlobalWrapper>
       <Header user={user} />
       <Suspense fallback={<EmptyFeed />}>
-        <Recordings fetchRecordings={fetchRecordings} recordings={recordings} />
+        <Recordings
+          fetchRecordings={fetchRecordings}
+          recordings={recordings}
+          recordingsCreatedCount={recordingsCreatedCount}
+        />
       </Suspense>
       <Recorder setNewRecording={setNewRecording} />
     </GlobalWrapper>

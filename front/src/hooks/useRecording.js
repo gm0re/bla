@@ -60,6 +60,7 @@ const useRecordings = () => {
   return [
     fetchRecordings,
     recordings,
+    recordingsCreatedCount,
     setNewRecording
   ];
 };

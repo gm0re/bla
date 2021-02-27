@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -12,8 +12,13 @@ const RecordingsWrapper = styled.div`
   flex-direction: column;
 `;
 
-const Recordings = ({ recordings, fetchRecordings }) => {
+const Recordings = ({
+  fetchRecordings,
+  recordings,
+  recordingsCreatedCount
+}) => {
   const [page, setPage] = useState(1);
+  const recordingsRef = useRef(null);
 
   const onScroll = ({ target }) => {
     const { scrollHeight, scrollTop, clientHeight } = target;
@@ -27,8 +32,18 @@ const Recordings = ({ recordings, fetchRecordings }) => {
     }
   }
 
+  const resetScrollEffect = ({ element }) => {
+    element.current.scrollTop = 0;
+  }
+
+  useEffect(() => {
+    if (recordingsCreatedCount && recordingsRef.current) {
+      resetScrollEffect({ element: recordingsRef })
+    }
+  }, [recordingsCreatedCount]);
+
   return (
-    <RecordingsWrapper onScroll={onScroll}>
+    <RecordingsWrapper onScroll={onScroll} ref={recordingsRef}>
       {recordings.length ? recordings.map(recording => (
         <Recording recording={recording} key={recording.id || recording.filename } />
       )) : (
@@ -40,7 +55,8 @@ const Recordings = ({ recordings, fetchRecordings }) => {
 
 Recordings.propTypes = {
   fetchRecordings: PropTypes.func,
-  recordings: PropTypes.arrayOf(PropTypes.object)
+  recordings: PropTypes.arrayOf(PropTypes.object),
+  recordingsCreatedCount: PropTypes.number
 };
 
 export default Recordings;
