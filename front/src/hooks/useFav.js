@@ -8,7 +8,7 @@ const useFav = recording => {
 
   // 👨‍🏭 hardcoded userId to be migrated with login
   const hasUserFaved = () => (
-    recording.favedBy.some(({ id }) => id === 1)
+    recording.favedBy?.some(({ id }) => id === 1)
   );
 
   const onFav = () => {
@@ -33,7 +33,7 @@ const useFav = recording => {
   };
 
   useEffect(() => {
-    setFavs(recording.favedBy.length);
+    setFavs(recording.favedBy?.length);
     setHasFaved(hasUserFaved());
   }, []);
 

@@ -46,7 +46,14 @@ const useRecordings = () => {
       user: 1
     };
 
-    const recording = attachUserToRecording(await recordingsSvc.save(newRecording));
+    let recording = attachUserToRecording(await recordingsSvc.save(newRecording));
+
+    // recording = {
+    //   ...recording,
+    //   favedBy: [],
+    //   sharedBy: [],
+    //   starredBy: []
+    // };
 
     setRecordings(oldRecordings => [...oldRecordings, recording]);
   };

@@ -7,7 +7,7 @@ const useStar = recording => {
 
   // 👨‍🏭 hardcoded userId to be migrated with login
   const hasUserStarred = () => (
-    recording.starredBy.some(({ id }) => id === 1)
+    recording.starredBy?.some(({ id }) => id === 1)
   );
 
   const onStar = () => {

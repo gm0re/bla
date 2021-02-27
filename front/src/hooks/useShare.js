@@ -7,7 +7,7 @@ const useShare = recording => {
 
   // 👨‍🏭 hardcoded userId to be migrated with login
   const hasUserShared = () => (
-    recording.sharedBy.some(({ id }) => id === 1)
+    recording.sharedBy?.some(({ id }) => id === 1)
   );
 
   const onShare = () => {
