@@ -20,7 +20,6 @@ const Recordings = ({ recordings, fetchRecordings }) => {
     const isAtBottom = () => scrollHeight - scrollTop === clientHeight;
 
     if (isAtBottom()) {
-      console.log('bottom');
       const newPage = page + 1;
 
       fetchRecordings(page);
