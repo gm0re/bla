@@ -6,12 +6,13 @@ const RECORDINGS_PER_PAGE = 10;
 
 const useRecordings = () => {
   const [recordings, setRecordings] = useState([]);
+  const [recordingsCreatedCount, setRecordingsCreatedCount] = useState(0);
   // 🧯 sailsjs blueprint api does not return pages
   const [lastPageReached, setLastPageReached] = useState(false);
 
   const fetchRecordings = async (page = 0) => {
     if (!lastPageReached) {
-      const newPage = RECORDINGS_PER_PAGE * page;
+      const newPage = (RECORDINGS_PER_PAGE * page) + recordingsCreatedCount;
       const newRecordings = await recordingsSvc.get(RECORDINGS_PER_PAGE, newPage);
 
       if (newRecordings.length) {
@@ -46,15 +47,9 @@ const useRecordings = () => {
       user: 1
     };
 
-    let recording = attachUserToRecording(await recordingsSvc.save(newRecording));
+    const recording = attachUserToRecording(await recordingsSvc.save(newRecording));
 
-    // recording = {
-    //   ...recording,
-    //   favedBy: [],
-    //   sharedBy: [],
-    //   starredBy: []
-    // };
-
+    setRecordingsCreatedCount(oldRecordingsCount => oldRecordingsCount + 1);
     setRecordings(oldRecordings => [...oldRecordings, recording]);
   };
 
