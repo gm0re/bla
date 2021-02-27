@@ -5,13 +5,21 @@ import { recordingsSvc } from '../services';
 const RECORDINGS_PER_PAGE = 10;
 
 const useRecordings = () => {
-  const [page, setPage] = useState(1);
-  const [skip, setSkip] = useState(RECORDINGS_PER_PAGE);
   const [recordings, setRecordings] = useState([]);
+  // 🧯 sailsjs blueprint api does not return pages
+  const [lastPageReached, setLastPageReached] = useState(false);
 
-  const fetchRecordings = async () => {
-    const newRecordings = await recordingsSvc.get(5, 5);
-    setRecordings(oldRecordings => [...oldRecordings, ...newRecordings]);
+  const fetchRecordings = async (page = 0) => {
+    if (!lastPageReached) {
+      const newPage = RECORDINGS_PER_PAGE * page;
+      const newRecordings = await recordingsSvc.get(RECORDINGS_PER_PAGE, newPage);
+
+      if (newRecordings.length) {
+        setRecordings(oldRecordings => [...oldRecordings, ...newRecordings]);
+      } else {
+        setLastPageReached(true);
+      }
+    }
   };
 
   // 👷 replace harcoded user with loged user data
@@ -43,8 +51,8 @@ const useRecordings = () => {
     setRecordings(oldRecordings => [...oldRecordings, recording]);
   };
 
-  useEffect(async() => {
-    setRecordings(await recordingsSvc.get(5, 0) || []);
+  useEffect(() => {
+    fetchRecordings();
   }, []);
 
   return [

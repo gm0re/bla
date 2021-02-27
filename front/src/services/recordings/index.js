@@ -30,7 +30,7 @@ const recordingsSvc = {
   ),
   get: (limit, skip) => (
     axios
-      .get(`${DOMAIN}/recordings?limit=${limit}&skip=${skip}`)
+      .get(`${DOMAIN}/recordings?limit=${limit}&skip=${skip}&sort=id`)
       .then(({ data: recordings }) => recordings)
       .catch(error => {
         console.error(error);
