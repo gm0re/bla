@@ -23,7 +23,6 @@ const RecordingActions = ({
   const [hasStarred, onStar] = useStar(recording);
 
   const onReply = () => {
-    console.log('reply');
     const totalReplies = hasReplied
       ? replies - 1
       : replies + 1;

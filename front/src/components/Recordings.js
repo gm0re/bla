@@ -16,7 +16,7 @@ const Recordings = ({ recordings, fetchRecordings }) => {
   const [page, setPage] = useState(1);
 
   const onScroll = ({ target }) => {
-    const { scrollHeight, scrollTop, clientHeight } = target
+    const { scrollHeight, scrollTop, clientHeight } = target;
     const isAtBottom = () => scrollHeight - scrollTop === clientHeight;
 
     if (isAtBottom()) {

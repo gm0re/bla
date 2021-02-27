@@ -11,8 +11,6 @@ const useStar = recording => {
   );
 
   const onStar = () => {
-    console.log('fav');
-
     if (hasStarred) {
       recordingsSvc.deleteStar({
         recordingId: recording.id,

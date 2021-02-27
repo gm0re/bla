@@ -12,7 +12,6 @@ const useFav = recording => {
   );
 
   const onFav = () => {
-    console.log('fav');
     const totalFavs = hasFaved
       ? favs - 1
       : favs + 1;

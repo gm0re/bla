@@ -11,8 +11,6 @@ const useShare = recording => {
   );
 
   const onShare = () => {
-    console.log('fav');
-
     if (hasShared) {
       recordingsSvc.deleteShare({
         recordingId: recording.id,
