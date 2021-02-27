@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import identicon from 'identicon';
+import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
+import identicon from "identicon";
 
 const iconSize = 48;
 
@@ -9,21 +9,24 @@ const UserIcon = ({ username }) => {
 
   useEffect(() => {
     // 👷 move to backend layer.
-    identicon.generate({
-      id: username,
-      size: iconSize
-    }, (error, buffer) => {
-      if (error) {
-        console.error(error);
+    identicon.generate(
+      {
+        id: username,
+        size: iconSize
+      },
+      (error, buffer) => {
+        if (error) {
+          console.error(error);
+        }
+        setAvatar(buffer);
       }
-      setAvatar(buffer);
-    });
+    );
   }, []);
   return (
     <div className="border rounded-full overflow-hidden">
       <img className="w-auto h-8" src={avatar} />
     </div>
-  )
+  );
 };
 
 UserIcon.propTypes = {

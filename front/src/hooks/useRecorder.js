@@ -22,17 +22,14 @@ const useRecorder = (setNewRecording) => {
   };
 
   const startRecording = () => {
-    console.log("startRecording");
     setRecorderState(RECORDING);
   };
 
   const resumeRecording = () => {
-    console.log("resumeRecording");
     setRecorderState(RESUMING);
   };
 
   const pauseRecording = () => {
-    console.log("pauseRecording");
     setRecorderState(PAUSED);
   };
 

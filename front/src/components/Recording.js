@@ -1,8 +1,12 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import dayjs from "dayjs";
+import RelativeTime from "dayjs/plugin/relativeTime";
 
-import UserIcon from './UserIcon';
-import RecordingActions from './RecordingActions';
+dayjs.extend(RelativeTime);
+
+import UserIcon from "./UserIcon";
+import RecordingActions from "./RecordingActions";
 
 const Recording = ({ recording }) => {
   // 🛠 move to a useVotes hook to manage votes incoming from recordings.
@@ -10,32 +14,20 @@ const Recording = ({ recording }) => {
   const [upVotes, setUpVotes] = useState(0);
 
   const onVote = () => {
-    const totalVotes = hasVoted
-      ? upVotes - 1
-      : upVotes + 1;
+    const totalVotes = hasVoted ? upVotes - 1 : upVotes + 1;
 
     setHasVoted(!hasVoted);
     setUpVotes(totalVotes);
   };
 
-  const formatDate = dateString => {
-    const options = {
-      day: 'numeric',
-      hour: "2-digit",
-      hour12: true,
-      minute: "2-digit",
-      month: 'short',
-      timezone: new Date().getTimezoneOffset(),
-      year: 'numeric'
-    };
-    return new Date(dateString).toLocaleString(undefined, options);
-  };
+  const formatDate = (dateString) => dayjs().to(dayjs(dateString));
 
   return (
     <div className="bg-white p-2 border-b border-gray-100">
       <div className="flex items-center justify-center">
         <UserIcon username={recording.user.username} />
-        <audio className="ml-1 flex-grow"
+        <audio
+          className="ml-1 flex-grow"
           id={recording.id || recording.filename}
           key={recording.id || recording.filename}
           src={recording.filename}
@@ -43,7 +35,9 @@ const Recording = ({ recording }) => {
         />
       </div>
       <div className="flex place-content-between items-center pt-2">
-        <div className="text-xs text-gray-500">{formatDate(recording.createdAt)}</div>
+        <div className="text-xs text-gray-500" title={recording.createdAt}>
+          {formatDate(recording.createdAt)}
+        </div>
         <RecordingActions
           hasVoted={hasVoted}
           onVote={onVote}
@@ -51,7 +45,7 @@ const Recording = ({ recording }) => {
         />
       </div>
     </div>
-  )
+  );
 };
 
 Recording.propTypes = {

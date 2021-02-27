@@ -8,7 +8,7 @@ import { states as recorderStates } from "../constants/recorder";
 const { RECORDING, RESUMING, PAUSED, INACTIVE } = recorderStates;
 
 const ActionButton = ({ children, onClick }) => (
-  <div className="p-1" onClick={onClick}>
+  <div className="p-2 rounded-full bg-red-500" onClick={onClick}>
     {children}
   </div>
 );
@@ -28,7 +28,7 @@ const Recorder = ({ setNewRecording }) => {
   ] = useRecorder(setNewRecording);
 
   return (
-    <div className="flex justify-center p-2">
+    <div className="flex justify-center p-2 border-t">
       {recorderState !== "recording" && (
         <ActionButton
           onClick={recorderState === PAUSED ? resumeRecording : startRecording}
@@ -37,7 +37,7 @@ const Recorder = ({ setNewRecording }) => {
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
-            fill="currentColor"
+            className="fill-current text-gray-100"
           >
             <path
               fillRule="evenodd"
@@ -55,7 +55,7 @@ const Recorder = ({ setNewRecording }) => {
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
-            fill="currentColor"
+            className="fill-current text-gray-100"
           >
             <path
               fillRule="evenodd"
