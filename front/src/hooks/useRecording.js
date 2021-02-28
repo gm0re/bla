@@ -13,16 +13,18 @@ const useRecordings = () => {
 
   const sortRecordings = (recA, recB) => ((recA.createdAt > recB.createdAt) ? -1 : 1);
 
+  const recordingsDictReducer = (newRecsDict, recording) => {
+    newRecsDict[recording.id] = recording;
+    return newRecsDict;
+  };
+
   const fetchRecordings = async (page = 0) => {
     if (!lastPageReached) {
       const newPage = RECORDINGS_PER_PAGE * page;
       const newRecordings = await recordingsSvc.get(RECORDINGS_PER_PAGE, newPage);
 
       if (newRecordings.length) {
-        const newRecsDictionary = newRecordings.reduce((newRecsDict, recording) => {
-          newRecsDict[recording.id] = recording;
-          return newRecsDict;
-        }, { ...recordingsDictionary });
+        const newRecsDictionary = newRecordings.reduce(recordingsDictReducer, { ...recordingsDictionary });
 
         setRecordingsDictionary(() => newRecsDictionary);
         setRecordings(() => Object.values(newRecsDictionary).sort(sortRecordings));
