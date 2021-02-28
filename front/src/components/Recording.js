@@ -33,7 +33,19 @@ const RecordingHeader = styled.div`
 const RecordingWrapper = styled.div`
   padding: 8px;
   background-color: white;
+
+  ${({ animate }) => (animate && 'animation: color-me-in 5s;')}
+
   border: 1px solid #00000008;
+
+  @keyframes color-me-in {
+    0% {
+      background: orange;
+    }
+    100% {
+      background: white;
+    }
+  }
 `;
 
 const Separator = styled.span`
@@ -41,8 +53,8 @@ const Separator = styled.span`
   margin-right: 4px;
 `;
 
-const Recording = ({ recording }) => (
-  <RecordingWrapper>
+const Recording = ({ animate, recording }) => (
+  <RecordingWrapper animate={animate}>
     <PlayerWrapper>
       <UserIcon profilePic={recording.user.profilePic} />
       <div>
@@ -64,6 +76,7 @@ const Recording = ({ recording }) => (
 );
 
 Recording.propTypes = {
+  animate: PropTypes.bool,
   recording: PropTypes.shape({
     createdAt: PropTypes.string,
     filename: PropTypes.string,

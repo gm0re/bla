@@ -32,20 +32,28 @@ const Recordings = ({
     }
   }
 
-  const resetScrollEffect = ({ element }) => {
+  const doesAnimate = recording => (
+    !!(recordings.indexOf(recording) === 0 && recordingsCreatedCount)
+  );
+
+  const setScrollOnTop = ({ element }) => {
     element.current.scrollTop = 0;
   }
 
   useEffect(() => {
     if (recordingsCreatedCount && recordingsRef.current) {
-      resetScrollEffect({ element: recordingsRef })
+      setScrollOnTop({ element: recordingsRef })
     }
   }, [recordingsCreatedCount]);
 
   return (
     <RecordingsWrapper onScroll={onScroll} ref={recordingsRef}>
       {recordings.length ? recordings.map(recording => (
-        <Recording recording={recording} key={recording.id || recording.filename } />
+        <Recording
+          animate={doesAnimate(recording)}
+          recording={recording}
+          key={recording.id || recording.filename }
+        />
       )) : (
         <EmptyFeed />
       )}
