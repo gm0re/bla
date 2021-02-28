@@ -13,10 +13,10 @@ const useRecordings = () => {
 
   const sortRecordings = (recA, recB) => ((recA.createdAt > recB.createdAt) ? -1 : 1);
 
-  const recordingsDictReducer = (newRecsDict, recording) => {
-    newRecsDict[recording.id] = recording;
-    return newRecsDict;
-  };
+  const recordingsDictReducer = (newRecsDict, recording) => ({
+    ...newRecsDict,
+    [recording.id]: recording
+  });
 
   const fetchRecordings = async (page = 0) => {
     if (!lastPageReached) {
@@ -41,10 +41,10 @@ const useRecordings = () => {
     username: 'gmore'
   });
 
-  const attachUserToRecording = recording => {
-    recording.user = getUser();
-    return recording;
-  };
+  const attachUserToRecording = recording => ({
+    ...recording,
+    user: getUser()
+  });
 
   const setNewRecording = async ({ data: blob }) => {
     const filename = URL.createObjectURL(blob);
@@ -60,7 +60,7 @@ const useRecordings = () => {
 
     const recording = attachUserToRecording(await recordingsSvc.save(newRecording));
 
-    setRecordingsCreatedCount(oldRecordingsCount => oldRecordingsCount + 1);
+    setRecordingsCreatedCount(oldRecordingsCreatedCount => oldRecordingsCreatedCount + 1);
     setRecordingsDictionary(oldRecsDictionary => ({
       [recording[recording.id]]: recording,
       ...oldRecsDictionary
