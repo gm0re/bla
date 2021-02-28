@@ -13,6 +13,11 @@ module.exports = {
     filesize: { type: 'number', columnType: 'float', required: true },
     duration: { type: 'number', columnType: 'float', required: true },
 
+    parent: {
+      model: 'recordings',
+      columnName: 'parentId'
+    },
+
     user: {
       model: 'users',
       columnName: 'userId'
