@@ -28,11 +28,11 @@ const useRecordings = () => {
 
         setRecordingsDictionary(() => newRecsDictionary);
         setRecordings(() => Object.values(newRecsDictionary).sort(sortRecordings));
+      }
 
-        // 🧯 sailsjs blueprint api does not return pages
-        if (newRecordings.length !== RECORDINGS_PER_PAGE) {
-          setIsLastPageReached(true);
-        }
+      // 🧯 sailsjs blueprint api does not return pages
+      if (newRecordings.length !== RECORDINGS_PER_PAGE) {
+        setIsLastPageReached(true);
       }
     }
   };

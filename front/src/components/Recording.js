@@ -62,7 +62,6 @@ const Recording = ({
   recording
 }) => {
   const onRecordingClick = () => {
-    console.log('rec click', recording);
     fetchRecordings(0, { parent: recording.id }, undefined, true);
   };
 
