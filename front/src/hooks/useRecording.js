@@ -6,17 +6,26 @@ const RECORDINGS_PER_PAGE = 10;
 
 const useRecordings = () => {
   const [recordings, setRecordings] = useState([]);
+  const [recordingsDictionary, setRecordingsDictionary] = useState({});
   const [recordingsCreatedCount, setRecordingsCreatedCount] = useState(0);
   // 🧯 sailsjs blueprint api does not return pages
   const [lastPageReached, setLastPageReached] = useState(false);
 
+  const sortRecordings = (recA, recB) => ((recA.createdAt > recB.createdAt) ? -1 : 1);
+
   const fetchRecordings = async (page = 0) => {
     if (!lastPageReached) {
-      const newPage = (RECORDINGS_PER_PAGE * page) + recordingsCreatedCount;
+      const newPage = RECORDINGS_PER_PAGE * page;
       const newRecordings = await recordingsSvc.get(RECORDINGS_PER_PAGE, newPage);
 
       if (newRecordings.length) {
-        setRecordings(oldRecordings => [...oldRecordings, ...newRecordings]);
+        const newRecsDictionary = newRecordings.reduce((newRecsDict, recording) => {
+          newRecsDict[recording.id] = recording;
+          return newRecsDict;
+        }, { ...recordingsDictionary });
+
+        setRecordingsDictionary(() => newRecsDictionary);
+        setRecordings(() => Object.values(newRecsDictionary).sort(sortRecordings));
       } else {
         setLastPageReached(true);
       }
@@ -50,7 +59,14 @@ const useRecordings = () => {
     const recording = attachUserToRecording(await recordingsSvc.save(newRecording));
 
     setRecordingsCreatedCount(oldRecordingsCount => oldRecordingsCount + 1);
-    setRecordings(oldRecordings => [recording, ...oldRecordings]);
+    setRecordingsDictionary(oldRecsDictionary => ({
+      [recording[recording.id]]: recording,
+      ...oldRecsDictionary
+    }));
+    setRecordings(oldRecordings => [
+      recording,
+      ...oldRecordings
+    ]);
   };
 
   useEffect(() => {
