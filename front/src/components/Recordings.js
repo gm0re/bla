@@ -52,7 +52,7 @@ const Recordings = ({
         <Recording
           animate={doesAnimate(recording)}
           recording={recording}
-          key={recording.id || recording.filename }
+          key={recording.id}
         />
       )) : (
         <EmptyFeed />

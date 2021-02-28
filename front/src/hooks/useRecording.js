@@ -20,8 +20,8 @@ const useRecordings = () => {
 
   const fetchRecordings = async (page = 0) => {
     if (!lastPageReached) {
-      const newPage = RECORDINGS_PER_PAGE * page;
-      const newRecordings = await recordingsSvc.get(RECORDINGS_PER_PAGE, newPage);
+      const nextPage = RECORDINGS_PER_PAGE * page;
+      const newRecordings = await recordingsSvc.get(RECORDINGS_PER_PAGE, nextPage);
 
       if (newRecordings.length) {
         const newRecsDictionary = newRecordings.reduce(recordingsDictReducer, { ...recordingsDictionary });
