@@ -31,13 +31,14 @@ const recordingsSvc = {
   get: (
     limit,
     skip,
+    where = '',
     sorting = {
       order: 'DESC',
       sort: 'createdAt'
     }
   ) => (
     axios
-      .get(`${DOMAIN}/recordings?limit=${limit}&skip=${skip}&sort=${sorting.sort} ${sorting.order}`)
+      .get(`${DOMAIN}/recordings?${where && `where=${JSON.stringify(where)}`}&limit=${limit}&skip=${skip}&sort=${sorting.sort} ${sorting.order}`)
       .then(({ data: recordings }) => recordings)
       .catch(error => {
         console.error(error);

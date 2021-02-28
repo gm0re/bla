@@ -31,12 +31,15 @@ const RecordingHeader = styled.div`
 `;
 
 const RecordingWrapper = styled.div`
+  &:hover {
+    background-color: #f7f7f7;
+  }
   padding: 8px;
   background-color: white;
+  border: 1px solid #00000008;
+  cursor: pointer;
 
   ${({ animate }) => (animate && 'animation: color-me-in 5s;')}
-
-  border: 1px solid #00000008;
 
   @keyframes color-me-in {
     0% {
@@ -53,30 +56,45 @@ const Separator = styled.span`
   margin-right: 4px;
 `;
 
-const Recording = ({ animate, recording }) => (
-  <RecordingWrapper animate={animate}>
-    <PlayerWrapper>
-      <UserIcon profilePic={recording.user.profilePic} />
-      <div>
-        <RecordingHeader>
-          <Username>{recording.user.username}</Username>
-          <Separator>·</Separator>
-          <Timestamp relative>{recording.createdAt}</Timestamp>
-        </RecordingHeader>
-        <Player
-          id={recording.id || recording.filename}
-          key={recording.id || recording.filename}
-          src={recording.filename}
-          controls
-        />
-      </div>
-    </PlayerWrapper>
-    <RecordingActions recording={recording} />
-  </RecordingWrapper>
-);
+const Recording = ({
+  animate,
+  fetchRecordings,
+  recording
+}) => {
+  const onRecordingClick = () => {
+    console.log('rec click', recording);
+    fetchRecordings(0, { parent: recording.id }, undefined, true);
+  };
+
+  return (
+    <RecordingWrapper
+      animate={animate}
+      onClick={onRecordingClick}
+    >
+      <PlayerWrapper>
+        <UserIcon profilePic={recording.user.profilePic} />
+        <div>
+          <RecordingHeader>
+            <Username>{recording.user.username}</Username>
+            <Separator>·</Separator>
+            <Timestamp relative>{recording.createdAt}</Timestamp>
+          </RecordingHeader>
+          <Player
+            id={recording.id || recording.filename}
+            key={recording.id || recording.filename}
+            src={recording.filename}
+            controls
+          />
+        </div>
+      </PlayerWrapper>
+      <RecordingActions recording={recording} />
+    </RecordingWrapper>
+  );
+};
 
 Recording.propTypes = {
   animate: PropTypes.bool,
+  fetchRecordings: PropTypes.func,
   recording: PropTypes.shape({
     createdAt: PropTypes.string,
     filename: PropTypes.string,

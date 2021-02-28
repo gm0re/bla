@@ -8,8 +8,7 @@ const useRecordings = () => {
   const [recordings, setRecordings] = useState([]);
   const [recordingsDictionary, setRecordingsDictionary] = useState({});
   const [recordingsCreatedCount, setRecordingsCreatedCount] = useState(0);
-  // 🧯 sailsjs blueprint api does not return pages
-  const [lastPageReached, setLastPageReached] = useState(false);
+  const [isLastPageReached, setIsLastPageReached] = useState(false);
 
   const sortRecordings = (recA, recB) => ((recA.createdAt > recB.createdAt) ? -1 : 1);
 
@@ -18,18 +17,22 @@ const useRecordings = () => {
     [recording.id]: recording
   });
 
-  const fetchRecordings = async (page = 0) => {
-    if (!lastPageReached) {
+  const fetchRecordings = async (page = 0, where = undefined, sorting = undefined, refresh = false) => {
+    if (!isLastPageReached) {
       const nextPage = RECORDINGS_PER_PAGE * page;
-      const newRecordings = await recordingsSvc.get(RECORDINGS_PER_PAGE, nextPage);
+      const newRecordings = await recordingsSvc.get(RECORDINGS_PER_PAGE, nextPage, where, sorting);
 
       if (newRecordings.length) {
-        const newRecsDictionary = newRecordings.reduce(recordingsDictReducer, { ...recordingsDictionary });
+        const shouldResetRecsDictionary = refresh ? {} : { ...recordingsDictionary };
+        const newRecsDictionary = newRecordings.reduce(recordingsDictReducer, shouldResetRecsDictionary);
 
         setRecordingsDictionary(() => newRecsDictionary);
         setRecordings(() => Object.values(newRecsDictionary).sort(sortRecordings));
-      } else {
-        setLastPageReached(true);
+
+        // 🧯 sailsjs blueprint api does not return pages
+        if (newRecordings.length !== RECORDINGS_PER_PAGE) {
+          setIsLastPageReached(true);
+        }
       }
     }
   };
@@ -77,6 +80,7 @@ const useRecordings = () => {
 
   return [
     fetchRecordings,
+    isLastPageReached,
     recordings,
     recordingsCreatedCount,
     setNewRecording

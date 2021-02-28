@@ -28,6 +28,7 @@ const GlobalWrapper = styled.div`
 const App = () => {
   const [
     fetchRecordings,
+    isLastPageReached,
     recordings,
     recordingsCreatedCount,
     setNewRecording
@@ -46,6 +47,7 @@ const App = () => {
       <Suspense fallback={<EmptyFeed />}>
         <Recordings
           fetchRecordings={fetchRecordings}
+          isLastPageReached={isLastPageReached}
           recordings={recordings}
           recordingsCreatedCount={recordingsCreatedCount}
         />

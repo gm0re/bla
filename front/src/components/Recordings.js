@@ -14,6 +14,7 @@ const RecordingsWrapper = styled.div`
 
 const Recordings = ({
   fetchRecordings,
+  isLastPageReached,
   recordings,
   recordingsCreatedCount
 }) => {
@@ -24,7 +25,7 @@ const Recordings = ({
     const { scrollHeight, scrollTop, clientHeight } = target;
     const isAtBottom = () => scrollHeight - scrollTop === clientHeight;
 
-    if (isAtBottom()) {
+    if (!isLastPageReached && isAtBottom()) {
       const newPage = page + 1;
 
       fetchRecordings(page);
@@ -51,8 +52,9 @@ const Recordings = ({
       {recordings.length ? recordings.map(recording => (
         <Recording
           animate={doesAnimate(recording)}
-          recording={recording}
+          fetchRecordings={fetchRecordings}
           key={recording.id}
+          recording={recording}
         />
       )) : (
         <EmptyFeed />
@@ -63,6 +65,7 @@ const Recordings = ({
 
 Recordings.propTypes = {
   fetchRecordings: PropTypes.func,
+  isLastPageReached: PropTypes.bool,
   recordings: PropTypes.arrayOf(PropTypes.object),
   recordingsCreatedCount: PropTypes.number
 };
