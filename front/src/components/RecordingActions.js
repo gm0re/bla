@@ -19,6 +19,12 @@ const RecordingActions = ({
   const [hasShared, onShare] = useShare(recording);
   const [hasStarred, onStar] = useStar(recording);
 
+  const onClickWrapper = (event, callback) => {
+    event.stopPropagation();
+
+    callback();
+  };
+
   return (
     <RecordingActionsWrapper>
       <RecordingAction
@@ -29,7 +35,7 @@ const RecordingActions = ({
           active: ['fas', 'heart'],
           inactive: ['far', 'heart']
         }}
-        onClick={onFav}
+        onClick={event => onClickWrapper(event, onFav)}
       />
       <RecordingAction
         color="#0070ff"
@@ -39,7 +45,7 @@ const RecordingActions = ({
           active: ['fas', 'comment'],
           inactive: ['far', 'comment']
         }}
-        onClick={onReply}
+        onClick={event => onClickWrapper(event, onReply)}
       />
       <RecordingAction
         color="#ffca00"
@@ -48,7 +54,7 @@ const RecordingActions = ({
           active: ['fas', 'star'],
           inactive: ['far', 'star']
         }}
-        onClick={onStar}
+        onClick={event => onClickWrapper(event, onStar)}
       />
       <RecordingAction
         color="#0dbb0d"
@@ -57,7 +63,7 @@ const RecordingActions = ({
           active: ['fas', 'share-square'],
           inactive: ['far', 'share-square']
         }}
-        onClick={onShare}
+        onClick={event => onClickWrapper(event, onShare)}
       />
     </RecordingActionsWrapper>
   );
