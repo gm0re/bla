@@ -1,4 +1,5 @@
 import React, { lazy, Suspense } from "react";
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import styled from 'styled-components';
 
 import './icons';
@@ -44,14 +45,20 @@ const App = () => {
   return (
     <GlobalWrapper>
       <Header user={user} />
-      <Suspense fallback={<EmptyFeed />}>
-        <Recordings
-          fetchRecordings={fetchRecordings}
-          isLastPageReached={isLastPageReached}
-          recordings={recordings}
-          recordingsCreatedCount={recordingsCreatedCount}
-        />
-      </Suspense>
+      <Router>
+        <Switch>
+          <Route path="/">
+            <Suspense fallback={<EmptyFeed />}>
+              <Recordings
+                fetchRecordings={fetchRecordings}
+                isLastPageReached={isLastPageReached}
+                recordings={recordings}
+                recordingsCreatedCount={recordingsCreatedCount}
+              />
+            </Suspense>
+          </Route>
+        </Switch>
+      </Router>
       <Recorder setNewRecording={setNewRecording} />
     </GlobalWrapper>
   );
