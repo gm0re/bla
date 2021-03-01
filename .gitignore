@@ -25,5 +25,8 @@ yarn-error.log*
 # eslint
 /front/.eslintcache
 
-# ignore IDE files
+# IDE files
 .vscode/
+
+# temp img folder
+/back/seeds/PicsTemp
