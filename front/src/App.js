@@ -11,8 +11,9 @@ import {
 } from './components';
 
 const Recordings = lazy(() => import('./components/Recordings'));
+const RecordingDetail = lazy(() => import('./components/RecordingDetail'));
 
-import useRecording from "./hooks/useRecording";
+import useRecordings from "./hooks/useRecordings";
 
 const GlobalWrapper = styled.div`
   font-family: sans-serif;
@@ -33,7 +34,7 @@ const App = () => {
     recordings,
     recordingsCreatedCount,
     setNewRecording
-  ] = useRecording();
+  ] = useRecordings();
 
   // 👩‍🏭 hardcoded user until log in is implemented
   const user = {
@@ -55,6 +56,11 @@ const App = () => {
                 recordings={recordings}
                 recordingsCreatedCount={recordingsCreatedCount}
               />
+            </Suspense>
+          </Route>
+          <Route path="/recording/:id">
+            <Suspense fallback={<EmptyFeed />}>
+              <RecordingDetail />
             </Suspense>
           </Route>
         </Switch>
