@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { useFav, useShare, useStar } from '../hooks';
+import { useFav, useReply, useShare, useStar } from '../hooks';
 import RecordingAction from './RecordingAction';
 
 const RecordingActionsWrapper = styled.div`
@@ -14,22 +14,10 @@ const RecordingActionsWrapper = styled.div`
 const RecordingActions = ({
   recording
 }) => {
-  // 🛠 move to hooks to manage diff states
-  const [hasReplied, setHasReplied] = useState(false);
-  const [replies, setReplies] = useState(0);
-
   const [favs, hasFaved, onFav] = useFav(recording);
+  const [replies, hasReplied, onReply] = useReply(recording);
   const [hasShared, onShare] = useShare(recording);
   const [hasStarred, onStar] = useStar(recording);
-
-  const onReply = () => {
-    const totalReplies = hasReplied
-      ? replies - 1
-      : replies + 1;
-
-    setHasReplied(!hasReplied);
-    setReplies(totalReplies);
-  };
 
   return (
     <RecordingActionsWrapper>

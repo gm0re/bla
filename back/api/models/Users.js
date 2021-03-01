@@ -22,6 +22,12 @@ module.exports = {
       through: 'favs'
     },
 
+    replies: {
+      collection: 'recordings',
+      via: 'userId',
+      through: 'replies'
+    },
+
     shares: {
       collection: 'recordings',
       via: 'userId',

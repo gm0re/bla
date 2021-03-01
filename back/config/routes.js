@@ -23,7 +23,8 @@ module.exports.routes = {
   'POST /recordings': { action: 'create-recordings' },
   'DELETE /favs/recording/:recordingId/user/:userId': { action: 'delete-fav-by-user-recording' },
   'DELETE /stars/recording/:recordingId/user/:userId': { action: 'delete-star-by-user-recording' },
-  'DELETE /shares/recording/:recordingId/user/:userId': { action: 'delete-share-by-user-recording' }
+  'DELETE /shares/recording/:recordingId/user/:userId': { action: 'delete-share-by-user-recording' },
+  'DELETE /replies/recording/:recordingId/user/:userId': { action: 'delete-reply-by-user-recording' }
 
   /***************************************************************************
   *                                                                          *

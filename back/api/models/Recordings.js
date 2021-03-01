@@ -29,6 +29,12 @@ module.exports = {
       through: 'favs'
     },
 
+    repliedBy: {
+      collection: 'users',
+      via: 'recordingId',
+      through: 'replies'
+    },
+
     sharedBy: {
       collection: 'users',
       via: 'recordingId',
