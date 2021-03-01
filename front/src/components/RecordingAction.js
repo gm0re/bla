@@ -64,27 +64,38 @@ const RecordingAction = ({
   hasClickedOn,
   icon,
   onClick
-}) => (
-  <RecordingActionButton color={color} onClick={onClick}>
-    {typeof count === 'number' && (
-      <Counter color={color}>{`${count}`}</Counter>
-    )}
-    <ActionButtonElems>
-      {hasClickedOn ? (
-        <ActionIcon
-          icon={icon.active}
-          color={color}
-        />
-      ) : (
-        <ActionIcon
-          icon={icon.inactive}
-          color={`${hasClickedOn ? color : inactiveColor}`}
-        />
+}) => {
+  const onClickWrapper = (event, callback) => {
+    event.stopPropagation();
+
+    callback();
+  };
+
+  return (
+    <RecordingActionButton
+      color={color}
+      onClick={event => onClickWrapper(event, onClick)}
+    >
+      {typeof count === 'number' && (
+        <Counter color={color}>{`${count}`}</Counter>
       )}
-      <ActionButtonGlow color={color} />
-    </ActionButtonElems>
-  </RecordingActionButton>
-);
+      <ActionButtonElems>
+        {hasClickedOn ? (
+          <ActionIcon
+            icon={icon.active}
+            color={color}
+          />
+        ) : (
+          <ActionIcon
+            icon={icon.inactive}
+            color={`${hasClickedOn ? color : inactiveColor}`}
+          />
+        )}
+        <ActionButtonGlow color={color} />
+      </ActionButtonElems>
+    </RecordingActionButton>
+  );
+};
 
 RecordingAction.propTypes = {
   color: PropTypes.string,
