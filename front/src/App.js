@@ -1,5 +1,5 @@
 import React, { lazy, Suspense } from "react";
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Redirect, Route } from 'react-router-dom';
 import styled from 'styled-components';
 
 import './icons';
@@ -11,7 +11,6 @@ import {
 } from './components';
 
 const Recordings = lazy(() => import('./components/Recordings'));
-const RecordingDetail = lazy(() => import('./components/RecordingDetail'));
 
 import useRecordings from "./hooks/useRecordings";
 
@@ -48,7 +47,8 @@ const App = () => {
       <Header user={user} />
       <Router>
         <Switch>
-          <Route path="/">
+          <Redirect exact from="/" to="/recordings" />
+          <Route path="/recordings/:id?">
             <Suspense fallback={<EmptyFeed />}>
               <Recordings
                 fetchRecordings={fetchRecordings}
@@ -56,11 +56,6 @@ const App = () => {
                 recordings={recordings}
                 recordingsCreatedCount={recordingsCreatedCount}
               />
-            </Suspense>
-          </Route>
-          <Route path="/recording/:id">
-            <Suspense fallback={<EmptyFeed />}>
-              <RecordingDetail />
             </Suspense>
           </Route>
         </Switch>

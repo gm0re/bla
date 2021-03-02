@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -39,6 +40,8 @@ const RecordingWrapper = styled.div`
   border: 1px solid #00000008;
   cursor: pointer;
 
+  ${({ detailed }) => (detailed && 'position: sticky; top: 0; z-index: 999;')}
+
   ${({ animate }) => (animate && 'animation: color-me-in 5s;')}
 
   @keyframes color-me-in {
@@ -58,16 +61,19 @@ const Separator = styled.span`
 
 const Recording = ({
   animate,
-  fetchRecordings,
+  detailed,
   recording
 }) => {
+  const history = useHistory();
+
   const onRecordingClick = () => {
-    fetchRecordings(0, { parent: recording.id }, undefined, true);
+    history.push(`/recordings/${recording.id}`);
   };
 
   return (
     <RecordingWrapper
       animate={animate}
+      detailed={detailed}
       onClick={onRecordingClick}
     >
       <PlayerWrapper>
@@ -93,7 +99,7 @@ const Recording = ({
 
 Recording.propTypes = {
   animate: PropTypes.bool,
-  fetchRecordings: PropTypes.func,
+  detailed: PropTypes.bool,
   recording: PropTypes.shape({
     createdAt: PropTypes.string,
     filename: PropTypes.string,

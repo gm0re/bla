@@ -18,7 +18,8 @@ module.exports.routes = {
   * `assets` directory)                                                      *
   *                                                                          *
   ***************************************************************************/
-
+  'GET /recordings': { action: 'find-recordings-and-replies' },
+  'GET /recordings/:id': { action: 'find-recordings-and-replies' },
   'POST /recordings': { action: 'create-recordings' },
   'DELETE /favs/recording/:recordingId/user/:userId': { action: 'delete-fav-by-user-recording' },
   'DELETE /stars/recording/:recordingId/user/:userId': { action: 'delete-star-by-user-recording' },

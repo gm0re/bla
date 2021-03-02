@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -20,6 +21,9 @@ const Recordings = ({
 }) => {
   const [page, setPage] = useState(1);
   const recordingsRef = useRef(null);
+  const { id } = useParams();
+
+  const getIdFilter = () => (id ? { id } : { parent: null });
 
   const onScroll = ({ target }) => {
     const { scrollHeight, scrollTop, clientHeight } = target;
@@ -28,10 +32,10 @@ const Recordings = ({
     if (!isLastPageReached && isAtBottom()) {
       const newPage = page + 1;
 
-      fetchRecordings(page);
+      fetchRecordings(getIdFilter(), page);
       setPage(newPage);
     }
-  }
+  };
 
   const doesAnimate = recording => (
     !!(recordings.indexOf(recording) === 0 && recordingsCreatedCount)
@@ -39,7 +43,11 @@ const Recordings = ({
 
   const setScrollOnTop = ({ element }) => {
     element.current.scrollTop = 0;
-  }
+  };
+
+  useEffect(() => {
+    fetchRecordings(getIdFilter());
+  }, [id]);
 
   useEffect(() => {
     if (recordingsCreatedCount && recordingsRef.current) {
@@ -50,12 +58,21 @@ const Recordings = ({
   return (
     <RecordingsWrapper onScroll={onScroll} ref={recordingsRef}>
       {recordings.length ? recordings.map(recording => (
-        <Recording
-          animate={doesAnimate(recording)}
-          fetchRecordings={fetchRecordings}
-          key={recording.id}
-          recording={recording}
-        />
+        <div key={recording.id}>
+          <Recording
+            animate={doesAnimate(recording)}
+            detailed
+            key={recording.id}
+            recording={recording}
+          />
+          {!!recording.replies?.length && recording.replies.map(reply => (
+            <Recording
+              animate={doesAnimate(reply)}
+              key={reply.id}
+              recording={reply}
+            />
+          ))}
+        </div>
       )) : (
         <EmptyFeed />
       )}

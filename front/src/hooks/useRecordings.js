@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import recordingsSvc from '../services/recordings';
 
@@ -17,10 +17,11 @@ const useRecordings = () => {
     [recording.id]: recording
   });
 
-  const fetchRecordings = async (page = 0, where = undefined, sorting = undefined, refresh = false) => {
-    if (!isLastPageReached) {
+  const fetchRecordings = async (filters, page = 0, sorting = undefined, refresh = true) => {
+    if (refresh || !isLastPageReached) {
       const nextPage = RECORDINGS_PER_PAGE * page;
-      const newRecordings = await recordingsSvc.get(RECORDINGS_PER_PAGE, nextPage, where, sorting);
+
+      const newRecordings = await recordingsSvc.get(RECORDINGS_PER_PAGE, nextPage, filters, sorting);
 
       if (newRecordings.length) {
         const shouldResetRecsDictionary = refresh ? {} : { ...recordingsDictionary };
@@ -73,10 +74,6 @@ const useRecordings = () => {
       ...oldRecordings
     ]);
   };
-
-  useEffect(() => {
-    fetchRecordings();
-  }, []);
 
   return [
     fetchRecordings,

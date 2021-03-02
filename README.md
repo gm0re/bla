@@ -41,3 +41,8 @@ To run the backend project:
 - Show transcriptions.
 - User settings.
 - Widget customization (user + owner).
+
+## Widgets
+- Bag of audios
+- Live conversations
+- Normal asynchronic conversation

@@ -8,12 +8,10 @@ import RecordingAction from './RecordingAction';
 const RecordingActionsWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
+  justify-content: center;
 `;
 
-const RecordingActions = ({
-  recording
-}) => {
+const RecordingActions = ({ recording }) => {
   const [favs, hasFaved, onFav] = useFav(recording);
   const [replies, hasReplied, onReply] = useReply(recording);
   const [hasShared, onShare] = useShare(recording);
@@ -66,7 +64,7 @@ const RecordingActions = ({
 RecordingActions.propTypes = {
   recording: PropTypes.shape({
     favs: PropTypes.number,
-    replies: PropTypes.number,
+    replies: PropTypes.array,
     user: PropTypes.shape({
       hasFaved: PropTypes.bool,
       hasReplied: PropTypes.bool,

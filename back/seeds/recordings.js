@@ -22,7 +22,8 @@ exports.seed = knex => (
         });
       }
 
-      // console.log('Recordings seeded:', recordings);
+      recordings[0].parentId = null;
+      recordings[1].parentId = null;
 
       return knex('recordings').insert(recordings);
     })
