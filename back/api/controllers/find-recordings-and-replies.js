@@ -36,29 +36,35 @@ module.exports = {
   },
 
 
-  fn: async (inputs) => {
-    const { id } = inputs;
-    const limit = inputs.limit || 10;
-    const skip = inputs.skip || 0;
-    const sort = inputs.sort || 'createdAt DESC';
-    const where = inputs.where ? JSON.parse(inputs.where) : {};
+  fn: async ({
+    id,
+    limit = 10,
+    skip = 0,
+    sort = 'createdAt DESC',
+    where: whereRaw,
+  }) => {
+    const where = whereRaw ? JSON.parse(whereRaw) : {};
+    const query = id || { where, limit, skip, sort };
 
-    const recordings = await Recordings.find(id || { where, limit, skip, sort }).populateAll();
+    console.log('Recs Query', query);
 
-    if (recordings.length) {
-      const populateReplies = async recording => {
-        if (recording.replies.length) {
-          const repliesIds = recording.replies.map(({ id }) => id);
+    const populateReplies = async recording => {
+      if (recording.replies.length) {
+        const repliesIds = recording.replies.map(({ id }) => id);
+        const repliesQuery = { where: { id: { 'in': repliesIds } }, sort };
 
-          recording.replies = await Recordings.find({ id: { 'in': repliesIds }}).populateAll();
-        }
-        return recording;
+        console.log('Replies Query', repliesQuery);
+
+        recording.replies = await Recordings.find(repliesQuery).populateAll();
       }
-      return await Promise.all(recordings.map(populateReplies));
-    }
+      return recording;
+    };
 
-    return [];
+    const recordings = await Recordings.find(query).populateAll();
+
+    return recordings.length
+      ? await Promise.all(recordings.map(populateReplies))
+      : recordings;
   }
-
 
 };
