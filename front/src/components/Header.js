@@ -1,7 +1,9 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+import BackButton from './BackButton';
 import Username from './Username';
 import UserIcon from './UserIcon';
 
@@ -9,7 +11,7 @@ const HeaderWrapper = styled.div`
   height: 54px;
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
+  justify-content: ${({ showBackButton }) => (showBackButton ? 'space-between' : 'flex-end')};
   align-items: center;
   z-index: 999;
   padding: 8px;
@@ -19,12 +21,30 @@ const HeaderWrapper = styled.div`
   }
 `;
 
-const Header = ({ user }) => (
-  <HeaderWrapper>
-    <UserIcon profilePic={user.profilePic} />
-    <Username>{user.username}</Username>
-  </HeaderWrapper>
-);
+const UserWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
+
+const Header = ({ user }) => {
+  const history = useHistory();
+
+  // 🤔 doesn't seem right
+  const showBackButton = () => (
+    history.location.pathname !== '/recordings'
+  );
+
+  return (
+    <HeaderWrapper showBackButton={showBackButton()}>
+      {showBackButton() && (<BackButton history={history} />)}
+      <UserWrapper>
+        <UserIcon profilePic={user.profilePic} />
+        <Username>{user.username}</Username>
+      </UserWrapper>
+    </HeaderWrapper>
+  );
+};
 
 Header.propTypes = {
   user: PropTypes.shape({

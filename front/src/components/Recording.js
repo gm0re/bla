@@ -3,10 +3,10 @@ import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import UserIcon from './UserIcon';
-import Username from './Username';
 import RecordingActions from './RecordingActions';
 import Timestamp from './Timestamp';
+import UserIcon from './UserIcon';
+import Username from './Username';
 
 const PlayerWrapper = styled.div`
   display: flex;
@@ -41,6 +41,7 @@ const RecordingWrapper = styled.div`
   cursor: pointer;
 
   ${({ detailed }) => (detailed && 'position: sticky; top: 0; z-index: 999;')}
+  ${({ detailed }) => (detailed && 'box-shadow: 0px 9px 10px #eaeaea8c;')}
 
   ${({ animate }) => (animate && 'animation: color-me-in 5s;')}
 

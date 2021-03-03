@@ -1,5 +1,5 @@
 import React, { lazy, Suspense } from "react";
-import { BrowserRouter as Router, Switch, Redirect, Route } from 'react-router-dom';
+import { Switch, Redirect, Route } from 'react-router-dom';
 import styled from 'styled-components';
 
 import './icons';
@@ -43,21 +43,19 @@ const App = () => {
   return (
     <GlobalWrapper>
       <Header user={user} />
-      <Router>
-        <Switch>
-          <Redirect exact from="/" to="/recordings" />
-          <Route path="/recordings/:id?">
-            <Suspense fallback={<EmptyFeed />}>
-              <Recordings
-                fetchRecordings={fetchRecordings}
-                isLastPageReached={isLastPageReached}
-                recordings={recordings}
-                recordingsCreatedCount={recordingsCreatedCount}
-              />
-            </Suspense>
-          </Route>
-        </Switch>
-      </Router>
+      <Switch>
+        <Redirect exact from="/" to="/recordings" />
+        <Route path="/recordings/:id?">
+          <Suspense fallback={<EmptyFeed />}>
+            <Recordings
+              fetchRecordings={fetchRecordings}
+              isLastPageReached={isLastPageReached}
+              recordings={recordings}
+              recordingsCreatedCount={recordingsCreatedCount}
+            />
+          </Suspense>
+        </Route>
+      </Switch>
       <Recorder setNewRecording={setNewRecording} />
     </GlobalWrapper>
   );

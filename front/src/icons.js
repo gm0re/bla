@@ -6,6 +6,7 @@ import {
   faStar as farStar
 } from '@fortawesome/free-regular-svg-icons';
 import {
+  faChevronLeft,
   faComment as fasComment,
   faHeart as fasHeart,
   faMicrophone,
@@ -16,6 +17,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
+  faChevronLeft,
   farComment,
   faHeart,
   faMicrophone,
