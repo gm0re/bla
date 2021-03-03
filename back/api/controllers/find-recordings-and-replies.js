@@ -48,22 +48,30 @@ module.exports = {
 
     console.log('Recs Query', query);
 
-    const populateReplies = async recording => {
-      if (recording.replies.length) {
-        const repliesIds = recording.replies.map(({ id }) => id);
+    const popRecWithReplies = async recording => {
+      const getRecWithReplies = async rec => {
+        const repliesIds = rec.replies.map(({ id }) => id);
         const repliesQuery = { where: { id: { 'in': repliesIds } }, sort };
 
         console.log('Replies Query', repliesQuery);
 
-        recording.replies = await Recordings.find(repliesQuery).populateAll();
-      }
-      return recording;
+        const replies = await Recordings.find(repliesQuery).populateAll();
+
+        return {
+          ...rec,
+          replies
+        }
+      };
+
+      return recording.replies.length
+        ? getRecWithReplies(recording)
+        : recording;
     };
 
     const recordings = await Recordings.find(query).populateAll();
 
     return recordings.length
-      ? await Promise.all(recordings.map(populateReplies))
+      ? Promise.all(recordings.map(popRecWithReplies))
       : recordings;
   }
 
