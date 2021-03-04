@@ -33,12 +33,12 @@ const RecordingHeader = styled.div`
 
 const RecordingWrapper = styled.div`
   &:hover {
-    background-color: #f7f7f7;
+    background-color: ${({ detailed }) => (detailed ? '#f7f7f7' : '#e0dede')};
   }
   padding: 8px;
-  background-color: white;
-  border: 1px solid #00000008;
   cursor: pointer;
+
+  background-color: ${({ detailed }) => (detailed ? 'white' : '#eaeaea')};
 
   ${({ detailed }) => (detailed && 'position: sticky; top: 0; z-index: 999;')}
   ${({ detailed }) => (detailed && 'box-shadow: 0px 9px 10px #eaeaea8c;')}
