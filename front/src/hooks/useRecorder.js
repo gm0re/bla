@@ -2,14 +2,17 @@ import { useState, useEffect } from 'react';
 
 import { states as recorderStates } from '../constants/recorder';
 
+import useRecordings from '../hooks/useRecordings';
+
 const { RECORDING, RESUMING, PAUSED, INACTIVE } = recorderStates;
 
-const useRecorder = setNewRecording => {
+const useRecorder = () => {
   // 👷 WIP: save stream to stop all tracks by getTracks()[0].stop()
   // causing a 🐛 because of tracks removal?
   const [, setStream] = useState();
   const [recorder, setRecorder] = useState(null);
   const [recorderState, setRecorderState] = useState(INACTIVE);
+  const { setNewRecording } = useRecordings();
 
   const updateRecorderState = () => {
     const recorderActions = {

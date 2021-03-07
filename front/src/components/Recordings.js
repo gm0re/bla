@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import Recording from './Recording';
 import EmptyFeed from './EmptyFeed';
+
+import useRecordings from '../hooks/useRecordings';
 
 const RecordingsWrapper = styled.div`
   height: 584px;
@@ -13,12 +14,14 @@ const RecordingsWrapper = styled.div`
   flex-direction: column;
 `;
 
-const Recordings = ({
-  fetchRecordings,
-  isLastPageReached,
-  recordings,
-  recordingsCreatedCount
-}) => {
+const Recordings = () => {
+  const {
+    fetchRecordings,
+    isLastPageReached,
+    recordings,
+    recordingsCreatedCount
+  } = useRecordings();
+
   const [page, setPage] = useState(1);
   const recordingsRef = useRef(null);
   const { id } = useParams();
@@ -78,13 +81,6 @@ const Recordings = ({
       )}
     </RecordingsWrapper>
   );
-};
-
-Recordings.propTypes = {
-  fetchRecordings: PropTypes.func,
-  isLastPageReached: PropTypes.bool,
-  recordings: PropTypes.arrayOf(PropTypes.object),
-  recordingsCreatedCount: PropTypes.number
 };
 
 export default Recordings;

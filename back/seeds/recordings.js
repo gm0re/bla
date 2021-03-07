@@ -12,6 +12,7 @@ exports.seed = knex => (
       for (let i = 0; i <= RECORDINGS_TO_SEED; i++) {
         recordings.push({
           filename: faker.system.fileName(),
+          filepath: faker.system.fileName(),
           filetype: faker.system.fileType(),
           filesize: faker.random.float(),
           duration: faker.random.float(),

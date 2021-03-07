@@ -30,3 +30,7 @@ yarn-error.log*
 
 # temp img folder
 /back/seeds/PicsTemp
+
+# uploads folder
+/back/uploads
+/back/.tmp

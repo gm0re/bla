@@ -31,6 +31,7 @@ To run the backend project:
 - Make a trello board to manage issues.
 - Apply design + UX.
 - Create iframe wrapper and widgetize.
+- Create tags > ppl and audio/threads.
 - Create preset filters.
 - Create custom filters bar.
 - Store audios.

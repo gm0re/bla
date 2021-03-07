@@ -20,7 +20,7 @@ module.exports.routes = {
   ***************************************************************************/
   'GET /recordings': { action: 'find-recordings-and-replies' },
   'GET /recordings/:id': { action: 'find-recordings-and-replies' },
-  'POST /recordings': { action: 'create-recordings' },
+  'POST /recordings/user/:userId/parent/:parentId?': { action: 'recording-uploading' },
   'DELETE /favs/recording/:recordingId/user/:userId': { action: 'delete-fav-by-user-recording' },
   'DELETE /stars/recording/:recordingId/user/:userId': { action: 'delete-star-by-user-recording' },
   'DELETE /shares/recording/:recordingId/user/:userId': { action: 'delete-share-by-user-recording' },

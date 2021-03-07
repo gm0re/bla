@@ -52,9 +52,11 @@ const recordingsSvc = {
         console.error(error);
       })
   ),
-  save: newRecording => (
+  save: (newRecording, userId, parentRecId = '') => (
     axios
-      .post(`${DOMAIN}/recordings`, newRecording)
+      .post(`${DOMAIN}/recordings/user/${userId}/parent/${parentRecId}`, newRecording, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      })
       .then(({ data: recording }) => recording)
       .catch(error => {
         console.error(error);

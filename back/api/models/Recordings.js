@@ -9,6 +9,7 @@ module.exports = {
 
   attributes: {
     filename: { type: 'string', required: true, unique: true },
+    filepath: { type: 'string', required: true, unique: true },
     filetype: { type: 'string', required: true },
     filesize: { type: 'number', columnType: 'float', required: true },
     duration: { type: 'number', columnType: 'float', required: true },

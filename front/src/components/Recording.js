@@ -35,9 +35,9 @@ const RecordingWrapper = styled.div`
   &:hover {
     background-color: ${({ detailed }) => (detailed ? '#f7f7f7' : '#e0dede')};
   }
+
   padding: 8px;
   cursor: pointer;
-
   background-color: ${({ detailed }) => (detailed ? 'white' : '#eaeaea')};
 
   ${({ detailed }) => (detailed && 'position: sticky; top: 0; z-index: 999;')}
@@ -88,7 +88,8 @@ const Recording = ({
           <Player
             id={recording.id || recording.filename}
             key={recording.id || recording.filename}
-            src={recording.filename}
+            src={`http://localhost:1337/${recording.filepath}`}
+            type={recording.filetype}
             controls
           />
         </div>
@@ -104,6 +105,8 @@ Recording.propTypes = {
   recording: PropTypes.shape({
     createdAt: PropTypes.string,
     filename: PropTypes.string,
+    filepath: PropTypes.string,
+    filetype: PropTypes.string,
     id: PropTypes.number,
     user: PropTypes.shape({
       profilePic: PropTypes.string,
