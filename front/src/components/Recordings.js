@@ -37,8 +37,8 @@ const Recordings = ({
     }
   };
 
-  const doesAnimate = recording => (
-    !!(recordings.indexOf(recording) === 0 && recordingsCreatedCount)
+  const doesAnimate = (recordingsList, recording) => (
+    !!(recordingsList.indexOf(recording) === 0 && recordingsCreatedCount)
   );
 
   const setScrollOnTop = ({ element }) => {
@@ -61,14 +61,14 @@ const Recordings = ({
       {recordings.length ? recordings.map(recording => (
         <div key={recording.id}>
           <Recording
-            animate={doesAnimate(recording)}
+            animate={!id && doesAnimate(recordings, recording)}
             detailed
             key={recording.id}
             recording={recording}
           />
           {!!recording.replies?.length && recording.replies.map(reply => (
             <Recording
-              animate={doesAnimate(reply)}
+              animate={id && doesAnimate(recording.replies, reply)}
               key={reply.id}
               recording={reply}
             />
