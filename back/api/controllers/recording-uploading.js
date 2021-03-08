@@ -1,10 +1,7 @@
 const uniqid = require('uniqid');
 
 module.exports = {
-
-
   friendlyName: 'Recordings uploading',
-
 
   description: 'Create a new user recording and save the recording file.',
 
@@ -25,17 +22,26 @@ module.exports = {
   },
 
   exits: {
+    noFileAttached: {
+      description: 'No file was attached.',
+      responseType: 'badRequest'
+    },
 
+    tooBig: {
+      description: 'The file is too big.',
+      responseType: 'badRequest'
+    }
   },
 
-  fn: function({ userId, parentId = null }) {
+  fn: async function({ recording, userId, parentId = null }) {
     let filepath = 'uploads';
 
+    const maxBytes = 1000000;
     const filename = uniqid();
     const dirname = require('path').resolve(sails.config.appPath, `.tmp/public/${filepath}`);
 
-    const saveAs = (__newFileStream, next) => {
-      const [mimetype] = __newFileStream.headers['content-type'].split(';');
+    const saveAs = (newRecordingFile, next) => {
+      const [mimetype] = newRecordingFile.headers['content-type'].split(';');
       const [_, extension] = mimetype.split('/');
 
       try {
@@ -51,39 +57,35 @@ module.exports = {
       }
     };
 
-    const saveRecording = async (err, recordingFiles) => {
-      if (err) {
-        return this.res.serverError(err);
-      }
+    const uploadedRec = await sails.uploadOne(recording, {
+      dirname,
+      maxBytes,
+      saveAs
+    })
+    .intercept('E_EXCEEDS_UPLOAD_LIMIT', 'tooBig')
+    .intercept(err => new Error(`The photo upload failed: ${util.inspect(err)}`));
 
-      if (!recordingFiles.length) {
-        return this.res.badRequest('No file was uploaded.');
-      }
+    if(!uploadedRec) {
+      throw 'noFileAttached';
+    }
 
-      const [{ size: filesize, type: filetype }] = recordingFiles;
+    const { size: filesize, type: filetype } = uploadedRec;
 
-      const recording = {
-        filepath,
-        filesize,
-        filetype,
-        filename,
-        duration: 0,
-        user: userId,
-        parent: parentId
-      };
-
-      const newRecording = await Recordings.create(recording).fetch();
-
-      console.log('New rec stored: ', newRecording);
-
-      return newRecording;
+    const recordingData = {
+      filepath,
+      filesize,
+      filetype,
+      filename,
+      duration: 0,
+      user: userId,
+      parent: parentId
     };
 
-    this.req.file('recording').upload({
-      maxBytes: 1000000,
-      dirname,
-      saveAs
-    }, saveRecording);
+    const newRecording = await Recordings.create(recordingData).fetch();
+
+    console.log('New rec stored: ', newRecording);
+
+    return newRecording;
   }
 
 };
