@@ -55,6 +55,7 @@ const Recordings = ({
     }
   }, [recordingsCreatedCount]);
 
+  console.log('Recordings', recordings);
   return (
     <RecordingsWrapper onScroll={onScroll} ref={recordingsRef}>
       {recordings.length ? recordings.map(recording => (

@@ -59,14 +59,28 @@ const useRecordings = () => {
     console.log('new rec', recording);
 
     setRecordingsCreatedCount(oldRecordingsCreatedCount => oldRecordingsCreatedCount + 1);
-    setRecordingsDictionary(oldRecsDictionary => ({
-      [recording[recording.id]]: recording,
-      ...oldRecsDictionary
-    }));
-    setRecordings(oldRecordings => [
-      recording,
-      ...oldRecordings
-    ]);
+
+    if (parentRecId) {
+      recordings[0].replies = [
+        recording,
+        ...recordings[0].replies
+      ];
+
+      setRecordingsDictionary(oldRecsDictionary => ({
+        [oldRecsDictionary[parentRecId].replies]: recording,
+        ...oldRecsDictionary
+      }));
+      setRecordings(() => ([...recordings]));
+    } else {
+      setRecordingsDictionary(oldRecsDictionary => ({
+        [recording[recording.id]]: recording,
+        ...oldRecsDictionary
+      }));
+      setRecordings(oldRecordings => [
+        recording,
+        ...oldRecordings
+      ]);
+    }
   };
 
   return [
