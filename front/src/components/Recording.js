@@ -19,6 +19,9 @@ const PlayerWrapper = styled.div`
 `;
 
 const Player = styled.audio`
+  &:focus {
+    outline: none;
+  }
   height: 35px;
 `;
 
