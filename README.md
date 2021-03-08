@@ -43,6 +43,8 @@ To run the backend project:
 - User settings.
 - Widget customization (user + owner).
 
+## Fix me
+- Recordings pag issues > Implement recordings pagination
 ## Widgets
 - Bag of audios
 - Live conversations
