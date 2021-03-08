@@ -32,7 +32,7 @@ const Recordings = ({
     if (!isLastPageReached && isAtBottom()) {
       const newPage = page + 1;
 
-      fetchRecordings(getIdFilter(), page);
+      fetchRecordings(getIdFilter(), page, undefined, false);
       setPage(newPage);
     }
   };
@@ -55,7 +55,6 @@ const Recordings = ({
     }
   }, [recordingsCreatedCount]);
 
-  console.log('Recordings', recordings);
   return (
     <RecordingsWrapper onScroll={onScroll} ref={recordingsRef}>
       {recordings.length ? recordings.map(recording => (

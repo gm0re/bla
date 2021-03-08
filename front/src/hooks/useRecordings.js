@@ -18,7 +18,12 @@ const useRecordings = () => {
     [recording.id]: recording
   });
 
-  const fetchRecordings = async (filters, page = 0, sorting = undefined, refresh = true) => {
+  const fetchRecordings = async (
+    filters,
+    page = 0,
+    sorting = undefined,
+    refresh = true
+  ) => {
     if (refresh || !isLastPageReached) {
       const nextPage = RECORDINGS_PER_PAGE * page;
 
@@ -52,11 +57,7 @@ const useRecordings = () => {
     // 👨‍🏭 should be extracted from a user token in the backend
     const { userId } = userSvc.get();
 
-    console.log(blob);
-
     const recording = attachUserToRecording(await recordingsSvc.save(recordingData, userId, parentRecId));
-
-    console.log('new rec', recording);
 
     setRecordingsCreatedCount(oldRecordingsCreatedCount => oldRecordingsCreatedCount + 1);
 
