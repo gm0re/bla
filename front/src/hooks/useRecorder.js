@@ -1,18 +1,17 @@
 import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
 import { states as recorderStates } from '../constants/recorder';
 
-import useRecordings from '../hooks/useRecordings';
-
 const { RECORDING, RESUMING, PAUSED, INACTIVE } = recorderStates;
 
-const useRecorder = () => {
+const useRecorder = setNewRecording => {
   // 👷 WIP: save stream to stop all tracks by getTracks()[0].stop()
   // causing a 🐛 because of tracks removal?
   const [, setStream] = useState();
   const [recorder, setRecorder] = useState(null);
   const [recorderState, setRecorderState] = useState(INACTIVE);
-  const { setNewRecording } = useRecordings();
+  const { id: parentRecId } = useParams();
 
   const updateRecorderState = () => {
     const recorderActions = {
@@ -40,6 +39,10 @@ const useRecorder = () => {
     setRecorderState(INACTIVE);
   };
 
+  const onSetNewRecording = event => {
+    setNewRecording(event, parentRecId);
+  };
+
   useEffect(async() => {
     if (recorder === null) {
       if (recorderState === RECORDING) {
@@ -61,9 +64,9 @@ const useRecorder = () => {
   useEffect(() => {
     if (recorder !== null) {
       recorder.start();
-      recorder.addEventListener('dataavailable', setNewRecording);
+      recorder.addEventListener('dataavailable', onSetNewRecording);
 
-      return () => recorder.removeEventListener('dataavailable', setNewRecording);
+      return () => recorder.removeEventListener('dataavailable', onSetNewRecording);
     }
   }, [recorder]);
 

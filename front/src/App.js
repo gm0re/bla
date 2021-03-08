@@ -14,6 +14,8 @@ const Recordings = lazy(() => import('./components/Recordings'));
 
 import userSvc from './services/user';
 
+import useRecordings from "./hooks/useRecordings";
+
 const GlobalWrapper = styled.div`
   font-family: sans-serif;
   width: 50%;
@@ -27,6 +29,14 @@ const GlobalWrapper = styled.div`
 `;
 
 const App = () => {
+  const [
+    fetchRecordings,
+    isLastPageReached,
+    recordings,
+    recordingsCreatedCount,
+    setNewRecording
+  ] = useRecordings();
+
   // 👩‍🏭 hardcoded user until log in is implemented
   const user = userSvc.get();
 
@@ -37,9 +47,14 @@ const App = () => {
         <Redirect exact from="/" to="/recordings" />
         <Route path="/recordings/:id?">
           <Suspense fallback={<EmptyFeed />}>
-            <Recordings />
+            <Recordings
+              fetchRecordings={fetchRecordings}
+              isLastPageReached={isLastPageReached}
+              recordings={recordings}
+              recordingsCreatedCount={recordingsCreatedCount}
+            />
           </Suspense>
-          <Recorder />
+          <Recorder setNewRecording={setNewRecording} />
         </Route>
       </Switch>
     </GlobalWrapper>

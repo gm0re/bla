@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
@@ -39,14 +40,16 @@ const RecordButton = styled(RecorderButton)`
   color: white;
 `;
 
-const Recorder = () => {
+const Recorder = ({
+  setNewRecording
+}) => {
   const [
     pauseRecording,
     recorderState,
     resumeRecording,
     startRecording,
     stopRecording
-  ] = useRecorder();
+  ] = useRecorder(setNewRecording);
 
   return (
     <RecorderWrapper>
@@ -79,6 +82,10 @@ const Recorder = () => {
       </RecorderButton>
     </RecorderWrapper>
   )
+};
+
+Recorder.propTypes = {
+  setNewRecording: PropTypes.func
 };
 
 export default Recorder;

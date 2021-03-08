@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
 
 import recordingsSvc from '../services/recordings';
 import userSvc from '../services/user';
@@ -7,7 +6,6 @@ import userSvc from '../services/user';
 const RECORDINGS_PER_PAGE = 10;
 
 const useRecordings = () => {
-  const { id: parentRecId } = useParams();
   const [recordings, setRecordings] = useState([]);
   const [recordingsDictionary, setRecordingsDictionary] = useState({});
   const [recordingsCreatedCount, setRecordingsCreatedCount] = useState(0);
@@ -46,10 +44,10 @@ const useRecordings = () => {
     user: userSvc.get()
   });
 
-  const setNewRecording = ({ data: blob }) => {
-    // const filename = URL.createObjectURL(blob);
-
+  const setNewRecording = async ({ data: blob }, parentRecId) => {
+    console.log(parentRecId);
     const recordingData = new FormData();
+
     recordingData.append('recording', blob);
 
     // 👨‍🏭 should be extracted from a user token in the backend
@@ -57,7 +55,7 @@ const useRecordings = () => {
 
     console.log(blob);
 
-    const recording = attachUserToRecording(recordingsSvc.save(recordingData, userId, parentRecId));
+    const recording = attachUserToRecording(await recordingsSvc.save(recordingData, userId, parentRecId));
 
     console.log('new rec', recording);
 
@@ -72,13 +70,13 @@ const useRecordings = () => {
     ]);
   };
 
-  return {
+  return [
     fetchRecordings,
     isLastPageReached,
     recordings,
     recordingsCreatedCount,
     setNewRecording
-  };
+  ];
 };
 
 export default useRecordings;
