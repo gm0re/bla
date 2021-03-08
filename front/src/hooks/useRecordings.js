@@ -24,7 +24,6 @@ const useRecordings = () => {
     sorting = undefined,
     refresh = true
   ) => {
-    console.log('START', 'refresh', refresh, 'isLastPageReached', isLastPageReached);
     if (refresh || !isLastPageReached) {
       const nextPage = RECORDINGS_PER_PAGE * page;
 
@@ -41,13 +40,10 @@ const useRecordings = () => {
       // 🧯 sailsjs blueprint api does not return pages
       if (newRecordings.length !== RECORDINGS_PER_PAGE) {
         setIsLastPageReached(true);
-        console.log('true');
       } else {
         setIsLastPageReached(false);
-        console.log('false');
       }
     }
-    console.log('END', 'refresh', refresh, 'isLastPageReached', isLastPageReached);
   };
 
   const attachUserToRecording = recording => ({
