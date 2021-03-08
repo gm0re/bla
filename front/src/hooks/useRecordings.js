@@ -45,7 +45,6 @@ const useRecordings = () => {
   });
 
   const setNewRecording = async ({ data: blob }, parentRecId) => {
-    console.log(parentRecId);
     const recordingData = new FormData();
 
     recordingData.append('recording', blob);
