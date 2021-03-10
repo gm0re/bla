@@ -7,12 +7,14 @@
   </head>
   <body width="100%" height="100%">
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    Jelou {{ name }} !
+    {{ name }} forma de onda -
 
     <p id="audioSamples">{{ audioSamples }} </p>
 
-    <div id="background" style="background-color: orange; width: 0px; height: 155px;">
-      <canvas id="canvas" width="800" height="155"></canvas>
+    <div id="canvas-container" style="width: 800px; height: 155px; position: relative;">
+      <div id="background" style="background-color: orange; width: 0px; height: 155px; position: absolute;"></div>
+      <div id="position-mask" style="background-color: #00000026; width: 0px; height: 155px; position: absolute; z-index: 999;"></div>
+      <canvas id="canvas" style="width: 800px; height: 155px; position: absolute; z-index: 9999;"></canvas>
     </div>
 
     <script>
@@ -20,9 +22,13 @@
         const audioSamplesRaw = document.getElementById("audioSamples").innerHTML;
         const audioSamples = audioSamplesRaw.split(',');
         // const audioSamplesChunk = audioSamples.slice(0, 300);
-
+        const canvasContainer = document.getElementById('canvas-container');
+        const positionMask = document.getElementById('position-mask');
         const progressMask = document.getElementById('background');
+
+        let intervalId = 0;
         let progressPxls = 0;
+        let positionPxls = 0;
 
         const canvas = document.querySelector("canvas");
 
@@ -36,15 +42,39 @@
         ctx.translate(0, canvas.offsetHeight / 2);
         ctx.globalCompositeOperation = "destination-out";
 
-        const intervalId = setInterval(() => {
-          progressPxls = progressPxls + 0.5;
-          progressMask.style.width = `${progressPxls}px`;
+        const drawPositionMask = (x) => {
+          positionPxls = x;
+          positionMask.style.width = `${positionPxls}px`;
+        };
 
-          if (progressPxls >= canvas.offsetWidth) {
-            stopProgress();
-            return;
+        const drawProgressMask = (x) => {
+          progressPxls = x;
+          progressMask.style.width = `${progressPxls}px`;
+        };
+
+        canvasContainer.onmousemove = (e) => {
+          drawPositionMask(e.clientX);
+        };
+
+        canvasContainer.onmouseout = () => {
+          drawPositionMask(0);
+        };
+
+        canvasContainer.onclick = (e) => {
+          drawProgressMask(e.clientX);
+          if (intervalId) {
+            clearInterval(intervalId);
+          } else {
+            intervalId = setInterval(() => {
+              drawProgressMask(progressPxls + 0.5);
+
+              if (progressPxls >= canvas.offsetWidth) {
+                stopProgress();
+                return;
+              }
+            }, 5);
           }
-        }, 5);
+        };
 
         const stopProgress = () => {
           clearInterval(intervalId);
@@ -65,7 +95,7 @@
         const drawLineSegment = (ctx, x, y, spaceBetween, isEven) => {
           y = isEven ? y : -y;
 
-          ctx.lineWidth = 1;
+          ctx.lineWidth = 2;
           ctx.strokeStyle = "white";
 
           ctx.beginPath();
@@ -87,7 +117,6 @@
             let waveHeight = (audioSamples[i] * canvasHeight) / (maxSampleRate * 2);
 
             if (waveHeight >= canvasHeight / 2.5) {
-              console.log(waveHeight);
               waveHeight = (canvasHeight / 2) - 5;
             }
             drawLineSegment(ctx, waveHorizontalPosition, waveHeight, waveWidth, isEven);
