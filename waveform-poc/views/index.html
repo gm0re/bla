@@ -11,13 +11,18 @@
 
     <p id="audioSamples">{{ audioSamples }} </p>
 
-    <canvas id="canvas" width="800" height="255"></canvas>
+    <div id="background" style="background-color: red; width: 0px; height: 155px;">
+      <canvas id="canvas" width="800" height="155"></canvas>
+    </div>
 
     <script>
       ((() => {
         const audioSamplesRaw = document.getElementById("audioSamples").innerHTML;
         const audioSamples = audioSamplesRaw.split(',');
         // const audioSamplesChunk = audioSamples.slice(0, 300);
+
+        const progressMask = document.getElementById('background');
+        let progressPxls = 0;
 
         const canvas = document.querySelector("canvas");
 
@@ -26,10 +31,20 @@
 
         const ctx = canvas.getContext('2d');
 
+        // ctx.fillStyle = "blue";
+        ctx.fillRect(0, 0, canvas.offsetWidth, canvas.offsetHeight);
+
         ctx.translate(0, canvas.offsetHeight / 2);
 
+        ctx.globalCompositeOperation = "destination-out";
+
+        setInterval(() => {
+          progressPxls = progressPxls + 0.5;
+          progressMask.style.width = `${progressPxls}px`;
+        }, 25);
+
         const getFilteredSamplesByBlocks = (audioBuffer, totalWidth) => {
-          const wavesDistance = 2.5;
+          const wavesDistance = 5;
           const samples = Math.floor(totalWidth / wavesDistance);
           const blockSize = Math.floor(audioBuffer.length / samples);
           const filteredAudioBuffer = [];
@@ -44,7 +59,7 @@
           y = isEven ? y : -y;
 
           ctx.lineWidth = 1;
-          ctx.strokeStyle = "black";
+          ctx.strokeStyle = "white";
 
           ctx.beginPath();
           ctx.moveTo(x, 0);
@@ -74,6 +89,7 @@
         const filteredAudioSamples = getFilteredSamplesByBlocks(audioSamples, canvas.width);
 
         draw(filteredAudioSamples, canvas, ctx);
+
       })());
     </script>
   </body>
