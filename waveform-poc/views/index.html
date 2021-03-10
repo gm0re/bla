@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Waveform POC</title>
+  </head>
+  <body width="100%" height="100%">
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    Jelou {{ name }} !
+
+    <p id="audioSamples">{{ audioSamples }} </p>
+
+    <canvas id="canvas" width="800" height="255"></canvas>
+
+    <script>
+      ((() => {
+        const audioSamplesRaw = document.getElementById("audioSamples").innerHTML;
+        const audioSamples = audioSamplesRaw.split(',');
+        // const audioSamplesChunk = audioSamples.slice(0, 300);
+
+        const canvas = document.querySelector("canvas");
+
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+
+        const ctx = canvas.getContext('2d');
+
+        ctx.translate(0, canvas.offsetHeight / 2);
+
+        const getFilteredSamplesByBlocks = (audioBuffer, totalWidth) => {
+          const wavesDistance = 2.5;
+          const samples = Math.floor(totalWidth / wavesDistance);
+          const blockSize = Math.floor(audioBuffer.length / samples);
+          const filteredAudioBuffer = [];
+
+          for (let i = 0; i < audioBuffer.length; i = i + blockSize) {
+            filteredAudioBuffer.push(audioBuffer[i]);
+          }
+          return filteredAudioBuffer;
+        };
+
+        const drawLineSegment = (ctx, x, y, spaceBetween, isEven) => {
+          y = isEven ? y : -y;
+
+          ctx.lineWidth = 1;
+          ctx.strokeStyle = "black";
+
+          ctx.beginPath();
+          ctx.moveTo(x, 0);
+          ctx.lineTo(x, y);
+          ctx.arc(x + spaceBetween / 2, y, spaceBetween / 2, Math.PI, 0, isEven);
+          ctx.lineTo(x + spaceBetween, 0);
+          ctx.stroke();
+        };
+
+        const draw = (audioSamples, { height: canvasHeight }, ctx) => {
+          const waveWidth = canvas.offsetWidth / audioSamples.length;
+          const maxSampleRate = 255;
+
+          for (let i = 0; i < audioSamples.length; i++) {
+            const waveHorizontalPosition = waveWidth * i;
+            const isEven = (i + 1) % 2;
+
+            let waveHeight = (audioSamples[i] * canvasHeight) / (maxSampleRate * 2);
+
+            if (waveHeight >= canvasHeight / 2) {
+              waveHeight = (canvasHeight / 2) - 3;
+            }
+            drawLineSegment(ctx, waveHorizontalPosition, waveHeight, waveWidth, isEven);
+          }
+        };
+
+        const filteredAudioSamples = getFilteredSamplesByBlocks(audioSamples, canvas.width);
+
+        draw(filteredAudioSamples, canvas, ctx);
+      })());
+    </script>
+  </body>
+</html>
