@@ -11,7 +11,7 @@
 
     <p id="audioSamples">{{ audioSamples }} </p>
 
-    <div id="background" style="background-color: red; width: 0px; height: 155px;">
+    <div id="background" style="background-color: orange; width: 0px; height: 155px;">
       <canvas id="canvas" width="800" height="155"></canvas>
     </div>
 
@@ -31,17 +31,24 @@
 
         const ctx = canvas.getContext('2d');
 
-        // ctx.fillStyle = "blue";
+        ctx.fillStyle = "#232831";
         ctx.fillRect(0, 0, canvas.offsetWidth, canvas.offsetHeight);
-
         ctx.translate(0, canvas.offsetHeight / 2);
-
         ctx.globalCompositeOperation = "destination-out";
 
-        setInterval(() => {
+        const intervalId = setInterval(() => {
           progressPxls = progressPxls + 0.5;
           progressMask.style.width = `${progressPxls}px`;
-        }, 25);
+
+          if (progressPxls >= canvas.offsetWidth) {
+            stopProgress();
+            return;
+          }
+        }, 5);
+
+        const stopProgress = () => {
+          clearInterval(intervalId);
+        };
 
         const getFilteredSamplesByBlocks = (audioBuffer, totalWidth) => {
           const wavesDistance = 5;
@@ -79,8 +86,9 @@
 
             let waveHeight = (audioSamples[i] * canvasHeight) / (maxSampleRate * 2);
 
-            if (waveHeight >= canvasHeight / 2) {
-              waveHeight = (canvasHeight / 2) - 3;
+            if (waveHeight >= canvasHeight / 2.5) {
+              console.log(waveHeight);
+              waveHeight = (canvasHeight / 2) - 5;
             }
             drawLineSegment(ctx, waveHorizontalPosition, waveHeight, waveWidth, isEven);
           }
@@ -89,7 +97,6 @@
         const filteredAudioSamples = getFilteredSamplesByBlocks(audioSamples, canvas.width);
 
         draw(filteredAudioSamples, canvas, ctx);
-
       })());
     </script>
   </body>
