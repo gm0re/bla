@@ -29,7 +29,7 @@ const useRecordings = () => {
 
       const newRecordings = await recordingsSvc.get(RECORDINGS_PER_PAGE, nextPage, filters, sorting);
 
-      if (newRecordings.length) {
+      if (newRecordings?.length) {
         const shouldResetRecsDictionary = refresh ? {} : { ...recordingsDictionary };
         const newRecsDictionary = newRecordings.reduce(recordingsDictReducer, shouldResetRecsDictionary);
 

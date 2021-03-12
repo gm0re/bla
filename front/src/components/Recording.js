@@ -7,6 +7,7 @@ import RecordingActions from './RecordingActions';
 import Timestamp from './Timestamp';
 import UserIcon from './UserIcon';
 import Username from './Username';
+import Player from './Player';
 
 const PlayerWrapper = styled.div`
   display: flex;
@@ -16,22 +17,6 @@ const PlayerWrapper = styled.div`
   > div {
     margin: 6px;
   }
-`;
-
-const Player = styled.audio`
-  &:focus {
-    outline: none;
-  }
-  height: 35px;
-`;
-
-const RecordingHeader = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: start;
-  flex-direction: row;
-  margin: 4px;
-  line-height: 18px;
 `;
 
 const RecordingWrapper = styled.div`
@@ -63,6 +48,10 @@ const Separator = styled.span`
   margin-right: 4px;
 `;
 
+const HeaderWrapper = styled.div`
+  display: flex;
+`;
+
 const Recording = ({
   animate,
   detailed,
@@ -81,21 +70,17 @@ const Recording = ({
       onClick={onRecordingClick}
     >
       <PlayerWrapper>
-        <UserIcon profilePic={recording.user.profilePic} />
-        <div>
-          <RecordingHeader>
-            <Username>{recording.user.username}</Username>
-            <Separator>·</Separator>
-            <Timestamp relative>{recording.createdAt}</Timestamp>
-          </RecordingHeader>
-          <Player
-            id={recording.id || recording.filename}
-            key={recording.id || recording.filename}
-            src={`http://localhost:1337/${recording.filepath}`}
-            type={recording.filetype}
-            controls
-          />
-        </div>
+        <Player
+          header={
+            <HeaderWrapper>
+              <Username>{recording.user.username}</Username>
+              <Separator>·</Separator>
+              <Timestamp relative>{recording.createdAt}</Timestamp>
+            </HeaderWrapper>
+          }
+          playButton={<UserIcon profilePic={recording.user.profilePic} />}
+          recording={recording}
+        />
       </PlayerWrapper>
       <RecordingActions recording={recording} />
     </RecordingWrapper>

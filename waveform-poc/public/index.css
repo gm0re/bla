@@ -6,7 +6,7 @@
   cursor: pointer;
 }
 
-#background {
+#progress-mask {
   background-color: orange;
   width: 0px;
   height: 50px;

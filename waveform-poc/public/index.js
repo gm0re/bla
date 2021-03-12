@@ -2,7 +2,7 @@
   const audioSamples = document.getElementById('audio-samples').innerHTML.split(',');
   const canvasContainer = document.getElementById('canvas-container');
   const positionMask = document.getElementById('position-mask');
-  const progressMask = document.getElementById('background');
+  const progressMask = document.getElementById('progress-mask');
 
   // weird stuff to get audio duration on chrome
   const getPlayerStats = (player, next) => {
@@ -72,8 +72,8 @@
     ctx.stroke();
   };
 
-  const draw = (audioSamples, { height: canvasHeight }, ctx) => {
-    const waveWidth = canvas.offsetWidth / audioSamples.length;
+  const draw = (audioSamples, { height: canvasHeight, offsetWidth }, ctx) => {
+    const waveWidth = offsetWidth / audioSamples.length;
     const maxSampleRate = 255;
 
     for (let i = 0; i < audioSamples.length; i++) {
