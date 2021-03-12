@@ -1,7 +1,6 @@
 ((() => {
   const audioSamplesRaw = document.getElementById("audioSamples").innerHTML;
   const audioSamples = audioSamplesRaw.split(',');
-  const player = document.getElementById('audio');
   const canvasContainer = document.getElementById('canvas-container');
   const positionMask = document.getElementById('position-mask');
   const progressMask = document.getElementById('background');
@@ -18,40 +17,12 @@
     player.currentTime = 24 * 60 * 60; // fake big time
   };
 
-  getAudioMetadata(player, (audioMetaData) => {
-    console.log(audioMetaData);
-  });
-
-  player.addEventListener('timeupdate', () => {
-    drawProgressMask(player.currentTime / player.duration);
-  });
-
-  const canvas = document.querySelector("canvas");
-
-  canvas.width = canvas.offsetWidth;
-  canvas.height = canvas.offsetHeight;
-
-  const ctx = canvas.getContext('2d');
-
-  ctx.fillStyle = "#232831";
-  ctx.fillRect(0, 0, canvas.offsetWidth, canvas.offsetHeight);
-  ctx.translate(0, canvas.offsetHeight / 2);
-  ctx.globalCompositeOperation = "destination-out";
-
   const drawPositionMask = (x) => {
     positionMask.style.width = `${x}px`;
   };
 
   const drawProgressMask = (x) => {
     progressMask.style.width = `${x * 100}%`;
-  };
-
-  canvasContainer.onmousemove = ({ layerX }) => {
-    drawPositionMask(layerX);
-  };
-
-  canvasContainer.onmouseout = () => {
-    drawPositionMask(0);
   };
 
   const getFilteredSamplesByBlocks = (audioBuffer, totalWidth) => {
@@ -97,7 +68,39 @@
     }
   };
 
-  const filteredAudioSamples = getFilteredSamplesByBlocks(audioSamples, canvas.width);
+  const player = document.getElementById('audio');
 
-  draw(filteredAudioSamples, canvas, ctx);
+  player.addEventListener('timeupdate', () => {
+    drawProgressMask(player.currentTime / player.duration);
+  });
+
+  const canvas = document.querySelector("canvas");
+
+  canvas.width = canvas.offsetWidth;
+  canvas.height = canvas.offsetHeight;
+
+  canvasContainer.onmousemove = ({ layerX }) => {
+    drawPositionMask(layerX);
+  };
+
+  canvasContainer.onmouseout = () => {
+    drawPositionMask(0);
+  };
+
+  const ctx = canvas.getContext('2d');
+
+  ctx.fillStyle = "#232831";
+  ctx.fillRect(0, 0, canvas.offsetWidth, canvas.offsetHeight);
+  ctx.translate(0, canvas.offsetHeight / 2);
+  ctx.globalCompositeOperation = "destination-out";
+
+  getAudioMetadata(player, (audioMetaData) => {
+    console.log(audioMetaData);
+  });
+
+  draw(
+    getFilteredSamplesByBlocks(audioSamples, canvas.width),
+    canvas,
+    ctx
+  );
 })());
