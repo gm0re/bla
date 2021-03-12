@@ -65,23 +65,6 @@
     drawPositionMask(0);
   };
 
-  // canvasContainer.onclick = (e) => {
-  //   drawProgressMask(e.pageX);
-  //   if (intervalId) {
-  //     clearInterval(intervalId);
-  //     intervalId = undefined;
-  //   } else {
-  //     intervalId = setInterval(() => {
-  //       drawProgressMask(progressPxls + 0.5);
-
-  //       if (progressPxls >= canvas.offsetWidth) {
-  //         stopProgress();
-  //         return;
-  //       }
-  //     }, 5);
-  //   }
-  // };
-
   const stopProgress = () => {
     clearInterval(intervalId);
   };
