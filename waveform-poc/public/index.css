@@ -3,6 +3,7 @@
   height: 50px;
   position: relative;
   overflow: hidden;
+  cursor: pointer;
 }
 
 #background {
@@ -35,9 +36,11 @@
 
 #play-btn {
   min-width: 60px;
+  cursor: pointer;
 }
 
 #audio-time {
   display: flex;
   align-items: center;
+  cursor: default;
 }
