@@ -10,23 +10,26 @@ app.set('views', __dirname + '/views');
 app.engine('html', engine.mustache);
 app.set('view engine', 'html');
 
+app.use(express.static('public'));
+
 app.get('/', (_, res) => {
-  fs.readFile('./sktwi1e0bkm16faiz.webm', (err, file) => {
-    if (err) throw new err;
+  fs.readFile('./public/sktwi1e0bkm16faiz.webm', (err, file) => {
+    if (err) throw new Error(err);
 
     const { data: audioSamples } = file.toJSON();
 
     fs.writeFile('./file.json', JSON.stringify(file.toJSON()), (err) => {
-      if (err) throw err;
+      if (err) throw new Error(err);
       console.log(`The file has been saved! File data buffer: ${file.toJSON().data.length}`);
 
       const data = {
         name: 'gmore',
+        audioUrl: 'http://localhost:8080/sktwi1e0bkm16faiz.webm',
         audioSamples: audioSamples
       };
 
       res.render(path.join('index.html'), data, (err, html) => {
-        if (err) throw new err;
+        if (err) throw new Error(err);
 
         res.send(html);
       });

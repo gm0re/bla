@@ -4,129 +4,26 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Waveform POC</title>
+    <link rel="stylesheet" href="index.css">
   </head>
   <body width="100%" height="100%">
-    <noscript>You need to enable JavaScript to run this app.</noscript>
     {{ name }} forma de onda -
 
     <p id="audioSamples">{{ audioSamples }} </p>
 
-    <div id="canvas-container" style="width: 800px; height: 155px; position: relative;">
-      <div id="background" style="background-color: orange; width: 0px; height: 155px; position: absolute;"></div>
-      <div id="position-mask" style="background-color: #00000026; width: 0px; height: 155px; position: absolute; z-index: 999;"></div>
-      <canvas id="canvas" style="width: 800px; height: 155px; position: absolute; z-index: 9999;"></canvas>
+    <audio id="audio" src={{ audioUrl }} preload="metadata" controls type="audio/webm" codecs="opus"></audio>
+
+    <br />
+
+    <div id="player-container">
+      <button id="play-btn">Play</button>
+      <div id="canvas-container">
+        <div id="background"></div>
+        <div id="position-mask"></div>
+        <canvas id="canvas"></canvas>
+      </div>
     </div>
 
-    <script>
-      ((() => {
-        const audioSamplesRaw = document.getElementById("audioSamples").innerHTML;
-        const audioSamples = audioSamplesRaw.split(',');
-        // const audioSamplesChunk = audioSamples.slice(0, 300);
-        const canvasContainer = document.getElementById('canvas-container');
-        const positionMask = document.getElementById('position-mask');
-        const progressMask = document.getElementById('background');
-
-        let intervalId = 0;
-        let progressPxls = 0;
-        let positionPxls = 0;
-
-        const canvas = document.querySelector("canvas");
-
-        canvas.width = canvas.offsetWidth;
-        canvas.height = canvas.offsetHeight;
-
-        const ctx = canvas.getContext('2d');
-
-        ctx.fillStyle = "#232831";
-        ctx.fillRect(0, 0, canvas.offsetWidth, canvas.offsetHeight);
-        ctx.translate(0, canvas.offsetHeight / 2);
-        ctx.globalCompositeOperation = "destination-out";
-
-        const drawPositionMask = (x) => {
-          positionPxls = x;
-          positionMask.style.width = `${positionPxls}px`;
-        };
-
-        const drawProgressMask = (x) => {
-          progressPxls = x;
-          progressMask.style.width = `${progressPxls}px`;
-        };
-
-        canvasContainer.onmousemove = (e) => {
-          drawPositionMask(e.clientX);
-        };
-
-        canvasContainer.onmouseout = () => {
-          drawPositionMask(0);
-        };
-
-        canvasContainer.onclick = (e) => {
-          drawProgressMask(e.clientX);
-          if (intervalId) {
-            clearInterval(intervalId);
-          } else {
-            intervalId = setInterval(() => {
-              drawProgressMask(progressPxls + 0.5);
-
-              if (progressPxls >= canvas.offsetWidth) {
-                stopProgress();
-                return;
-              }
-            }, 5);
-          }
-        };
-
-        const stopProgress = () => {
-          clearInterval(intervalId);
-        };
-
-        const getFilteredSamplesByBlocks = (audioBuffer, totalWidth) => {
-          const wavesDistance = 5;
-          const samples = Math.floor(totalWidth / wavesDistance);
-          const blockSize = Math.floor(audioBuffer.length / samples);
-          const filteredAudioBuffer = [];
-
-          for (let i = 0; i < audioBuffer.length; i = i + blockSize) {
-            filteredAudioBuffer.push(audioBuffer[i]);
-          }
-          return filteredAudioBuffer;
-        };
-
-        const drawLineSegment = (ctx, x, y, spaceBetween, isEven) => {
-          y = isEven ? y : -y;
-
-          ctx.lineWidth = 2;
-          ctx.strokeStyle = "white";
-
-          ctx.beginPath();
-          ctx.moveTo(x, 0);
-          ctx.lineTo(x, y);
-          ctx.arc(x + spaceBetween / 2, y, spaceBetween / 2, Math.PI, 0, isEven);
-          ctx.lineTo(x + spaceBetween, 0);
-          ctx.stroke();
-        };
-
-        const draw = (audioSamples, { height: canvasHeight }, ctx) => {
-          const waveWidth = canvas.offsetWidth / audioSamples.length;
-          const maxSampleRate = 255;
-
-          for (let i = 0; i < audioSamples.length; i++) {
-            const waveHorizontalPosition = waveWidth * i;
-            const isEven = (i + 1) % 2;
-
-            let waveHeight = (audioSamples[i] * canvasHeight) / (maxSampleRate * 2);
-
-            if (waveHeight >= canvasHeight / 2.5) {
-              waveHeight = (canvasHeight / 2) - 5;
-            }
-            drawLineSegment(ctx, waveHorizontalPosition, waveHeight, waveWidth, isEven);
-          }
-        };
-
-        const filteredAudioSamples = getFilteredSamplesByBlocks(audioSamples, canvas.width);
-
-        draw(filteredAudioSamples, canvas, ctx);
-      })());
-    </script>
+    <script src="index.js"></script>
   </body>
 </html>
