@@ -1,7 +1,6 @@
 ((() => {
   const audioSamplesRaw = document.getElementById("audioSamples").innerHTML;
   const audioSamples = audioSamplesRaw.split(',');
-  // const audioSamplesChunk = audioSamples.slice(0, 300);
   const player = document.getElementById('audio');
   const canvasContainer = document.getElementById('canvas-container');
   const positionMask = document.getElementById('position-mask');
@@ -16,7 +15,7 @@
       };
     }, false);
 
-    player.currentTime = 24 * 60 * 60; //fake big time
+    player.currentTime = 24 * 60 * 60; // fake big time
   };
 
   getAudioMetadata(player, (audioMetaData) => {
