@@ -32,3 +32,12 @@
   flex-direction: row;
   justify-content: center;
 }
+
+#play-btn {
+  min-width: 60px;
+}
+
+#audio-time {
+  display: flex;
+  align-items: center;
+}

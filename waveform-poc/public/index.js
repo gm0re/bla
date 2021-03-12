@@ -7,7 +7,7 @@
 
   // weird stuff to get audio duration on chrome
   const getAudioMetadata = (player, next) => {
-    player.addEventListener('durationchange', (e) => {
+    player.addEventListener('durationchange', () => {
       if (player.duration !== Infinity) {
         player.currentTime = 0;
         next({ player });
@@ -68,9 +68,35 @@
     }
   };
 
+  const getFormattedTime = (secs) => {
+    const minutes = Math.floor(secs / 60);
+    const seconds = Math.floor(secs % 60);
+    const minutesLabel = minutes < 10 ? `0${minutes}` : `${minutes}`;
+    const secondsLabel = seconds < 10 ? `0${seconds}` : `${seconds}`;
+
+    return `${minutesLabel}:${secondsLabel}`;
+  }
+
   const player = document.getElementById('audio');
+  const playBtn = document.getElementById('play-btn');
+  const audioTime = document.getElementById('audio-time');
+
+  let playState = 'pause';
+
+  playBtn.onclick = () => {
+    playBtn.textContent = playState;
+
+    if (playState.toLowerCase() === 'play') {
+      player.pause();
+      playState = 'pause';
+    } else {
+      player.play();
+      playState = 'play';
+    }
+  }
 
   player.addEventListener('timeupdate', () => {
+    audioTime.innerHTML = `${getFormattedTime(player.currentTime)} / ${getFormattedTime(player.duration)}`;
     drawProgressMask(player.currentTime / player.duration);
   });
 

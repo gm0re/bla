@@ -9,18 +9,21 @@
   <body width="100%" height="100%">
     {{ name }} forma de onda -
 
-    <p id="audioSamples">{{ audioSamples }} </p>
+    <p id="audioSamples">{{ audioSamples }}</p>
 
     <audio id="audio" src={{ audioUrl }} preload="metadata" controls type="audio/webm" codecs="opus"></audio>
 
     <br />
 
     <div id="player-container">
-      <button id="play-btn">Play</button>
+      <button id="play-btn">play</button>
       <div id="canvas-container">
         <div id="background"></div>
         <div id="position-mask"></div>
         <canvas id="canvas"></canvas>
+      </div>
+      <div id="audio-time">
+        00:00
       </div>
     </div>
 
