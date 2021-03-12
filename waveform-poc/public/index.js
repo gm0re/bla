@@ -7,12 +7,7 @@
   const positionMask = document.getElementById('position-mask');
   const progressMask = document.getElementById('background');
 
-  let audioProgress = 0;
-  let intervalId = 0;
-  let progressPxls = 0;
-  let positionPxls = 0;
-
-  // weird stuff to get audio duration on Chrome
+  // weird stuff to get audio duration on chrome
   const getAudioMetadata = (player, next) => {
     player.addEventListener('durationchange', (e) => {
       if (player.duration !== Infinity) {
@@ -21,19 +16,15 @@
       };
     }, false);
 
-    player.currentTime = 24*60*60; //fake big time
+    player.currentTime = 24 * 60 * 60; //fake big time
   };
 
   getAudioMetadata(player, (audioMetaData) => {
     console.log(audioMetaData);
   });
 
-  player.addEventListener('timeupdate', (e) => {
-    audioProgress = player.currentTime / player.duration;
-
-    progressPxls = audioProgress;
-
-    drawProgressMask(progressPxls);
+  player.addEventListener('timeupdate', () => {
+    drawProgressMask(player.currentTime / player.duration);
   });
 
   const canvas = document.querySelector("canvas");
@@ -49,16 +40,15 @@
   ctx.globalCompositeOperation = "destination-out";
 
   const drawPositionMask = (x) => {
-    positionPxls = x;
-    positionMask.style.width = `${positionPxls}px`;
+    positionMask.style.width = `${x}px`;
   };
 
   const drawProgressMask = (x) => {
     progressMask.style.width = `${x * 100}%`;
   };
 
-  canvasContainer.onmousemove = (e) => {
-    drawPositionMask(e.layerX);
+  canvasContainer.onmousemove = ({ layerX }) => {
+    drawPositionMask(layerX);
   };
 
   canvasContainer.onmouseout = () => {
