@@ -1,5 +1,5 @@
 ((() => {
-  const audioSamples = document.getElementById("audioSamples").innerHTML.split(',');
+  const audioSamples = document.getElementById('audio-samples').innerHTML.split(',');
   const canvasContainer = document.getElementById('canvas-container');
   const positionMask = document.getElementById('position-mask');
   const progressMask = document.getElementById('background');
