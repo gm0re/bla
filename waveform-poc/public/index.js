@@ -58,15 +58,11 @@
   };
 
   canvasContainer.onmousemove = (e) => {
-    drawPositionMask(e.pageX);
+    drawPositionMask(e.layerX);
   };
 
   canvasContainer.onmouseout = () => {
     drawPositionMask(0);
-  };
-
-  const stopProgress = () => {
-    clearInterval(intervalId);
   };
 
   const getFilteredSamplesByBlocks = (audioBuffer, totalWidth) => {
