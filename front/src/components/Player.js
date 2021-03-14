@@ -101,12 +101,16 @@ const Player = ({
   const [audioTime, setAudioTime] = useState('00:00 / 00:00');
   const [playerState, setPlayerState] = useState(PLAYER_STATES.paused);
 
+  let canvas = canvasRef.current;
+  let player = playerRef.current;
+  let positionMask = positionMaskRef.current;
+  let progressMask = progressMaskRef.current;
+
   // weird stuff to load json > first stringify
   const audioSamples = JSON.parse(JSON.stringify(audioSamplesJson)).data;
 
   // weird stuff to get audio duration on chrome
-  const getPlayerStats = (player, next) => {
-    console.log(player);
+  const getPlayerStats = next => {
     player.addEventListener('durationchange', () => {
       if (player.duration !== Infinity) {
         player.currentTime = 0;
@@ -139,14 +143,14 @@ const Player = ({
     return `${minutesLabel}:${secondsLabel}`;
   }
 
-  const updateCurrentTime = (canvas, player, x) => {
+  const updateCurrentTime = x => {
     const progressPositionPercentage = x / canvas.width;
     const newCurrentTime = progressPositionPercentage * player.duration;
 
     player.currentTime = newCurrentTime;
   };
 
-  const playAudio = player => {
+  const playAudio = () => {
     if (playerState === PLAYER_STATES.playing) {
       player.pause();
       setPlayerState(PLAYER_STATES.paused);
@@ -156,14 +160,13 @@ const Player = ({
       setPlayerState(PLAYER_STATES.playing);
       // Show play btn
     }
-    // console.log(player.)
   };
 
-  const drawPositionMask = (positionMask, x) => {
+  const drawPositionMask = x => {
     positionMask.style.width = `${x}px`;
   };
 
-  const drawProgressMask = (progressMask, x, type = 'pixels') => {
+  const drawProgressMask = (x, type = 'pixels') => {
     const types = {
       percentage: '%',
       pixels: 'px'
@@ -205,10 +208,10 @@ const Player = ({
   };
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    const player = playerRef.current;
-    const positionMask = positionMaskRef.current;
-    const progressMask = progressMaskRef.current;
+    canvas = canvasRef.current;
+    player = playerRef.current;
+    positionMask = positionMaskRef.current;
+    progressMask = progressMaskRef.current;
 
     canvas.width = canvas.offsetWidth;
     canvas.height = canvas.offsetHeight;
@@ -223,10 +226,10 @@ const Player = ({
     player.addEventListener('timeupdate', () => {
       const newAudioTime = `${getFormattedTime(player.currentTime)} / ${getFormattedTime(player.duration)}`;
       setAudioTime(newAudioTime);
-      drawProgressMask(progressMask, player.currentTime / player.duration, 'percentage');
+      drawProgressMask(player.currentTime / player.duration, 'percentage');
     });
 
-    getPlayerStats(player, audioMetaData => {
+    getPlayerStats(audioMetaData => {
       console.log(audioMetaData);
     });
 
@@ -238,7 +241,7 @@ const Player = ({
   }, []);
 
   return (
-    <PlayerWrapper onClick={e => e.stopPropagation()}>
+    <PlayerWrapper>
       <audio
         src={`http://localhost:1337/${recording.filepath}`}
         type={recording.filetype}
@@ -248,17 +251,17 @@ const Player = ({
         {header}
         <AudioTime>{audioTime}</AudioTime>
       </PlayerHeader>
-      <PlayerContent>
+      <PlayerContent onClick={e => e.stopPropagation()}>
         <PlayButtonWrappper>
-          <PlayButton onClick={() => playAudio(playerRef.current)}>{playButton}</PlayButton>
+          <PlayButton onClick={playAudio}>{playButton}</PlayButton>
         </PlayButtonWrappper>
         <CanvasContainer
           id={recording.id || recording.filename}
-          onClick={e => updateCurrentTime(canvasRef.current, playerRef.current, e.nativeEvent.layerX)}
-          onMouseUp={e => updateCurrentTime(canvasRef.current, playerRef.current, e.nativeEvent.layerX)}
-          onMouseDown={e => updateCurrentTime(canvasRef.current, playerRef.current, e.nativeEvent.layerX)}
-          onMouseMove={e => drawPositionMask(positionMaskRef.current, e.nativeEvent.layerX)}
-          onMouseOut={() => drawPositionMask(positionMaskRef.current, 0)}
+          onClick={({ nativeEvent: { layerX } }) => updateCurrentTime(layerX)}
+          onMouseUp={({ nativeEvent: { layerX } }) => updateCurrentTime(layerX)}
+          onMouseDown={({ nativeEvent: { layerX } }) => updateCurrentTime(layerX)}
+          onMouseMove={({ nativeEvent: { layerX } }) => drawPositionMask(layerX)}
+          onMouseOut={() => drawPositionMask(0)}
         >
           <ProgressMask ref={progressMaskRef} />
           <PositionMask ref={positionMaskRef} />
