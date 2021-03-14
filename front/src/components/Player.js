@@ -24,7 +24,6 @@ const PositionMask = styled.div`
   width: 0px;
   height: 50px;
   position: absolute;
-  z-index: 999;
 }`;
 
 const PlayerCanvas = styled.canvas`
