@@ -9,3 +9,4 @@ export { default as RecordingActions } from './RecordingActions';
 export { default as Recordings } from './Recordings';
 export { default as UserIcon } from './UserIcon';
 export { default as Username } from './Username';
+export { default as Waveform } from './Waveform';
