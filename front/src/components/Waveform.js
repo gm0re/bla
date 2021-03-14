@@ -71,8 +71,8 @@ const Waveform = ({
     ctx.stroke();
   };
 
-  const draw = (audioWaves, { height: canvasHeight, offsetWidth }, ctx) => {
-    const waveWidth = offsetWidth / audioWaves.length;
+  const draw = (audioWaves, { height: canvasHeight, offsetWidth: canvasWidth }, ctx) => {
+    const waveWidth = canvasWidth / audioWaves.length;
     const maxSampleRate = 255;
 
     for (let i = 0; i < audioWaves.length; i++) {
@@ -88,9 +88,9 @@ const Waveform = ({
     }
   };
 
-  const getFilteredSamplesByBlocks = (audioBuffer, totalWidth) => {
+  const getFilteredSamplesByBlocks = audioBuffer => {
     const wavesDistance = 5;
-    const samples = Math.floor(totalWidth / wavesDistance);
+    const samples = Math.floor(canvas.width / wavesDistance);
     const blockSize = Math.floor(audioBuffer.length / samples);
     const filteredAudioBuffer = [];
 
@@ -105,8 +105,8 @@ const Waveform = ({
     drawProgressMask(player.currentTime / player.duration, 'percentage');
   };
 
-  const updateCurrentTime = (x, width) => {
-    const progressPositionPercentage = x / width;
+  const updateCurrentTime = x => {
+    const progressPositionPercentage = x / canvas.width;
     const newCurrentTime = progressPositionPercentage * player.duration;
 
     player.currentTime = newCurrentTime;
@@ -132,7 +132,7 @@ const Waveform = ({
     player.addEventListener('timeupdate', onTimeUpdate);
 
     draw(
-      getFilteredSamplesByBlocks(audioSamples, canvas.width),
+      getFilteredSamplesByBlocks(audioSamples),
       canvas,
       ctx
     );
@@ -142,10 +142,10 @@ const Waveform = ({
 
   return (
     <WaveformWrapper
-      onClick={({ nativeEvent: { layerX } }) => updateCurrentTime(layerX, canvas.width)}
-      onMouseUp={({ nativeEvent: { layerX } }) => updateCurrentTime(layerX, canvas.width)}
-      onMouseDown={({ nativeEvent: { layerX } }) => updateCurrentTime(layerX, canvas.width)}
-      onMouseMove={({ nativeEvent: { layerX } }) => drawPositionMask(layerX, canvas.width)}
+      onClick={({ nativeEvent: { layerX } }) => updateCurrentTime(layerX)}
+      onMouseUp={({ nativeEvent: { layerX } }) => updateCurrentTime(layerX)}
+      onMouseDown={({ nativeEvent: { layerX } }) => updateCurrentTime(layerX)}
+      onMouseMove={({ nativeEvent: { layerX } }) => drawPositionMask(layerX)}
       onMouseOut={() => drawPositionMask(0)}
     >
       <ProgressMask ref={progressMaskRef} />

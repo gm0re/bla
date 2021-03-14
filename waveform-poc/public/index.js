@@ -44,8 +44,8 @@
     player.currentTime = newCurrentTime;
   };
 
-  const drawPositionMask = (x) => {
-    positionMask.style.width = `${x}px`;
+  const drawPositionMask = ({ layerX }) => {
+    positionMask.style.width = `${layerX}px`;
   };
 
   const drawProgressMask = (x, type = 'pixels') => {
@@ -120,8 +120,8 @@
   canvasContainer.addEventListener('click', updateCurrentTime);
   canvasContainer.addEventListener('mouseup', updateCurrentTime);
   canvasContainer.addEventListener('mousedown', updateCurrentTime);
-  canvasContainer.addEventListener('mousemove', ({ layerX }) => drawPositionMask(layerX));
-  canvasContainer.addEventListener('mouseout', () => drawPositionMask(0));
+  canvasContainer.addEventListener('mousemove', drawPositionMask);
+  canvasContainer.addEventListener('mouseout', () => drawPositionMask({ layerX: 0 }));
 
   const ctx = canvas.getContext('2d');
 
