@@ -101,10 +101,10 @@ const Player = ({
   const [audioTime, setAudioTime] = useState('00:00 / 00:00');
   const [playerState, setPlayerState] = useState(PLAYER_STATES.paused);
 
-  let canvas = canvasRef.current;
-  let player = playerRef.current;
-  let positionMask = positionMaskRef.current;
-  let progressMask = progressMaskRef.current;
+  let { current: canvas } = canvasRef;
+  let { current: player } = playerRef;
+  let { current: positionMask } = positionMaskRef;
+  let { current: progressMask } = progressMaskRef;
 
   // weird stuff to load json > first stringify
   const audioSamples = JSON.parse(JSON.stringify(audioSamplesJson)).data;
@@ -141,7 +141,7 @@ const Player = ({
     const secondsLabel = seconds < 10 ? `0${seconds}` : `${seconds}`;
 
     return `${minutesLabel}:${secondsLabel}`;
-  }
+  };
 
   const updateCurrentTime = x => {
     const progressPositionPercentage = x / canvas.width;
