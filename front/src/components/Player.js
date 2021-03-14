@@ -145,7 +145,6 @@ const Player = ({
         <Waveform
           audioSamples={audioSamples}
           playerRef={playerRef}
-          recording={recording}
         />
       </PlayerContent>
     </PlayerWrapper>
@@ -156,12 +155,8 @@ Player.propTypes = {
   header: PropTypes.node,
   playButton: PropTypes.node,
   recording: PropTypes.shape({
-    filename: PropTypes.string,
     filepath: PropTypes.string,
-    filetype: PropTypes.string,
-    id: PropTypes.number,
-    src: PropTypes.string,
-    type: PropTypes.string
+    filetype: PropTypes.string
   })
 };
 

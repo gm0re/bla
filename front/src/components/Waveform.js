@@ -32,8 +32,7 @@ const PlayerCanvas = styled.canvas`
 
 const Waveform = ({
   audioSamples,
-  playerRef,
-  recording
+  playerRef
 }) => {
   const canvasRef = useRef(null);
   const positionMaskRef = useRef(null);
@@ -143,7 +142,6 @@ const Waveform = ({
 
   return (
     <WaveformWrapper
-      id={recording.id}
       onClick={({ nativeEvent: { layerX } }) => updateCurrentTime(layerX, canvas.width)}
       onMouseUp={({ nativeEvent: { layerX } }) => updateCurrentTime(layerX, canvas.width)}
       onMouseDown={({ nativeEvent: { layerX } }) => updateCurrentTime(layerX, canvas.width)}
@@ -161,8 +159,7 @@ Waveform.propTypes = {
   audioSamples: PropTypes.array,
   playerRef: PropTypes.shape({
     current: PropTypes.instanceOf(HTMLAudioElement)
-  }),
-  recording: PropTypes.object
+  })
 };
 
 export default Waveform;
