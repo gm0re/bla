@@ -8,6 +8,7 @@
 module.exports = {
 
   attributes: {
+    fileextention: { type: 'string', required: true },
     filename: { type: 'string', required: true, unique: true },
     filepath: { type: 'string', required: true, unique: true },
     filetype: { type: 'string', required: true },

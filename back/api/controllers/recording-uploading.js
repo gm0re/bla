@@ -1,4 +1,5 @@
 const uniqid = require('uniqid');
+const fs = require('fs');
 
 module.exports = {
   friendlyName: 'Recordings uploading',
@@ -21,71 +22,65 @@ module.exports = {
     },
   },
 
-  exits: {
-    noFileAttached: {
-      description: 'No file was attached.',
-      responseType: 'badRequest'
-    },
+  exits: {},
 
-    tooBig: {
-      description: 'The file is too big.',
-      responseType: 'badRequest'
-    }
-  },
-
-  fn: async function({ recording, userId, parentId = null }) {
-    let filepath = 'uploads';
-
-    const maxBytes = 1000000;
+  fn: async function({ userId, parentId = null }) {
+    const req = this.req;
     const filename = uniqid();
-    const dirname = require('path').resolve(sails.config.appPath, `.tmp/public/${filepath}`);
+    const dirname = require('path').resolve(sails.config.appPath, 'assets');
 
-    const saveAs = (newRecordingFile, next) => {
-      const [mimetype] = newRecordingFile.headers['content-type'].split(';');
-      const [_, extension] = mimetype.split('/');
+    return new Promise((resolve, reject) => {
+      req.file('recording').upload((err, uploadedFiles) => {
+        if (err) return res.serverError(err);
 
-      try {
-        const newRecFilePath = `${userId}/${filename}.${extension}`;
+        const [uploadedRecording] = uploadedFiles;
 
-        filepath = `${filepath}/${newRecFilePath}`;
+        fs.readFile(uploadedRecording.fd, 'utf8', async (err, audioFile) => {
+          if (err) throw new Error(err);
 
-        console.log('Writting file: ', `${dirname}/${newRecFilePath}`);
+          const [mimetype] = uploadedRecording.type.split(';');
+          const [, fileextention] = mimetype.split('/');
 
-        next(undefined, newRecFilePath);
-      } catch (error) {
-        throw new Error(`Could not determine appropriate filename. ${error}`);
-      }
-    };
+          const fileBuffer = Buffer.from(audioFile);
+          const audioFilePath = `${dirname}/${filename}.${fileextention}`;
+          const bufferFilePath = `${dirname}/${filename}.json`;
 
-    const uploadedRec = await sails.uploadOne(recording, {
-      dirname,
-      maxBytes,
-      saveAs
-    })
-    .intercept('E_EXCEEDS_UPLOAD_LIMIT', 'tooBig')
-    .intercept(err => new Error(`The photo upload failed: ${util.inspect(err)}`));
+          fs.writeFile(audioFilePath, audioFile, (err) => {
+            if (err) throw new Error(err);
 
-    if(!uploadedRec) {
-      throw 'noFileAttached';
-    }
+            console.log(`The data file has been saved! File path: ${audioFilePath}`);
+          });
 
-    const { size: filesize, type: filetype } = uploadedRec;
+          fs.writeFile(bufferFilePath, JSON.stringify(fileBuffer.toJSON()), (err) => {
+            if (err) throw new Error(err);
 
-    const recordingData = {
-      filepath,
-      filesize,
-      filetype,
-      filename,
-      duration: 0,
-      user: userId,
-      parent: parentId
-    };
+            console.log(`The audio has been saved! File path: ${fileBuffer.toJSON().data.length}`);
+            console.log(`File data size: ${fileBuffer.toJSON().data.length}`);
+          });
 
-    const newRecording = await Recordings.create(recordingData).fetch();
+          const { size: filesize, type: filetype } = uploadedRecording;
 
-    console.log('New rec stored: ', newRecording);
+          const recordingData = {
+            fileextention,
+            filepath: `${filename}.${fileextention}`,
+            filesize,
+            filetype,
+            filename,
+            duration: 0,
+            user: userId,
+            parent: parentId
+          };
 
-    return newRecording;
+          const newRecording = await Recordings.create(recordingData).fetch();
+
+          console.log('New recording record stored:', newRecording);
+
+          return err ?
+            reject(err) :
+            resolve(newRecording);
+        });
+      });
+    });
   }
 
 };

@@ -11,6 +11,7 @@ exports.seed = knex => (
       // always run: ALTER SEQUENCE recordings_id_seq RESTART 1;
       for (let i = 0; i <= RECORDINGS_TO_SEED; i++) {
         recordings.push({
+          fileextention: faker.system.fileExt(),
           filename: faker.system.fileName(),
           filepath: faker.system.fileName(),
           filetype: faker.system.fileType(),
