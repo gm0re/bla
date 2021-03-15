@@ -42,6 +42,7 @@ module.exports = {
           const [, fileextention] = mimetype.split('/');
 
           const fileBuffer = Buffer.from(audioFile);
+          const bufferSamples = fileBuffer.toJSON();
           const audioFilePath = `${dirname}/${filename}.${fileextention}`;
           const bufferFilePath = `${dirname}/${filename}.json`;
 
@@ -51,11 +52,11 @@ module.exports = {
             console.log(`The data file has been saved! File path: ${audioFilePath}`);
           });
 
-          fs.writeFile(bufferFilePath, JSON.stringify(fileBuffer.toJSON()), (err) => {
+          fs.writeFile(bufferFilePath, JSON.stringify(bufferSamples), (err) => {
             if (err) throw new Error(err);
 
-            console.log(`The audio has been saved! File path: ${fileBuffer.toJSON().data.length}`);
-            console.log(`File data size: ${fileBuffer.toJSON().data.length}`);
+            console.log(`The audio has been saved! File path: ${bufferSamples.data.length}`);
+            console.log(`File data size: ${bufferSamples.data.length}`);
           });
 
           const { size: filesize, type: filetype } = uploadedRecording;
@@ -75,9 +76,14 @@ module.exports = {
 
           console.log('New recording record stored:', newRecording);
 
+          const recordingWithSamples = {
+            ...newRecording,
+            samples: bufferSamples.data
+          };
+
           return err ?
             reject(err) :
-            resolve(newRecording);
+            resolve(recordingWithSamples);
         });
       });
     });
