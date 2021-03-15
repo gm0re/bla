@@ -35,7 +35,7 @@ module.exports = {
 
         const [uploadedRecording] = uploadedFiles;
 
-        fs.readFile(uploadedRecording.fd, 'utf8', async (err, audioFile) => {
+        fs.readFile(uploadedRecording.fd, async (err, audioFile) => {
           if (err) throw new Error(err);
 
           const [mimetype] = uploadedRecording.type.split(';');
@@ -45,7 +45,7 @@ module.exports = {
           const audioFilePath = `${dirname}/${filename}.${fileextention}`;
           const bufferFilePath = `${dirname}/${filename}.json`;
 
-          fs.writeFile(audioFilePath, audioFile, (err) => {
+          fs.writeFile(audioFilePath, fileBuffer, (err) => {
             if (err) throw new Error(err);
 
             console.log(`The data file has been saved! File path: ${audioFilePath}`);
