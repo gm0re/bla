@@ -88,14 +88,14 @@ const Waveform = ({
     }
   };
 
-  const getFilteredSamplesByBlocks = audioBuffer => {
+  const getFilteredSamplesByBlocks = () => {
     const wavesDistance = 5;
     const samples = Math.floor(canvas.width / wavesDistance);
-    const blockSize = Math.floor(audioBuffer.length / samples);
+    const blockSize = Math.floor(audioSamples.length / samples);
     const filteredAudioBuffer = [];
 
-    for (let i = 0; i < audioBuffer.length; i = i + blockSize) {
-      filteredAudioBuffer.push(audioBuffer[i]);
+    for (let i = 0; i < audioSamples.length; i = i + blockSize) {
+      filteredAudioBuffer.push(audioSamples[i]);
     }
 
     return filteredAudioBuffer;
@@ -132,7 +132,7 @@ const Waveform = ({
     player.addEventListener('timeupdate', onTimeUpdate);
 
     draw(
-      getFilteredSamplesByBlocks(audioSamples),
+      getFilteredSamplesByBlocks(),
       canvas,
       ctx
     );
@@ -156,7 +156,7 @@ const Waveform = ({
 };
 
 Waveform.propTypes = {
-  audioSamples: PropTypes.array,
+  audioSamples: PropTypes.arrayOf(PropTypes.number),
   playerRef: PropTypes.shape({
     current: PropTypes.instanceOf(HTMLAudioElement)
   })
