@@ -4,8 +4,6 @@ import styled from 'styled-components';
 
 import Waveform from './Waveform';
 
-import audioSamplesJson from '../mocks/audioSamples.json';
-
 const PlayButtonWrappper = styled.div`
   :hover {
     background-color: #00000038;
@@ -72,11 +70,9 @@ const Player = ({
   const playerRef = useRef(null);
   const [audioTime, setAudioTime] = useState(PLAYER_DURATION_LABEL);
   const [playerState, setPlayerState] = useState(PLAYER_STATES.paused);
+  const [audioSamples, setAudioSamples] = useState([]);
 
   let { current: player } = playerRef;
-
-  // weird stuff to load json > first stringify
-  const audioSamples = JSON.parse(JSON.stringify(audioSamplesJson)).data;
 
   // weird stuff to get audio duration on chrome
   const getPlayerStats = next => {
@@ -115,7 +111,20 @@ const Player = ({
     setAudioTime(`${getFormattedTime(player.currentTime)} / ${getFormattedTime(player.duration)}`);
   };
 
+  const fetchAudioSamples = () => {
+    fetch(`http://localhost:1337/${recording.filename}.json`)
+      .then(recordingSamplesRaw => recordingSamplesRaw.json())
+      .then(recordingSamples => {
+        setAudioSamples(recordingSamples.data)
+      })
+      .catch(error => {
+        console.error(error)
+      });
+  };
+
   useEffect(() => {
+    fetchAudioSamples();
+
     player = playerRef.current;
 
     player.addEventListener('timeupdate', onTimeUpdate);
@@ -125,7 +134,7 @@ const Player = ({
     });
 
     return () => player.removeEventListener('timeupdate', onTimeUpdate);
-  }, []);
+  }, [playerRef, setAudioSamples]);
 
   return (
     <PlayerWrapper>
@@ -142,10 +151,14 @@ const Player = ({
         <PlayButtonWrappper>
           <PlayButton onClick={playAudio}>{playButton}</PlayButton>
         </PlayButtonWrappper>
-        <Waveform
-          audioSamples={audioSamples}
-          playerRef={playerRef}
-        />
+        {audioSamples.length && (
+          <Waveform
+            audioSamples={recording.samples?.length
+              ? recording.samples
+              : audioSamples}
+            playerRef={playerRef}
+          />
+        )}
       </PlayerContent>
     </PlayerWrapper>
   );
@@ -155,8 +168,10 @@ Player.propTypes = {
   header: PropTypes.node,
   playButton: PropTypes.node,
   recording: PropTypes.shape({
+    filename: PropTypes.string,
     filepath: PropTypes.string,
-    filetype: PropTypes.string
+    filetype: PropTypes.string,
+    samples: PropTypes.array
   })
 };
 
