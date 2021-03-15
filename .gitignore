@@ -33,4 +33,5 @@ yarn-error.log*
 
 # uploads folder
 /back/uploads
+/back/assets
 /back/.tmp
