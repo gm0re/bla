@@ -74,14 +74,15 @@ const Player = ({
 
   let { current: player } = playerRef;
 
+  const fixPlayerDuration = () => {
+    if (player.duration !== Infinity) {
+      player.currentTime = 0;
+    }
+  };
+
   // weird stuff to get audio duration on chrome
-  const getPlayerStats = next => {
-    player.addEventListener('durationchange', () => {
-      if (player.duration !== Infinity) {
-        player.currentTime = 0;
-        return next({ player });
-      }
-    }, false);
+  const setPlayerDuration = () => {
+    player.addEventListener('durationchange', fixPlayerDuration, false);
     // fake big time
     player.currentTime = 24 * 60 * 60;
   };
@@ -122,6 +123,11 @@ const Player = ({
       });
   };
 
+  const removeListenersOnUnmount = () => {
+    player.removeEventListener('timeupdate', onTimeUpdate);
+    player.removeEventListener('durationchange', fixPlayerDuration);
+  };
+
   useEffect(() => {
     fetchAudioSamples();
 
@@ -129,11 +135,9 @@ const Player = ({
 
     player.addEventListener('timeupdate', onTimeUpdate);
 
-    getPlayerStats(audioMetaData => {
-      console.log(audioMetaData);
-    });
+    setPlayerDuration();
 
-    return () => player.removeEventListener('timeupdate', onTimeUpdate);
+    return removeListenersOnUnmount;
   }, [playerRef, setAudioSamples]);
 
   return (
