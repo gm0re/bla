@@ -35,6 +35,8 @@ const AudioTime = styled.div`
   display: flex;
   align-items: center;
   cursor: default;
+  font-weight: lighter;
+  font-size: small;
 }`
 
 const PlayerHeader = styled.div`
@@ -80,7 +82,7 @@ const Player = ({
     }
   };
 
-  // weird stuff to get audio duration on chrome
+  // weird stuff to set audio duration on chrome
   const setPlayerDuration = () => {
     player.addEventListener('durationchange', fixPlayerDuration, false);
     // fake big time
@@ -96,6 +98,7 @@ const Player = ({
     return `${minutesLabel}:${secondsLabel}`;
   };
 
+  // 👷 need to add an additional state for when the audio has reached the end
   const playAudio = () => {
     if (playerState === PLAYER_STATES.playing) {
       player.pause();

@@ -4,7 +4,8 @@ import styled from 'styled-components';
 
 const WaveformWrapper = styled.div`
   width: 400px;
-  height: 50px;
+  height: 70px;
+  border-radius: 5px;
   position: relative;
   overflow: hidden;
   cursor: pointer;
@@ -13,20 +14,23 @@ const WaveformWrapper = styled.div`
 const ProgressMask = styled.div`
   background-color: orange;
   width: 0px;
-  height: 50px;
+  height: 70px;
+  border-radius: 5px;
   position: absolute;
 }`;
 
 const PositionMask = styled.div`
   background-color: #00000026;
   width: 0px;
-  height: 50px;
+  height: 70px;
+  border-radius: 5px;
   position: absolute;
 }`;
 
 const PlayerCanvas = styled.canvas`
   width: 400px;
-  height: 50px;
+  height: 70px;
+  border-radius: 5px;
   position: absolute;
 }`;
 
