@@ -3,7 +3,7 @@ import { createGlobalStyle } from "styled-components";
 const GlobalStyles = createGlobalStyle`
   body {
     background-color: ${({ theme }) => theme.background.primary};
-    color: ${({ theme }) => theme.text};
+    color: ${({ theme }) => theme.text.primary};
     font-family: ${({ theme }) => theme.global.font.family};
   }
 
@@ -19,11 +19,11 @@ const GlobalStyles = createGlobalStyle`
     background-color: ${({ theme }) => theme.button.inactive};
     background-repeat: no-repeat;
     cursor: ${({ theme }) => theme.global.button.cursor};
-    color: ${({ theme }) => theme.text};
+    color: ${({ theme }) => theme.text.primary};
   }
 
   span {
-    color: ${({ theme }) => theme.text};
+    color: ${({ theme }) => theme.text.primary};
   }
 `;
 

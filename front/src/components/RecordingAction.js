@@ -31,7 +31,7 @@ const ActionIcon = styled(FontAwesomeIcon)`
 `;
 
 const Counter = styled.span`
-  color: ${({ color }) => color};
+  color: ${({ theme }) => theme.text.secondary};
 `;
 
 const RecordingActionButton = styled.button`
@@ -75,7 +75,7 @@ const RecordingAction = ({
       onClick={event => onClickWrapper(event, onClick)}
     >
       {typeof count === 'number' && (
-        <Counter color={inactiveColor}>{`${count}`}</Counter>
+        <Counter>{`${count}`}</Counter>
       )}
       <ActionButtonElems>
         <ActionIcon

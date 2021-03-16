@@ -16,7 +16,10 @@ const theme = {
         unvisited: '#1da1f2',
         visited: '#1da1f2'
       },
-      text: '#ffffff',
+      text: {
+        primary: '#ffffff',
+        secondary: '#808080'
+      },
       type: 'dark'
     },
     light: {
@@ -35,7 +38,10 @@ const theme = {
         unvisited: '#1da1f2',
         visited: '#1da1f2'
       },
-      text: '#000000',
+      text: {
+        primary: '#000000',
+        secondary: '#101010'
+      },
       type: 'light'
     }
   },
