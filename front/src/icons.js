@@ -10,10 +10,12 @@ import {
   faComment as fasComment,
   faHeart as fasHeart,
   faMicrophone,
+  faMoon,
   faPause,
   faShareSquare as fasShareSquare,
   faStar as fasStar,
-  faStop
+  faStop,
+  faSun
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -21,6 +23,7 @@ library.add(
   farComment,
   faHeart,
   faMicrophone,
+  faMoon,
   faPause,
   farShareSquare,
   farStar,
@@ -28,5 +31,6 @@ library.add(
   faStop,
   fasHeart,
   fasShareSquare,
-  fasStar
+  fasStar,
+  faSun
 );

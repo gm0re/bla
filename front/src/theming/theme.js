@@ -1,6 +1,8 @@
 const theme = {
   colors: {
-    dark: {},
+    dark: {
+      type: 'dark'
+    },
     light: {
       background: {
         primary: '#ffffff',
@@ -17,7 +19,8 @@ const theme = {
         unvisited: '#1da1f2',
         visited: '#1da1f2'
       },
-      text: '#000000'
+      text: '#000000',
+      type: 'light'
     }
   },
   global: {

@@ -6,9 +6,10 @@ import GlobalStyles from './theming/GlobalStyles';
 import './icons';
 
 import {
-  Recorder,
   EmptyFeed,
-  Header
+  Header,
+  Recorder,
+  Settings
 } from './components';
 
 import userSvc from './services/user';
@@ -58,6 +59,9 @@ const App = () => {
               />
             </Suspense>
             <Recorder setNewRecording={setNewRecording} />
+          </Route>
+          <Route path="/settings">
+            <Settings />
           </Route>
         </Switch>
       </GlobalWrapper>
