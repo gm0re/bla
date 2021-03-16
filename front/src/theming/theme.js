@@ -9,8 +9,8 @@ const theme = {
       border: '1px #2f3336 solid',
       boxShadow: '0px 9px 10px #eaeaea8c',
       button: {
-        hover: 'grey',
-        inactive: '#ffffff'
+        hover: '#101010',
+        inactive: '#000000'
       },
       link: {
         unvisited: '#1da1f2',
@@ -28,7 +28,7 @@ const theme = {
       border: '1px #c4cfd6 solid',
       boxShadow: '0px 9px 10px #eaeaea8c',
       button: {
-        hover: 'grey',
+        hover: '#f7f7f7',
         inactive: '#ffffff'
       },
       link: {

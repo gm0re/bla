@@ -11,7 +11,6 @@ const GoBackIcon = styled(FontAwesomeIcon)`
 const GoBackButton = styled.button`
   &:hover  {
     border: ${({ theme }) => theme.global.button.borderRadius};
-    border-radius: ${({ theme }) => theme.global.button.borderRadius};
     background-color: ${({ theme }) => theme.button.hover};
   }
 `;

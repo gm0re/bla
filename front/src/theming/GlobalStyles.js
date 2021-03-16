@@ -19,6 +19,7 @@ const GlobalStyles = createGlobalStyle`
     background-color: ${({ theme }) => theme.button.inactive};
     background-repeat: no-repeat;
     cursor: ${({ theme }) => theme.global.button.cursor};
+    color: ${({ theme }) => theme.text};
   }
 
   span {
