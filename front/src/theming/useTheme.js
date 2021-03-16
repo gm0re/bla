@@ -1,35 +1,34 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { default as themeConfig } from './theme';
 
-const themeTypes = Object.keys(themeConfig.colors).map(themeType => themeType);
+const themeTypes = {
+  DARK: 'dark',
+  LIGHT: 'light'
+};
+
+const themeWithGlobalConfig = mode => ({
+  ...mode,
+  global: themeConfig.global
+});
 
 const useTheme = () => {
-  const [theme, setTheme] = useState(themeConfig.colors.light);
+  const [theme, setTheme] = useState(themeWithGlobalConfig(themeConfig.colors.dark));
 
   const setLight = () => {
-    setTheme(themeConfig.colors.light);
+    setTheme(themeWithGlobalConfig(themeConfig.colors.light));
   };
 
   const setDark = () => {
-    setTheme(themeConfig.colors.dark);
+    setTheme(themeWithGlobalConfig(themeConfig.colors.dark));
   };
 
-  useEffect(() => {
-    // ⚒ save/load with local storage
-    setTheme(themeConfig.colors.light);
-  }, [setTheme]);
-
   return [
-    {
-      ...theme,
-      global: themeConfig.global
-    },
+    theme,
+    themeTypes,
     setDark,
-    setLight,
-    setTheme,
-    themeTypes
-  ]
+    setLight
+  ];
 };
 
 export default useTheme;

@@ -28,37 +28,41 @@ const RecordingActions = ({ recording }) => {
   return (
     <RecordingActionsWrapper>
       <RecordingAction
-        color={hasFaved ? ACTIONS_COLORS.FAVED : ''}
+        color={ACTIONS_COLORS.FAVED}
         count={favs}
         icon={hasFaved
           ? ['fas', 'heart']
           : ['far', 'heart']
         }
+        isActive={hasFaved}
         onClick={onFav}
       />
       <RecordingAction
-        color={hasReplied ? ACTIONS_COLORS.REPLIED : ''}
+        color={ACTIONS_COLORS.REPLIED}
         count={replies}
         icon={hasReplied
           ? ['fas', 'comment']
           : ['far', 'comment']
         }
+        isActive={hasReplied}
         onClick={onReply}
       />
       <RecordingAction
-        color={hasStarred ? ACTIONS_COLORS.STARRED : ''}
+        color={ACTIONS_COLORS.STARRED}
         icon={hasStarred
           ? ['fas', 'star']
           : ['far', 'star']
         }
+        isActive={hasStarred}
         onClick={onStar}
       />
       <RecordingAction
-        color={hasShared ? ACTIONS_COLORS.SHARED : ''}
+        color={ACTIONS_COLORS.SHARED}
         icon={hasShared
           ? ['fas', 'share-square']
           : ['far', 'share-square']
         }
+        isActive={hasShared}
         onClick={onShare}
       />
     </RecordingActionsWrapper>

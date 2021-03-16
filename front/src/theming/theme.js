@@ -1,6 +1,22 @@
 const theme = {
   colors: {
     dark: {
+      background: {
+        primary: '#000000',
+        secondary: '#101010',
+        tertiary: '#1f1f1f'
+      },
+      border: '1px #2f3336 solid',
+      boxShadow: '0px 9px 10px #eaeaea8c',
+      button: {
+        hover: 'grey',
+        inactive: '#ffffff'
+      },
+      link: {
+        unvisited: '#1da1f2',
+        visited: '#1da1f2'
+      },
+      text: '#ffffff',
       type: 'dark'
     },
     light: {

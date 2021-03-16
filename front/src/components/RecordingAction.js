@@ -30,7 +30,9 @@ const ActionIcon = styled(FontAwesomeIcon)`
   display: block;
 `;
 
-const Counter = styled.span``;
+const Counter = styled.span`
+  color: ${({ color }) => color};
+`;
 
 const RecordingActionButton = styled.button`
   &:hover ${ActionButtonGlow} {
@@ -59,6 +61,7 @@ const RecordingAction = ({
   color,
   count,
   icon,
+  isActive,
   onClick
 }) => {
   const onClickWrapper = (event, next) => {
@@ -72,12 +75,12 @@ const RecordingAction = ({
       onClick={event => onClickWrapper(event, onClick)}
     >
       {typeof count === 'number' && (
-        <Counter color={color}>{`${count}`}</Counter>
+        <Counter color={inactiveColor}>{`${count}`}</Counter>
       )}
       <ActionButtonElems>
         <ActionIcon
           icon={icon}
-          color={color || inactiveColor}
+          color={isActive ? color : inactiveColor}
         />
         <ActionButtonGlow color={color} />
       </ActionButtonElems>
@@ -89,6 +92,7 @@ RecordingAction.propTypes = {
   color: PropTypes.string,
   count: PropTypes.number,
   icon: PropTypes.arrayOf(PropTypes.string),
+  isActive: PropTypes.bool,
   onClick: PropTypes.func
 };
 

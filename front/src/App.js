@@ -30,7 +30,13 @@ const GlobalWrapper = styled.div`
 `;
 
 const App = () => {
-  const [theme] = useTheme();
+  const [
+    theme,
+    themeTypes,
+    setDark,
+    setLight
+  ] = useTheme();
+
   const [
     fetchRecordings,
     isLastPageReached,
@@ -43,29 +49,38 @@ const App = () => {
   const user = userSvc.get();
 
   return (
-    <ThemeProvider theme={theme}>
-      <GlobalStyles />
-      <GlobalWrapper>
-        <Header user={user} />
-        <Switch>
-          <Redirect exact from="/" to="/recordings" />
-          <Route path="/recordings/:id?">
-            <Suspense fallback={<EmptyFeed />}>
-              <Recordings
-                fetchRecordings={fetchRecordings}
-                isLastPageReached={isLastPageReached}
-                recordings={recordings}
-                recordingsCreatedCount={recordingsCreatedCount}
-              />
-            </Suspense>
-            <Recorder setNewRecording={setNewRecording} />
-          </Route>
-          <Route path="/settings">
-            <Settings />
-          </Route>
-        </Switch>
-      </GlobalWrapper>
-    </ThemeProvider>
+    <>
+      {theme && (
+        <ThemeProvider theme={theme}>
+          <GlobalStyles />
+          <GlobalWrapper>
+            <Header user={user} />
+            <Switch>
+              <Redirect exact from="/" to="/recordings" />
+              <Route path="/recordings/:id?">
+                <Suspense fallback={<EmptyFeed />}>
+                  <Recordings
+                    fetchRecordings={fetchRecordings}
+                    isLastPageReached={isLastPageReached}
+                    recordings={recordings}
+                    recordingsCreatedCount={recordingsCreatedCount}
+                  />
+                </Suspense>
+                <Recorder setNewRecording={setNewRecording} />
+              </Route>
+              <Route path="/settings">
+                <Settings
+                  theme={theme}
+                  themeTypes={themeTypes}
+                  setDark={setDark}
+                  setLight={setLight}
+                />
+              </Route>
+            </Switch>
+          </GlobalWrapper>
+        </ThemeProvider>
+      )}
+    </>
   );
 }
 

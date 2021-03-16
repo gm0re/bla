@@ -1,11 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Toggle from 'react-toggle';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import 'react-toggle/style.css';
-
-import useTheme from '../theming/useTheme';
 
 const SettingsWrapper = styled.div`
   min-height: 600px;
@@ -56,17 +55,14 @@ const ThemeToggle = styled(Toggle).attrs(() => ({ className: 'foo' }))`
   }
 `;
 
-const Settings = () => {
-  const [
-    theme,
-    setDark,
-    setLight,
-    ,
-    themeTypes
-  ] = useTheme();
-
+const Settings = ({
+  theme,
+  themeTypes,
+  setDark,
+  setLight
+}) => {
   const onToggleClick = () => {
-    if (theme.type === themeTypes.light) {
+    if (theme.type === themeTypes.LIGHT) {
       setDark();
     } else {
       setLight();
@@ -87,6 +83,13 @@ const Settings = () => {
       </SettingItem>
     </SettingsWrapper>
   );
+};
+
+Settings.propTypes = {
+  setDark: PropTypes.func,
+  setLight: PropTypes.func,
+  theme: PropTypes.object,
+  themeTypes: PropTypes.object
 };
 
 export default Settings;

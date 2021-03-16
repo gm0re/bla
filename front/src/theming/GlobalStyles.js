@@ -20,6 +20,10 @@ const GlobalStyles = createGlobalStyle`
     background-repeat: no-repeat;
     cursor: ${({ theme }) => theme.global.button.cursor};
   }
+
+  span {
+    color: ${({ theme }) => theme.text};
+  }
 `;
 
 export default GlobalStyles;
