@@ -10,16 +10,10 @@ const GoBackIcon = styled(FontAwesomeIcon)`
 
 const GoBackButton = styled.button`
   &:hover  {
-    border: 1px black solid;
-    border-radius: 10%;
-    background-color: #f1f1f1;
+    border: ${({ theme }) => theme.global.button.borderRadius};
+    border-radius: ${({ theme }) => theme.global.button.borderRadius};
+    background-color: ${({ theme }) => theme.button.hover};
   }
-  margin: 4px;
-  outline: none;
-  border: 0;
-  background-color: transparent;
-  background-repeat: no-repeat;
-  cursor: pointer;
 `;
 
 const BackButton = ({ history }) => {

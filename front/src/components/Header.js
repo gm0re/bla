@@ -13,11 +13,11 @@ const HeaderWrapper = styled.div`
   flex-direction: row;
   justify-content: ${({ showBackButton }) => (showBackButton ? 'space-between' : 'flex-end')};
   align-items: center;
-  z-index: 999;
-  padding: 8px;
+  padding: ${({ theme }) => theme.global.space.padding.xl};
+  border-bottom: ${({ theme }) => theme.border};
 
   > div {
-    margin: 4px;
+    margin: ${({ theme }) => theme.global.space.margin.m};
   }
 `;
 

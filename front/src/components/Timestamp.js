@@ -7,8 +7,8 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 dayjs.extend(relativeTime);
 
 const Label = styled.div`
-  font-weight: lighter;
-  font-size: small;
+  font-weight: ${({ theme }) => theme.global.font.weight.light};
+  font-size: ${({ theme }) => theme.global.font.size.s};
 `;
 
 const Human = ({ timestamp }) => {

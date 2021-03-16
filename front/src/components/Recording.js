@@ -15,23 +15,39 @@ const PlayerWrapper = styled.div`
   justify-content: center;
 
   > div {
-    margin: 6px;
+    margin: ${({ theme }) => theme.global.space.margin.l};
   }
 `;
 
 const RecordingWrapper = styled.div`
   &:hover {
-    background-color: ${({ detailed }) => (detailed ? '#f7f7f7' : '#e0dede')};
+    background-color: ${({ theme, detailed }) => (
+      detailed
+        ? theme.background.secondary
+        : theme.background.tertiary
+    )};
   }
 
-  padding: 8px;
   cursor: pointer;
-  background-color: ${({ detailed }) => (detailed ? 'white' : '#eaeaea')};
+  padding: ${({ theme }) => theme.global.space.margin.xl};
+  background-color: ${({ theme, detailed }) => (
+    detailed
+      ? theme.background.primary
+      : theme.background.tertiary
+  )};
+  border-bottom: ${({ theme }) => theme.border};
 
-  ${({ detailed }) => (detailed && 'position: sticky; top: 0; z-index: 999;')}
-  ${({ detailed }) => (detailed && 'box-shadow: 0px 9px 10px #eaeaea8c;')}
+  ${({ detailed }) => (detailed && (
+    'position: sticky; top: 0; z-index: 999;'
+  ))}
 
-  ${({ animate }) => (animate && 'animation: color-me-in 5s;')}
+  ${({ theme, detailed }) => (detailed && (
+    `box-shadow: ${theme.boxShadow};`
+  ))}
+
+  ${({ animate }) => (animate && (
+    'animation: color-me-in 5s;'
+  ))}
 
   @keyframes color-me-in {
     0% {
@@ -44,8 +60,8 @@ const RecordingWrapper = styled.div`
 `;
 
 const Separator = styled.span`
-  margin-left: 4px;
-  margin-right: 4px;
+  margin-left: ${({ theme }) => theme.global.space.margin.m};
+  margin-right: ${({ theme }) => theme.global.space.margin.m};
 `;
 
 const HeaderWrapper = styled.div`

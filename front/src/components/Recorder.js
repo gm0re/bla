@@ -13,17 +13,11 @@ const RecorderWrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  padding: 8px;
+  padding: ${({ theme }) => theme.global.space.padding.m};
 `;
 
 const RecorderButton = styled.button`
-  margin: 4px;
-  outline: none;
-  border: 0;
-  background-color: transparent;
-  background-repeat: no-repeat;
-  cursor: pointer;
-  font-size: larger;
+  font-size: ${({ theme }) => theme.global.font.size.l};
   display: ${({ hidden }) => (hidden ? 'none' : 'block')};
 `;
 
@@ -31,6 +25,8 @@ const RecordButton = styled(RecorderButton)`
   &:hover {
     transform: scale(1.2);
     transition: transform .1s;
+    background-color: red;
+    border-radius: 100%;
   }
 
   background-color: red;

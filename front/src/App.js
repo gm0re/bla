@@ -1,6 +1,7 @@
 import React, { lazy, Suspense } from "react";
 import { Switch, Redirect, Route } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
+import GlobalStyles from './theming/GlobalStyles';
 
 import './icons';
 
@@ -10,23 +11,25 @@ import {
   Header
 } from './components';
 
-const Recordings = lazy(() => import('./components/Recordings'));
-
 import userSvc from './services/user';
 
-import useRecordings from "./hooks/useRecordings";
+import useTheme from './theming/useTheme';
+import useRecordings from './hooks/useRecordings';
+
+const Recordings = lazy(() => import('./components/Recordings'));
 
 const GlobalWrapper = styled.div`
-  font-family: sans-serif;
   width: 50%;
   margin: auto;
   display: flex;
   flex-direction: column;
-  border-radius: 16px;
-  background-color: #fdfafa;
+  border: ${({ theme }) => theme.border};
+  border-radius: ${({ theme }) => theme.global.borderRadius.l};
+  background-color: ${({ theme }) => theme.colors};
 `;
 
 const App = () => {
+  const [theme] = useTheme();
   const [
     fetchRecordings,
     isLastPageReached,
@@ -39,23 +42,26 @@ const App = () => {
   const user = userSvc.get();
 
   return (
-    <GlobalWrapper>
-      <Header user={user} />
-      <Switch>
-        <Redirect exact from="/" to="/recordings" />
-        <Route path="/recordings/:id?">
-          <Suspense fallback={<EmptyFeed />}>
-            <Recordings
-              fetchRecordings={fetchRecordings}
-              isLastPageReached={isLastPageReached}
-              recordings={recordings}
-              recordingsCreatedCount={recordingsCreatedCount}
-            />
-          </Suspense>
-          <Recorder setNewRecording={setNewRecording} />
-        </Route>
-      </Switch>
-    </GlobalWrapper>
+    <ThemeProvider theme={theme}>
+      <GlobalStyles />
+      <GlobalWrapper>
+        <Header user={user} />
+        <Switch>
+          <Redirect exact from="/" to="/recordings" />
+          <Route path="/recordings/:id?">
+            <Suspense fallback={<EmptyFeed />}>
+              <Recordings
+                fetchRecordings={fetchRecordings}
+                isLastPageReached={isLastPageReached}
+                recordings={recordings}
+                recordingsCreatedCount={recordingsCreatedCount}
+              />
+            </Suspense>
+            <Recorder setNewRecording={setNewRecording} />
+          </Route>
+        </Switch>
+      </GlobalWrapper>
+    </ThemeProvider>
   );
 }
 

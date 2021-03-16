@@ -8,26 +8,26 @@ const inactiveColor = 'grey';
 const ActionButtonGlow = styled.div`
   display: none;
   position: absolute;
-  background-color: ${({ color }) => color};
   border-radius: 100%;
-  width: 24px;
-  height: 24px;
   opacity: 20%;
+  background-color: ${({ color }) => color};
+  width: ${({ theme }) => theme.global.icon.size.s};
+  height: ${({ theme }) => theme.global.icon.size.s};
 `;
 
 const ActionButtonElems = styled.div`
-  width: 24px;
-  height: 24px;
   position: relative;
+  width: ${({ theme }) => theme.global.icon.size.s};
+  height: ${({ theme }) => theme.global.icon.size.s};
 `;
 
 const ActionIcon = styled(FontAwesomeIcon)`
   position: absolute;
+  top: 3px;
+  left: 4px;
   width: 16px !important;
   height: 19px;
   display: block;
-  top: 3px;
-  left: 4px;
 `;
 
 const Counter = styled.span``;
@@ -36,39 +36,34 @@ const RecordingActionButton = styled.button`
   &:hover ${ActionButtonGlow} {
     display: block;
   }
+
   &:hover ${ActionIcon} {
     color: ${({ color }) => color};
   }
+
   &:hover ${Counter} {
     color: ${({ color }) => color};
   }
 
-  margin: 4px;
   display: flex;
-  outline: none;
-  border: 0;
-  background-color: transparent;
-  background-repeat: no-repeat;
-  cursor: pointer;
   flex-direction: row;
   align-items: center;
+  background-color: transparent;
 
   > div {
-    margin: 4px;
+    margin: ${({ theme }) => theme.global.space.margin.m};
   }
 `;
 
 const RecordingAction = ({
   color,
   count,
-  hasClickedOn,
   icon,
   onClick
 }) => {
-  const onClickWrapper = (event, callback) => {
+  const onClickWrapper = (event, next) => {
     event.stopPropagation();
-
-    callback();
+    next();
   };
 
   return (
@@ -80,17 +75,10 @@ const RecordingAction = ({
         <Counter color={color}>{`${count}`}</Counter>
       )}
       <ActionButtonElems>
-        {hasClickedOn ? (
-          <ActionIcon
-            icon={icon.active}
-            color={color}
-          />
-        ) : (
-          <ActionIcon
-            icon={icon.inactive}
-            color={`${hasClickedOn ? color : inactiveColor}`}
-          />
-        )}
+        <ActionIcon
+          icon={icon}
+          color={color || inactiveColor}
+        />
         <ActionButtonGlow color={color} />
       </ActionButtonElems>
     </RecordingActionButton>
@@ -100,11 +88,7 @@ const RecordingAction = ({
 RecordingAction.propTypes = {
   color: PropTypes.string,
   count: PropTypes.number,
-  hasClickedOn: PropTypes.bool,
-  icon: PropTypes.shape({
-    active: PropTypes.arrayOf(PropTypes.string),
-    inactive: PropTypes.arrayOf(PropTypes.string)
-  }),
+  icon: PropTypes.arrayOf(PropTypes.string),
   onClick: PropTypes.func
 };
 

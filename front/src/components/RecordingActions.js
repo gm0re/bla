@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import { useFav, useReply, useShare, useStar } from '../hooks';
+
 import RecordingAction from './RecordingAction';
 
 const RecordingActionsWrapper = styled.div`
@@ -10,6 +11,13 @@ const RecordingActionsWrapper = styled.div`
   flex-direction: row;
   justify-content: center;
 `;
+
+const ACTIONS_COLORS = {
+  FAVED: '#ff0000',
+  REPLIED: '#0070ff',
+  SHARED: '#0dbb0d',
+  STARRED: '#ffca00'
+};
 
 const RecordingActions = ({ recording }) => {
   const [favs, hasFaved, onFav] = useFav(recording);
@@ -20,41 +28,37 @@ const RecordingActions = ({ recording }) => {
   return (
     <RecordingActionsWrapper>
       <RecordingAction
-        color="red"
+        color={hasFaved ? ACTIONS_COLORS.FAVED : ''}
         count={favs}
-        hasClickedOn={hasFaved}
-        icon={{
-          active: ['fas', 'heart'],
-          inactive: ['far', 'heart']
-        }}
+        icon={hasFaved
+          ? ['fas', 'heart']
+          : ['far', 'heart']
+        }
         onClick={onFav}
       />
       <RecordingAction
-        color="#0070ff"
+        color={hasReplied ? ACTIONS_COLORS.REPLIED : ''}
         count={replies}
-        hasClickedOn={hasReplied}
-        icon={{
-          active: ['fas', 'comment'],
-          inactive: ['far', 'comment']
-        }}
+        icon={hasReplied
+          ? ['fas', 'comment']
+          : ['far', 'comment']
+        }
         onClick={onReply}
       />
       <RecordingAction
-        color="#ffca00"
-        hasClickedOn={hasStarred}
-        icon={{
-          active: ['fas', 'star'],
-          inactive: ['far', 'star']
-        }}
+        color={hasStarred ? ACTIONS_COLORS.STARRED : ''}
+        icon={hasStarred
+          ? ['fas', 'star']
+          : ['far', 'star']
+        }
         onClick={onStar}
       />
       <RecordingAction
-        color="#0dbb0d"
-        hasClickedOn={hasShared}
-        icon={{
-          active: ['fas', 'share-square'],
-          inactive: ['far', 'share-square']
-        }}
+        color={hasShared ? ACTIONS_COLORS.SHARED : ''}
+        icon={hasShared
+          ? ['fas', 'share-square']
+          : ['far', 'share-square']
+        }
         onClick={onShare}
       />
     </RecordingActionsWrapper>
