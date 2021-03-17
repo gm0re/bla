@@ -13,7 +13,6 @@ const GlobalStyles = createGlobalStyle`
   }
 
   button {
-    margin: ${({ theme }) => theme.global.space.margin.m};
     outline: none;
     border: 0;
     background-color: ${({ theme }) => theme.button.inactive};

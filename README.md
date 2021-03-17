@@ -12,7 +12,7 @@ Bla! is an application to chat via audio.
 ```
 
 ### Back
-Before running the project you must have installed `node` and `npm`. Also make sure to install globally latest version of `sails`:
+Before running the project you must have installed `psql`, `node` and `npm`. Also make sure to install globally latest version of `sails`:
 ```
   $ npm i -g sails
 ```

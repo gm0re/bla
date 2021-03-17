@@ -33,7 +33,7 @@ const RecordingWrapper = styled.div`
   background-color: ${({ theme, detailed }) => (
     detailed
       ? theme.background.primary
-      : theme.background.tertiary
+      : theme.background.secondary
   )};
   border-bottom: ${({ theme }) => theme.border};
 
@@ -41,12 +41,8 @@ const RecordingWrapper = styled.div`
     'position: sticky; top: 0; z-index: 999;'
   ))}
 
-  ${({ theme, detailed }) => (detailed && (
-    `box-shadow: ${theme.boxShadow};`
-  ))}
-
   ${({ animate }) => (animate && (
-    'animation: color-me-in 5s;'
+    'animation: color-me-in 3s;'
   ))}
 
   @keyframes color-me-in {
@@ -54,18 +50,13 @@ const RecordingWrapper = styled.div`
       background: orange;
     }
     100% {
-      background: white;
+      background: ${({ theme, detailed }) => (
+        detailed
+          ? theme.background.primary
+          : theme.background.secondary
+      )};
     }
   }
-`;
-
-const Separator = styled.span`
-  margin-left: ${({ theme }) => theme.global.space.margin.m};
-  margin-right: ${({ theme }) => theme.global.space.margin.m};
-`;
-
-const HeaderWrapper = styled.div`
-  display: flex;
 `;
 
 const Recording = ({
@@ -87,15 +78,10 @@ const Recording = ({
     >
       <PlayerWrapper>
         <Player
-          header={
-            <HeaderWrapper>
-              <Username>{recording.user.username}</Username>
-              <Separator>·</Separator>
-              <Timestamp relative>{recording.createdAt}</Timestamp>
-            </HeaderWrapper>
-          }
           playButton={<UserIcon profilePic={recording.user.profilePic} />}
           recording={recording}
+          subtitle={<Timestamp relative>{recording.createdAt}</Timestamp>}
+          title={<Username>{recording.user.username}</Username>}
         />
       </PlayerWrapper>
       <RecordingActions recording={recording} />

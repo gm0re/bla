@@ -4,10 +4,10 @@ const theme = {
       background: {
         primary: '#000000',
         secondary: '#101010',
-        tertiary: '#1f1f1f'
+        tertiary: '#080808'
       },
       border: '1px #2f3336 solid',
-      boxShadow: '0px 9px 10px #eaeaea8c',
+      boxShadow: '0px 9px 10px #2525258c',
       button: {
         hover: '#101010',
         inactive: '#000000'

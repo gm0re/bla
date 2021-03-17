@@ -46,6 +46,7 @@ const PlayerHeader = styled.div`
   flex-direction: row;
   margin: 4px;
   line-height: 18px;
+  align-items: flex-end;
 `;
 
 const PlayerContent = styled.div`
@@ -57,6 +58,25 @@ const PlayerContent = styled.div`
   line-height: 18px;
 `;
 
+const LeftsideHeader = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: flex-end;
+`;
+
+const RightsideHeader = styled.div``;
+
+const TitleWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+
+  > span {
+    margin-left: ${({ theme }) => theme.global.space.margin.l};
+  }
+`;
+
 const PLAYER_STATES = {
   paused: 'paused',
   playing: 'playing'
@@ -65,9 +85,10 @@ const PLAYER_STATES = {
 const PLAYER_DURATION_LABEL = '00:00 / 00:00';
 
 const Player = ({
-  header,
   playButton,
-  recording
+  recording,
+  title,
+  subtitle
 }) => {
   const playerRef = useRef(null);
   const [audioTime, setAudioTime] = useState(PLAYER_DURATION_LABEL);
@@ -151,13 +172,20 @@ const Player = ({
         ref={playerRef}
       />
       <PlayerHeader>
-        {header}
-        <AudioTime>{audioTime}</AudioTime>
+        <LeftsideHeader>
+          <PlayButtonWrappper>
+            <PlayButton onClick={playAudio}>{playButton}</PlayButton>
+          </PlayButtonWrappper>
+          <TitleWrapper>
+            <span>{title}</span>
+            <span>{subtitle}</span>
+          </TitleWrapper>
+        </LeftsideHeader>
+        <RightsideHeader>
+          <AudioTime>{audioTime}</AudioTime>
+        </RightsideHeader>
       </PlayerHeader>
       <PlayerContent onClick={e => e.stopPropagation()}>
-        <PlayButtonWrappper>
-          <PlayButton onClick={playAudio}>{playButton}</PlayButton>
-        </PlayButtonWrappper>
         {audioSamples.length && (
           <Waveform
             audioSamples={recording.samples?.length
@@ -179,7 +207,15 @@ Player.propTypes = {
     filepath: PropTypes.string,
     filetype: PropTypes.string,
     samples: PropTypes.array
-  })
+  }),
+  subtitle: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.node
+  ]),
+  title: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.node
+  ])
 };
 
 export default Player;

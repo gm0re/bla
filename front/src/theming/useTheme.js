@@ -13,7 +13,7 @@ const themeWithGlobalConfig = mode => ({
 });
 
 const useTheme = () => {
-  const [theme, setTheme] = useState(themeWithGlobalConfig(themeConfig.colors.dark));
+  const [theme, setTheme] = useState(themeWithGlobalConfig(themeConfig.colors.light));
 
   const setLight = () => {
     setTheme(themeWithGlobalConfig(themeConfig.colors.light));
