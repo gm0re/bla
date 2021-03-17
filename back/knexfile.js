@@ -1,7 +1,7 @@
 module.exports = {
   client: 'pg',
   connection: process.env.DATABASE_URL || {
-    user: 'root',
+    user: 'user',
     password: 'root',
     database: 'bla'
   },
