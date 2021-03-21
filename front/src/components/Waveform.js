@@ -18,6 +18,7 @@ const ProgressMask = styled.div`
   height: 70px;
   border-radius: 5px;
   position: absolute;
+  transition: .2s linear;
 }`;
 
 const PositionMask = styled.div`
