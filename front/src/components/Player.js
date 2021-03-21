@@ -122,7 +122,9 @@ const Player = ({
   };
 
   // 👷 need to add an additional state for when the audio has reached the end
-  const playAudio = () => {
+  const playAudio = e => {
+    e.stopPropagation();
+
     if (playerState === PLAYER_STATES.playing) {
       player.pause();
       setPlayerState(PLAYER_STATES.paused);
@@ -176,7 +178,9 @@ const Player = ({
       <PlayerHeader>
         <LeftsideHeader>
           <PlayButtonWrappper>
-            <PlayButton onClick={playAudio}>{playButton}</PlayButton>
+            <PlayButton onClick={playAudio}>
+              {playButton}
+            </PlayButton>
           </PlayButtonWrappper>
           <TitleWrapper>
             <span>{title}</span>
