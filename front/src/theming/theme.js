@@ -20,7 +20,13 @@ const theme = {
         primary: '#ffffff',
         secondary: '#808080'
       },
-      type: 'dark'
+      type: 'dark',
+      waveform: {
+        background: '#000000',
+        position: '#00000026',
+        progress: '#00c5ff',
+        wave: '#c4cfd6'
+      }
     },
     light: {
       background: {
@@ -42,7 +48,13 @@ const theme = {
         primary: '#000000',
         secondary: '#101010'
       },
-      type: 'light'
+      type: 'light',
+      waveform: {
+        background: '#ffffff',
+        position: '#00000026',
+        progress: '#00c5ff',
+        wave: '#c4cfd6'
+      }
     }
   },
   global: {

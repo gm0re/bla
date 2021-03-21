@@ -61,7 +61,7 @@ const Recordings = ({
         <div key={recording.id}>
           <Recording
             animate={!id && doesAnimate(recordings, recording)}
-            detailed
+            isDetailed
             key={recording.id}
             recording={recording}
           />

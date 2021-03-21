@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const WaveformWrapper = styled.div`
+  background-color: ${({ colors }) => colors.wave};
   width: 400px;
   height: 70px;
   border-radius: 5px;
@@ -12,7 +13,7 @@ const WaveformWrapper = styled.div`
 }`;
 
 const ProgressMask = styled.div`
-  background-color: orange;
+  background-color: ${({ colors }) => colors.progress};
   width: 0px;
   height: 70px;
   border-radius: 5px;
@@ -20,7 +21,7 @@ const ProgressMask = styled.div`
 }`;
 
 const PositionMask = styled.div`
-  background-color: #00000026;
+  background-color: ${({ colors }) => colors.position};
   width: 0px;
   height: 70px;
   border-radius: 5px;
@@ -36,6 +37,7 @@ const PlayerCanvas = styled.canvas`
 
 const Waveform = ({
   audioSamples,
+  colors,
   playerRef
 }) => {
   const canvasRef = useRef(null);
@@ -65,7 +67,7 @@ const Waveform = ({
     const y = isEven ? absY : -absY;
 
     ctx.lineWidth = 2;
-    ctx.strokeStyle = 'white';
+    ctx.strokeStyle = colors.wave;
 
     ctx.beginPath();
     ctx.moveTo(x, 0);
@@ -128,7 +130,7 @@ const Waveform = ({
 
     const ctx = canvas.getContext('2d');
 
-    ctx.fillStyle = '#232831';
+    ctx.fillStyle = colors.background;
     ctx.fillRect(0, 0, canvas.offsetWidth, canvas.offsetHeight);
     ctx.translate(0, canvas.offsetHeight / 2);
     ctx.globalCompositeOperation = 'destination-out';
@@ -151,9 +153,10 @@ const Waveform = ({
       onMouseDown={({ nativeEvent: { layerX } }) => updateCurrentTime(layerX)}
       onMouseMove={({ nativeEvent: { layerX } }) => drawPositionMask(layerX)}
       onMouseOut={() => drawPositionMask(0)}
+      colors={colors}
     >
-      <ProgressMask ref={progressMaskRef} />
-      <PositionMask ref={positionMaskRef} />
+      <ProgressMask ref={progressMaskRef} colors={colors} />
+      <PositionMask ref={positionMaskRef} colors={colors} />
       <PlayerCanvas ref={canvasRef} />
     </WaveformWrapper>
   )
@@ -161,6 +164,12 @@ const Waveform = ({
 
 Waveform.propTypes = {
   audioSamples: PropTypes.arrayOf(PropTypes.number),
+  colors: PropTypes.shape({
+    background: PropTypes.string,
+    position: PropTypes.string,
+    progress: PropTypes.string,
+    wave: PropTypes.string
+  }),
   playerRef: PropTypes.shape({
     current: PropTypes.instanceOf(HTMLAudioElement)
   })

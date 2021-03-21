@@ -45,6 +45,7 @@
   };
 
   const drawPositionMask = ({ layerX }) => {
+    console.log('touch')
     positionMask.style.width = `${layerX}px`;
   };
 
@@ -62,7 +63,7 @@
     y = isEven ? y : -y;
 
     ctx.lineWidth = 2;
-    ctx.strokeStyle = "white";
+    ctx.strokeStyle = "#00b7ff";
 
     ctx.beginPath();
     ctx.moveTo(x, 0);
@@ -122,10 +123,12 @@
   canvasContainer.addEventListener('mousedown', updateCurrentTime);
   canvasContainer.addEventListener('mousemove', drawPositionMask);
   canvasContainer.addEventListener('mouseout', () => drawPositionMask({ layerX: 0 }));
+  positionMask.addEventListener('mousemove', drawPositionMask);
+  // positionMask.addEventListener('mouseout', () => drawPositionMask({ layerX: 0 }));
 
   const ctx = canvas.getContext('2d');
 
-  ctx.fillStyle = "#232831";
+  ctx.fillStyle = "white";
   ctx.fillRect(0, 0, canvas.offsetWidth, canvas.offsetHeight);
   ctx.translate(0, canvas.offsetHeight / 2);
   ctx.globalCompositeOperation = "destination-out";

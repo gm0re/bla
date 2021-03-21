@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { withTheme } from 'styled-components';
 
 import Waveform from './Waveform';
 
@@ -85,9 +85,11 @@ const PLAYER_STATES = {
 const PLAYER_DURATION_LABEL = '00:00 / 00:00';
 
 const Player = ({
+  isDetailed,
   playButton,
   recording,
   title,
+  theme,
   subtitle
 }) => {
   const playerRef = useRef(null);
@@ -192,6 +194,12 @@ const Player = ({
               ? recording.samples
               : audioSamples}
             playerRef={playerRef}
+            colors={{
+              ...theme.waveform,
+              background: isDetailed
+                ? theme.waveform.background
+                : theme.background.secondary
+            }}
           />
         )}
       </PlayerContent>
@@ -200,7 +208,7 @@ const Player = ({
 };
 
 Player.propTypes = {
-  header: PropTypes.node,
+  isDetailed: PropTypes.bool,
   playButton: PropTypes.node,
   recording: PropTypes.shape({
     filename: PropTypes.string,
@@ -212,10 +220,11 @@ Player.propTypes = {
     PropTypes.string,
     PropTypes.node
   ]),
+  theme: PropTypes.object,
   title: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.node
   ])
 };
 
-export default Player;
+export default withTheme(Player);

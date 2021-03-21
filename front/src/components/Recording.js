@@ -20,24 +20,16 @@ const PlayerWrapper = styled.div`
 `;
 
 const RecordingWrapper = styled.div`
-  &:hover {
-    background-color: ${({ theme, detailed }) => (
-      detailed
-        ? theme.background.secondary
-        : theme.background.tertiary
-    )};
-  }
-
   cursor: pointer;
   padding: ${({ theme }) => theme.global.space.margin.xl};
-  background-color: ${({ theme, detailed }) => (
-    detailed
+  background-color: ${({ theme, isDetailed }) => (
+    isDetailed
       ? theme.background.primary
       : theme.background.secondary
   )};
   border-bottom: ${({ theme }) => theme.border};
 
-  ${({ detailed }) => (detailed && (
+  ${({ isDetailed }) => (isDetailed && (
     'position: sticky; top: 0; z-index: 999;'
   ))}
 
@@ -50,8 +42,8 @@ const RecordingWrapper = styled.div`
       background: orange;
     }
     100% {
-      background: ${({ theme, detailed }) => (
-        detailed
+      background: ${({ theme, isDetailed }) => (
+        isDetailed
           ? theme.background.primary
           : theme.background.secondary
       )};
@@ -61,7 +53,7 @@ const RecordingWrapper = styled.div`
 
 const Recording = ({
   animate,
-  detailed,
+  isDetailed,
   recording
 }) => {
   const history = useHistory();
@@ -73,11 +65,12 @@ const Recording = ({
   return (
     <RecordingWrapper
       animate={animate}
-      detailed={detailed}
+      isDetailed={isDetailed}
       onClick={onRecordingClick}
     >
       <PlayerWrapper>
         <Player
+          isDetailed={isDetailed}
           playButton={<UserIcon profilePic={recording.user.profilePic} />}
           recording={recording}
           subtitle={<Timestamp relative>{recording.createdAt}</Timestamp>}
@@ -91,7 +84,7 @@ const Recording = ({
 
 Recording.propTypes = {
   animate: PropTypes.bool,
-  detailed: PropTypes.bool,
+  isDetailed: PropTypes.bool,
   recording: PropTypes.shape({
     createdAt: PropTypes.string,
     filename: PropTypes.string,

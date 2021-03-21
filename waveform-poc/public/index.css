@@ -1,4 +1,17 @@
+#card {
+  height: 150px;
+  padding: 24px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border: 1px #c4cfd6 solid;
+  border-radius: 25px;
+  overflow: hidden;
+}
+
 #canvas-container {
+  background-color: #c4cfd6;
   width: 400px;
   height: 50px;
   position: relative;
@@ -37,10 +50,12 @@
 #play-btn {
   min-width: 60px;
   cursor: pointer;
+  margin: 4px;
 }
 
 #audio-time {
   display: flex;
   align-items: center;
   cursor: default;
+  margin: 4px;
 }
