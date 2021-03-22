@@ -9,7 +9,7 @@ const StyledLink = styled(Link)`
   }
 
   text-decoration: none;
-  color: black;
+  color: ${({ theme }) => theme.text.primary};
 `;
 
 const Anchor = ({ link, label }) => (
