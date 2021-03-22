@@ -20,7 +20,7 @@ import useRecordings from './hooks/useRecordings';
 const Recordings = lazy(() => import('./components/Recordings'));
 
 const GlobalWrapper = styled.div`
-  width: 50%;
+  width: 350px;
   margin: auto;
   display: flex;
   flex-direction: column;

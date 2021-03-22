@@ -2,11 +2,14 @@ import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+const WAVEFORM_MIN_WIDTH = 250;
+const WAVEFORM_MAX_WIDTH = 400;
+
 const WaveformWrapper = styled.div`
   background-color: ${({ colors }) => colors.wave};
-  width: 400px;
+  min-width: ${WAVEFORM_MIN_WIDTH}px;
+  max-width: ${WAVEFORM_MAX_WIDTH}px;
   height: 70px;
-  border-radius: 5px;
   position: relative;
   overflow: hidden;
   cursor: pointer;
@@ -16,7 +19,6 @@ const ProgressMask = styled.div`
   background-color: ${({ colors }) => colors.progress};
   width: 0px;
   height: 70px;
-  border-radius: 5px;
   position: absolute;
   transition: .2s linear;
 }`;
@@ -25,15 +27,15 @@ const PositionMask = styled.div`
   background-color: ${({ colors }) => colors.position};
   width: 0px;
   height: 70px;
-  border-radius: 5px;
   position: absolute;
 }`;
 
 const PlayerCanvas = styled.canvas`
-  width: 400px;
+  min-width: ${WAVEFORM_MIN_WIDTH}px;
+  max-width: ${WAVEFORM_MAX_WIDTH}px;
   height: 70px;
-  border-radius: 5px;
   position: absolute;
+  align-self: center;
 }`;
 
 const Waveform = ({
