@@ -5,8 +5,8 @@ import styled from 'styled-components';
 const ImgWrapper = styled.div`
   overflow: hidden;
   border-radius: 100%;
-  width: ${({ theme }) => theme.global.icon.m};
-  height: ${({ theme }) => theme.global.icon.m};
+  width: ${({ theme }) => theme.global.icon.size.m};
+  height: ${({ theme }) => theme.global.icon.size.m};
 `;
 
 const UserIcon = ({ profilePic }) => (
