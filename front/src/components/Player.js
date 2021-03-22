@@ -4,31 +4,40 @@ import styled, { withTheme } from 'styled-components';
 
 import Waveform from './Waveform';
 
+const PlayButton = styled.button`
+  padding: 0;
+  background-color: transparent;
+  position: relative;
+}`;
+
 const PlayButtonWrappper = styled.div`
   :hover {
-    background-color: #00000038;
+    border: 2px solid #00c5ff;
   }
 
+  border: 2px solid transparent;
   height: 48px;
   width: 48px;
   border-radius: 100%;
+
+  ${({ playButtonFocus }) => (playButtonFocus && (
+    'animation: icon-focus .4s;'
+  ))}
+
+  @keyframes icon-focus {
+    0% {
+      border: 2px solid #00c5ff;
+    }
+    100% {
+      border: 2px solid transparent
+    }
+  }
 `;
 
 const PlayerWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-}`;
-
-const PlayButton = styled.button`
-  width: 48px;
-  height: 48px;
-  outline: none;
-  border: 0;
-  padding: 0;
-  background-color: transparent;
-  background-repeat: no-repeat;
-  cursor: pointer;
 }`;
 
 const AudioTime = styled.div`
@@ -49,7 +58,7 @@ const PlayerHeader = styled.div`
   align-items: flex-end;
 `;
 
-const PlayerContent = styled.div`
+const WaveformWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: start;
@@ -96,6 +105,7 @@ const Player = ({
   const [audioTime, setAudioTime] = useState(PLAYER_DURATION_LABEL);
   const [playerState, setPlayerState] = useState(PLAYER_STATES.paused);
   const [audioSamples, setAudioSamples] = useState([]);
+  const [playButtonFocus, setPlayButtonFocus] = useState(false);
 
   let { current: player } = playerRef;
 
@@ -168,6 +178,18 @@ const Player = ({
     return removeListenersOnUnmount;
   }, [playerRef, setAudioSamples]);
 
+  const onWaveFormclick = e => {
+    e.stopPropagation();
+    setPlayButtonFocus(true);
+  };
+
+  const waveformColors = {
+    ...theme.waveform,
+    background: isDetailed
+      ? theme.waveform.background
+      : theme.background.secondary
+  };
+
   return (
     <PlayerWrapper>
       <audio
@@ -177,7 +199,12 @@ const Player = ({
       />
       <PlayerHeader>
         <LeftsideHeader>
-          <PlayButtonWrappper>
+          <PlayButtonWrappper
+            playButtonFocus={playButtonFocus}
+            onAnimationEnd={() => {
+              setPlayButtonFocus(false);
+            }}
+          >
             <PlayButton onClick={playAudio}>
               {playButton}
             </PlayButton>
@@ -191,22 +218,17 @@ const Player = ({
           <AudioTime>{audioTime}</AudioTime>
         </RightsideHeader>
       </PlayerHeader>
-      <PlayerContent onClick={e => e.stopPropagation()}>
+      <WaveformWrapper onClick={onWaveFormclick} >
         {audioSamples.length && (
           <Waveform
             audioSamples={recording.samples?.length
               ? recording.samples
               : audioSamples}
             playerRef={playerRef}
-            colors={{
-              ...theme.waveform,
-              background: isDetailed
-                ? theme.waveform.background
-                : theme.background.secondary
-            }}
+            colors={waveformColors}
           />
         )}
-      </PlayerContent>
+      </WaveformWrapper>
     </PlayerWrapper>
   );
 };
