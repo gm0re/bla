@@ -34,8 +34,9 @@ const useTheme = () => {
 
   const checkForThemeUpdates = selectedTheme => {
     const latestThemeConfig = themeWithGlobalConfig(themeConfig.colors[selectedTheme.type]);
+    const isThemeDiff = JSON.stringify(selectedTheme) !== JSON.stringify(latestThemeConfig);
 
-    if (JSON.stringify(selectedTheme) !== JSON.stringify(latestThemeConfig)) {
+    if (isThemeDiff) {
       setNewTheme(themeConfig.colors[selectedTheme.type]);
       console.log('Theme was updated!');
     }
