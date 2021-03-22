@@ -32,18 +32,18 @@ const useTheme = () => {
     setNewTheme(themeConfig.colors.dark);
   };
 
-  const checkForThemeUpdates = themeSelected => {
-    const latestThemeConfig = themeWithGlobalConfig(themeConfig.colors[themeSelected.type]);
+  const checkForThemeUpdates = selectedTheme => {
+    const latestThemeConfig = themeWithGlobalConfig(themeConfig.colors[selectedTheme.type]);
 
-    if (JSON.stringify(themeSelected) !== JSON.stringify(latestThemeConfig)) {
-      setNewTheme(themeConfig.colors[themeSelected.type]);
+    if (JSON.stringify(selectedTheme) !== JSON.stringify(latestThemeConfig)) {
+      setNewTheme(themeConfig.colors[selectedTheme.type]);
       console.log('Theme was updated!');
     }
   };
 
   useEffect(() => {
     checkForThemeUpdates(theme);
-  }, []);
+  }, [setNewTheme]);
 
   return [
     theme,
