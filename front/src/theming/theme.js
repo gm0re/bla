@@ -3,7 +3,7 @@ const theme = {
     dark: {
       background: {
         primary: '#000000',
-        secondary: '#101010',
+        secondary: '##080808',
         tertiary: '#080808'
       },
       border: '1px #2f3336 solid',

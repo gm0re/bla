@@ -1,11 +1,14 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { default as themeConfig } from './theme';
+import { setIntoLocalStorage, getFromLocalStorage } from '../utils/storage';
 
 const themeTypes = {
   DARK: 'dark',
   LIGHT: 'light'
 };
+
+const storageThemeKey = 'theme';
 
 const themeWithGlobalConfig = mode => ({
   ...mode,
@@ -13,15 +16,34 @@ const themeWithGlobalConfig = mode => ({
 });
 
 const useTheme = () => {
-  const [theme, setTheme] = useState(themeWithGlobalConfig(themeConfig.colors.light));
+  const savedTheme = getFromLocalStorage(storageThemeKey);
+  const [theme, setTheme] = useState(themeWithGlobalConfig(savedTheme || themeConfig.colors.light));
+
+  const setNewTheme = newTheme => {
+    setTheme(themeWithGlobalConfig(newTheme));
+    setIntoLocalStorage(storageThemeKey, newTheme);
+  };
 
   const setLight = () => {
-    setTheme(themeWithGlobalConfig(themeConfig.colors.light));
+    setNewTheme(themeConfig.colors.light);
   };
 
   const setDark = () => {
-    setTheme(themeWithGlobalConfig(themeConfig.colors.dark));
+    setNewTheme(themeConfig.colors.dark);
   };
+
+  const checkForThemeUpdates = themeSelected => {
+    const latestThemeConfig = themeWithGlobalConfig(themeConfig.colors[themeSelected.type]);
+
+    if (JSON.stringify(themeSelected) !== JSON.stringify(latestThemeConfig)) {
+      setNewTheme(themeConfig.colors[themeSelected.type]);
+      console.log('Theme was updated!');
+    }
+  };
+
+  useEffect(() => {
+    checkForThemeUpdates(theme);
+  }, []);
 
   return [
     theme,
