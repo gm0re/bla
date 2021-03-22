@@ -29,7 +29,7 @@ const Relative = ({ timestamp }) => (
 );
 
 const Timestamp = ({ human, children: timestamp, relative }) => (
-  <Label>
+  <Label title={timestamp}>
     {human && <Human timestamp={timestamp} />}
     {relative && <Relative timestamp={timestamp} />}
   </Label>

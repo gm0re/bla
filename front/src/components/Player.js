@@ -218,7 +218,7 @@ const Player = ({
           <AudioTime>{audioTime}</AudioTime>
         </RightsideHeader>
       </PlayerHeader>
-      <WaveformWrapper onClick={onWaveFormclick} >
+      <WaveformWrapper onClick={onWaveFormclick}>
         {audioSamples.length && (
           <Waveform
             audioSamples={recording.samples?.length

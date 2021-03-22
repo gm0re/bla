@@ -72,7 +72,7 @@ const Settings = ({
   return (
     <SettingsWrapper>
       <SettingItem>
-        <SettingName>Theme</SettingName>
+        <SettingName>Theme Mode</SettingName>
         <ThemeToggle
           icons={{
             checked: <LightIcon />,

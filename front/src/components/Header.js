@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+import Anchor from './Anchor';
 import BackButton from './BackButton';
 import Username from './Username';
 import UserIcon from './UserIcon';
@@ -40,7 +41,10 @@ const Header = ({ user }) => {
       {showBackButton() && (<BackButton history={history} />)}
       <UserWrapper>
         <UserIcon profilePic={user.profilePic} />
-        <Username>{user.username}</Username>
+        <Anchor
+          label={<Username>{user.username}</Username>}
+          link={'/settings'}
+        />
       </UserWrapper>
     </HeaderWrapper>
   );
