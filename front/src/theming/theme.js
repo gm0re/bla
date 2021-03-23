@@ -67,6 +67,14 @@ const theme = {
       borderRadius: '10%',
       cursor: 'pointer'
     },
+    colors: {
+      error: 'red',
+      info: 'blue',
+      special: {
+        primary: '#00c5ff',
+        secondary: '#00c5ff'
+      }
+    },
     font: {
       family: 'sans-serif',
       size: {

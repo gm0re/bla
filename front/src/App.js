@@ -31,7 +31,6 @@ const GlobalWrapper = styled.div`
   border-radius: ${({ theme }) => theme.global.borderRadius.l};
   background-color: ${({ theme }) => theme.colors};
   position: relative;
-  overflow: hidden;
 `;
 
 const App = () => {

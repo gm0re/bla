@@ -20,6 +20,7 @@ const useTheme = () => {
   const [theme, setTheme] = useState(themeWithGlobalConfig(savedTheme || themeConfig.colors.light));
 
   const setNewTheme = newTheme => {
+    console.log(themeWithGlobalConfig(newTheme));
     setTheme(themeWithGlobalConfig(newTheme));
     setIntoLocalStorage(storageThemeKey, newTheme);
   };

@@ -18,7 +18,9 @@ import {
   faStar as fasStar,
   faStop,
   faSun,
-  faTimes
+  faTimes,
+  faSortAmountDown,
+  faSortAmountUp
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -38,5 +40,7 @@ library.add(
   fasShareSquare,
   fasStar,
   faSun,
-  faTimes
+  faTimes,
+  faSortAmountDown,
+  faSortAmountUp
 );
