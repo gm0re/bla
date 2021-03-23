@@ -8,6 +8,7 @@ import {
 import {
   faChevronLeft,
   faComment as fasComment,
+  faFilter,
   faHeart as fasHeart,
   faMicrophone,
   faMoon,
@@ -16,13 +17,15 @@ import {
   faShareSquare as fasShareSquare,
   faStar as fasStar,
   faStop,
-  faSun
+  faSun,
+  faTimes
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
   faChevronLeft,
   farComment,
   faHeart,
+  faFilter,
   faMicrophone,
   faMoon,
   faPause,
@@ -34,5 +37,6 @@ library.add(
   fasHeart,
   fasShareSquare,
   fasStar,
-  faSun
+  faSun,
+  faTimes
 );

@@ -1,6 +1,7 @@
 export { default as BackButton } from './BackButton';
 export { default as Recorder } from './Recorder';
 export { default as EmptyFeed } from './EmptyFeed';
+export { default as FiltersPanel } from './FiltersPanel';
 export { default as Header } from './Header';
 export { default as Player } from './Player';
 export { default as Recording } from './Recording';

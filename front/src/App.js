@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from "react";
+import React, { lazy, Suspense, useState } from "react";
 import { Switch, Redirect, Route } from 'react-router-dom';
 import styled, { ThemeProvider } from 'styled-components';
 
@@ -8,6 +8,7 @@ import './icons';
 
 import {
   EmptyFeed,
+  FiltersPanel,
   Header,
   Recorder,
   Settings,
@@ -29,6 +30,8 @@ const GlobalWrapper = styled.div`
   border: ${({ theme }) => theme.border};
   border-radius: ${({ theme }) => theme.global.borderRadius.l};
   background-color: ${({ theme }) => theme.colors};
+  position: relative;
+  overflow: hidden;
 `;
 
 const App = () => {
@@ -38,6 +41,11 @@ const App = () => {
     setDark,
     setLight
   ] = useTheme();
+
+  const [
+    showFiltersPanel,
+    setShowFiltersPanel
+  ] = useState(false);
 
   const [
     fetchRecordings,
@@ -57,7 +65,10 @@ const App = () => {
           <GlobalStyles />
           <GlobalWrapper>
             <Header user={user} />
-            <SubHeader />
+            <SubHeader setShowFiltersPanel={setShowFiltersPanel} />
+            {showFiltersPanel && (
+              <FiltersPanel setShowFiltersPanel={setShowFiltersPanel} />
+            )}
             <Switch>
               <Redirect exact from="/" to="/recordings" />
               <Route path="/recordings/:id?">
