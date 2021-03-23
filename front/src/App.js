@@ -1,6 +1,7 @@
 import React, { lazy, Suspense } from "react";
 import { Switch, Redirect, Route } from 'react-router-dom';
 import styled, { ThemeProvider } from 'styled-components';
+
 import GlobalStyles from './theming/GlobalStyles';
 
 import './icons';
@@ -9,7 +10,8 @@ import {
   EmptyFeed,
   Header,
   Recorder,
-  Settings
+  Settings,
+  SubHeader
 } from './components';
 
 import userSvc from './services/user';
@@ -55,6 +57,7 @@ const App = () => {
           <GlobalStyles />
           <GlobalWrapper>
             <Header user={user} />
+            <SubHeader />
             <Switch>
               <Redirect exact from="/" to="/recordings" />
               <Route path="/recordings/:id?">

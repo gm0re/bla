@@ -42,7 +42,14 @@ const useTheme = () => {
     }
   };
 
+  const checkSavedTheme = () => {
+    if (!savedTheme) {
+      setNewTheme(theme);
+    }
+  };
+
   useEffect(() => {
+    checkSavedTheme()
     checkForThemeUpdates(theme);
   }, [setNewTheme]);
 

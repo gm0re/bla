@@ -8,6 +8,7 @@ export { default as RecordingAction } from './RecordingAction';
 export { default as RecordingActions } from './RecordingActions';
 export { default as Recordings } from './Recordings';
 export { default as Settings } from './Settings';
+export { default as SubHeader } from './SubHeader';
 export { default as UserIcon } from './UserIcon';
 export { default as Username } from './Username';
 export { default as Waveform } from './Waveform';
