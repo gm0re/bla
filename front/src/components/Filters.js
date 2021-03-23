@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+const ChipsWrapper = styled.div`
+  padding: ${({ theme }) => theme.global.space.padding.l};
+`;
+
 const Chip = styled.div`
   display: flex;
   flex-direction: row;
@@ -36,22 +40,24 @@ const Filters = ({
 }) => {
   const removeFilter = filterToRemove => {
     const newFilters = filters.filter(filter => filter !== filterToRemove);
-    setFilters(newFilters);
+
+    setFilters([
+      ...filters,
+      newFilters
+    ]);
   };
 
   return (
-    <>
-      {filters.map(filter => (
-        <Chip filter={filter} key={filter}>
+    <ChipsWrapper>
+      {!!filters.length && filters.map((filter, key) => (
+        <Chip filter={filter} key={`chip-${key}`}>
           <Label>{filter}</Label>
-          <RemoveChipButton onClick={() => {
-            removeFilter(filter);
-          }}>
+          <RemoveChipButton onClick={() => removeFilter(filter) }>
             <FontAwesomeIcon icon={['fa', 'times']} />
           </RemoveChipButton>
         </Chip>
       ))}
-    </>
+    </ChipsWrapper>
   );
 };
 

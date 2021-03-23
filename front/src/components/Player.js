@@ -29,7 +29,7 @@ const PlayButtonWrappper = styled.div`
       border: 2px solid #00c5ff;
     }
     100% {
-      border: 2px solid transparent
+      border: 2px solid transparent;
     }
   }
 `;

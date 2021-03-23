@@ -66,7 +66,10 @@ const App = () => {
             <Header user={user} />
             <SubHeader setShowFiltersPanel={setShowFiltersPanel} />
             {showFiltersPanel && (
-              <FiltersPanel setShowFiltersPanel={setShowFiltersPanel} />
+              <FiltersPanel
+                setShowFiltersPanel={setShowFiltersPanel}
+                showFiltersPanel={showFiltersPanel}
+              />
             )}
             <Switch>
               <Redirect exact from="/" to="/recordings" />
